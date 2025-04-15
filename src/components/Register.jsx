@@ -1,20 +1,23 @@
 import React, { useState } from "react";
 
 export const Register = () => {
-
   const allvalues = {
-    username:"",
+    username: "",
     email: "",
     password: "",
     role: "user",
+  };
+  const [inputValues, setInputValues] = useState(allvalues);
 
-  }
-  const [inputValues, setInputValues] = useState(allvalues)
-  const handlechange = (e)=>{
-    const {name, value} = e.target;
-    setInputValues((prev)=>({...prev, [name]: value}))
+  const handlechange = (e) => {
+    const { name, value } = e.target;
+    setInputValues((prev) => ({ ...prev, [name]: value }));
+  };
 
-  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("values", inputValues);
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
@@ -30,8 +33,11 @@ export const Register = () => {
             </label>
             <input
               type="text"
+              name="username"
               className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-             onChange={handlechange} value={inputValues.username}/>
+              onChange={handlechange}
+              value={inputValues.username}
+            />
           </div>
 
           <div className="flex flex-col">
@@ -40,8 +46,11 @@ export const Register = () => {
             </label>
             <input
               type="email"
+              name="email"
               className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            onChange={handlechange} value={inputValues.email} />
+              onChange={handlechange}
+              value={inputValues.email}
+            />
           </div>
 
           <div className="flex flex-col">
@@ -50,15 +59,23 @@ export const Register = () => {
             </label>
             <input
               type="password"
+              name="password"
               className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            onChange={handlechange} value={inputValues.password} />
+              onChange={handlechange}
+              value={inputValues.password}
+            />
           </div>
 
           <div className="flex flex-col">
             <label className="mb-1 text-sm font-medium text-gray-700">
               Role
             </label>
-            <select className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" onChange={handlechange} value={inputValues.role}>
+            <select
+              className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              name="role"
+              onChange={handlechange}
+              value={inputValues.role}
+            >
               <option value="admin">Admin</option>
               <option value="user">User</option>
             </select>
@@ -67,6 +84,7 @@ export const Register = () => {
           <button
             type="submit"
             className="mt-4 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-300"
+            onClick={handleSubmit}
           >
             Register
           </button>
