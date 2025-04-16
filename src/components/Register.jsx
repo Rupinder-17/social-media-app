@@ -5,7 +5,6 @@ export const Register = () => {
     username: "",
     email: "",
     password: "",
-    role: "user",
   };
   const [inputValues, setInputValues] = useState(allvalues);
 
@@ -66,20 +65,7 @@ export const Register = () => {
             />
           </div>
 
-          <div className="flex flex-col">
-            <label className="mb-1 text-sm font-medium text-gray-700">
-              Role
-            </label>
-            <select
-              className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              name="role"
-              onChange={handlechange}
-              value={inputValues.role}
-            >
-              <option value="admin">Admin</option>
-              <option value="user">User</option>
-            </select>
-          </div>
+         
 
           <button
             type="submit"
