@@ -1,20 +1,30 @@
 import React, { useState } from "react";
+import { useAuth } from "./hooks/useAuth";
 
 export const Register = () => {
   const allvalues = {
-    username: "",
     email: "",
     password: "",
+    username: "",
   };
   const [inputValues, setInputValues] = useState(allvalues);
+  const {register, loading , error} = useAuth()
 
   const handlechange = (e) => {
     const { name, value } = e.target;
     setInputValues((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
+    try{
+      const res = await register(inputValues) 
+      console.log(res);
+      
+    }catch(e){
+      console.log(e);
+      
+    }
     console.log("values", inputValues);
   };
 
@@ -67,12 +77,18 @@ export const Register = () => {
 
           <button
             type="submit"
+            disabled={loading}
             className="mt-4 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-300"
             onClick={handleSubmit}
           >
             Register
           </button>
         </form>
+        {error && (
+          <div className="mt-4 text-center text-red-500 text-sm border border-red-500 rounded-md p-2 bg-red-100">
+            {error.message || "An error occurred during registration"}
+          </div>
+        )}
       </div>
     </div>
   );
