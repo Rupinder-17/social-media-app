@@ -9,11 +9,11 @@ const createApiClient = () => {
       header: {
         "Content-Type": "application/json",
         ...(token && { Authorization: `Bearer ${token}` }),
-        ...options.header,
+        ...options.headers,
       },
     };
     try {
-      const response = await fetch(`${Baseurl}${endpoint},`, {
+      const response = await fetch(`${Baseurl}${endpoint}`, {
         ...defaultOptions,
         ...options,
       });
@@ -24,7 +24,7 @@ const createApiClient = () => {
       return data;
     } catch (e) {
       console.log(e);
-      throw console.e;
+      throw console;
     }
   };
   return { request };
