@@ -1,11 +1,11 @@
 import { apiclient } from "../../api/apiClients"
 
 export const authServices = {
-    async login(){
+    async login(credentials){
         try{
             const response = await apiclient.request("users/register", {
                 method : "POST",
-                body: JSON.stringify()
+                body: JSON.stringify(credentials)
             })
             console.log(response);
             
@@ -18,5 +18,20 @@ export const authServices = {
             console.log(error);
             
         }
+    },
+
+    async register(userdata){
+        try{
+            const response = await apiclient.request("users/register", {
+                method: "POST",
+                body: JSON.stringify(userdata)
+            });
+            return response
+        }catch(e){
+            console.log(e);
+            
+
+        }
     }
+
 }
