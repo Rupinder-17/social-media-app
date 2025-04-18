@@ -5,6 +5,7 @@ export const Register = () => {
   const allvalues = {
     email: "",
     password: "",
+    role: "USER",
     username: "",
   };
   const [inputValues, setInputValues] = useState(allvalues);

@@ -11,7 +11,9 @@ const createApiClient = () => {
         ...(token && { Authorization: `Bearer ${token}` }),
         ...options.headers,
       },
+      
     };
+    console.log("default", defaultOptions);
     try {
       const response = await fetch(`${Baseurl}${endpoint}`, {
         ...defaultOptions,

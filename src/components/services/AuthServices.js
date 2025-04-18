@@ -20,10 +20,14 @@ export const authServices = {
   },
 
   async register(userdata) {
+    
     try {
       const response = await apiclient.request("users/register", {
         method: "POST",
         body: JSON.stringify(userdata),
+        headers: {
+          accept: "application/json",
+        },
       });
       return response.data;
     } catch (e) {
