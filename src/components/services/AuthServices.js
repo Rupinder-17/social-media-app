@@ -25,9 +25,7 @@ export const authServices = {
       const response = await apiclient.request("users/register", {
         method: "POST",
         body: JSON.stringify(userdata),
-        headers: {
-          accept: "application/json",
-        },
+       
       });
       return response.data;
     } catch (e) {

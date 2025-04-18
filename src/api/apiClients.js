@@ -6,12 +6,11 @@ const createApiClient = () => {
 
     const token = localStorage.getItem("accessToken");
     const defaultOptions = {
-      header: {
+      headers: {
         "Content-Type": "application/json",
         ...(token && { Authorization: `Bearer ${token}` }),
         ...options.headers,
       },
-      
     };
     console.log("default", defaultOptions);
     try {
