@@ -67,7 +67,12 @@ export const Login = () => {
             Login
           </button>
         </form>
-          <button onClick={()=>navigate("/")}>Regiter here</button>
+        <button
+          onClick={() => navigate("/")}
+          className="text-center  text-blue-600"
+        >
+          Regiter here
+        </button>
       </div>
     </div>
   );

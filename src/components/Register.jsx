@@ -88,7 +88,7 @@ export const Register = () => {
             Register
           </button>
         </form>
-        <button onClick={()=> navigate("/login")}>Allready regiter</button>
+        <button onClick={()=> navigate("/login")} className="text-center text-blue-600">Allready regiter</button>
         {error && (
           <div className="mt-4 text-center text-red-500 text-sm border border-red-500 rounded-md p-2 bg-red-100">
             {error.message || "An error occurred during registration"}
