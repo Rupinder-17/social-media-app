@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { useAuth } from "./hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 export const Register = () => {
+  const navigate = useNavigate();
+  
   const allvalues = {
     email: "",
     password: "",
@@ -9,24 +12,22 @@ export const Register = () => {
     username: "",
   };
   const [inputValues, setInputValues] = useState(allvalues);
-  const {register, loading , error} = useAuth()
+  const { register, loading, error } = useAuth();
   console.log("inputs", inputValues);
-  
 
   const handlechange = (e) => {
     const { name, value } = e.target;
     setInputValues((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
-      const res = await register(inputValues) 
+    try {
+      const res = await register(inputValues);
+      navigate("/login");
       console.log(res);
-      
-    }catch(e){
+    } catch (e) {
       console.log(e);
-      
     }
     console.log("values", inputValues);
   };
@@ -87,6 +88,7 @@ export const Register = () => {
             Register
           </button>
         </form>
+        <button onClick={()=> navigate("/login")}>Allready regiter</button>
         {error && (
           <div className="mt-4 text-center text-red-500 text-sm border border-red-500 rounded-md p-2 bg-red-100">
             {error.message || "An error occurred during registration"}
