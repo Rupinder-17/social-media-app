@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
-import { Navigate, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 
 export const Login = () => {
   const navigate = useNavigate()
@@ -19,6 +19,7 @@ export const Login = () => {
     e.preventDefault();
     try {
       const res = await login(credentials);
+      navigate("/create-post")
       console.log(res);
     } catch (error) {
       console.log(error);
