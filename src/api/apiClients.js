@@ -7,16 +7,16 @@ const createApiClient = () => {
     const token = localStorage.getItem("accessToken");
     const defaultOptions = {
       headers: {
+        ...options.headers,
         "Content-Type": "application/json",
         ...(token && { Authorization: `Bearer ${token}` }),
-        ...options.headers,
       },
     };
     console.log("default", defaultOptions);
     try {
       const response = await fetch(`${Baseurl}${endpoint}`, {
-        ...defaultOptions,
         ...options,
+        ...defaultOptions,
       });
       const data = await response.json();
       if (!response.ok) {

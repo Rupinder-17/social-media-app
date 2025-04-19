@@ -11,7 +11,7 @@ export const authServices = {
 
       if (response.data?.accessToken) {
         localStorage.setItem("accessToken", response.data.accessToken);
-        localStorage.setItem("user", JSON.stringify(response.data.user))
+        localStorage.setItem("user", JSON.stringify(response.data.user));
       }
       return response.data;
     } catch (error) {
@@ -20,12 +20,13 @@ export const authServices = {
   },
 
   async register(userdata) {
-    
     try {
       const response = await apiclient.request("users/register", {
         method: "POST",
         body: JSON.stringify(userdata),
-       
+        headers: {
+          "x-api-key": "hello",
+        },
       });
       return response.data;
     } catch (e) {
