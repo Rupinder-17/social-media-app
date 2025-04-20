@@ -131,16 +131,6 @@ export const CreatePost = () => {
             />
 
             {/* Image Preview */}
-            {imagePreview && (
-              <div className="mt-2">
-                <p className="text-sm text-gray-600 mb-1">Image Preview:</p>
-                <img
-                  src={imagePreview}
-                  alt="Preview"
-                  className="w-full h-auto max-h-48 object-contain rounded-lg border border-gray-300"
-                />
-              </div>
-            )}
           </div>
 
           <button
@@ -160,6 +150,16 @@ export const CreatePost = () => {
             Back to Login
           </button>
         </div>
+        {imagePreview && (
+          <div className="mt-2">
+            <p className="text-sm text-gray-600 mb-1">Image Preview:</p>
+            <img
+              src={imagePreview}
+              alt="Preview"
+              className="w-full h-auto max-h-48 object-contain rounded-lg border border-gray-300"
+            />
+          </div>
+        )}
       </div>
     </div>
   );
