@@ -9,8 +9,9 @@ export const CreatePost = () => {
     image: "",
     tags: [],
   });
+
   const [imagePreview, setImagePreview] = useState(null);
-  console.log(data);
+  const [submittedPosts, setSubmittedPosts] = useState([]);
 
   const { createPost, status } = useCreatePost();
 
@@ -37,8 +38,19 @@ export const CreatePost = () => {
       await createPost(formData);
 
       if (status.success) {
-        setData({ content: "", image: "", tags: [] }); // Reset state
-        setImagePreview(null); // Clear image preview
+        // Save the current post to the submittedPosts array
+        const newPost = {
+          id: Date.now(), // Generate a unique ID
+          content: data.content,
+          image: imagePreview,
+          createdAt: new Date().toLocaleString(),
+        };
+
+        setSubmittedPosts((prev) => [newPost, ...prev]);
+
+        // Reset form state
+        setData({ content: "", image: "", tags: [] });
+        setImagePreview(null);
       }
     } catch (error) {
       console.error("Error submitting post:", error);
@@ -158,6 +170,33 @@ export const CreatePost = () => {
               alt="Preview"
               className="w-full h-auto max-h-48 object-contain rounded-lg border border-gray-300"
             />
+          </div>
+        )}
+
+        {/* Display submitted posts */}
+        {submittedPosts.length > 0 && (
+          <div className="mt-6">
+            <h2 className="text-xl font-semibold mb-3 text-gray-800">
+              Your Posts
+            </h2>
+            <div className="space-y-4">
+              {submittedPosts.map((post) => (
+                <div
+                  key={post.id}
+                  className="p-4 bg-gray-50 rounded-lg border border-gray-200"
+                >
+                  <p className="text-gray-600 text-sm mb-1">{post.createdAt}</p>
+                  <p className="text-gray-800 mb-2">{post.content}</p>
+                  {post.image && (
+                    <img
+                      src={post.image}
+                      alt="Post image"
+                      className="w-full h-auto max-h-48 object-contain rounded-lg"
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </div>
