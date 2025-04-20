@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useCreatePost } from "../hooks/useCreatePost";
 import { useNavigate } from "react-router-dom";
+// Icons for Instagram-like UI
+import { FiImage, FiX, FiArrowLeft } from "react-icons/fi";
 
 export const CreatePost = () => {
   const navigate = useNavigate();
@@ -89,11 +91,20 @@ export const CreatePost = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-md p-8">
-        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
-          Create New Post
-        </h1>
+    <div className="min-h-screen flex flex-col bg-gray-50">
+      {/* Instagram-like header */}
+      <div className="sticky top-0 z-10 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
+        <button
+          onClick={() => navigate("/login")}
+          className="text-gray-800 flex items-center gap-1"
+        >
+          <FiArrowLeft size={20} />
+        </button>
+        <h1 className="text-xl font-semibold text-center flex-1">Create New Post</h1>
+        <div className="w-6"></div> {/* Empty div for balanced spacing */}
+      </div>
+      
+      <div className="flex-1 overflow-y-auto p-4 max-w-xl mx-auto w-full">
 
         {status.success && (
           <div className="mb-4 p-3 bg-green-100 text-green-700 rounded-lg">
@@ -107,93 +118,126 @@ export const CreatePost = () => {
           </div>
         )}
 
-        <form className="space-y-4" onSubmit={handleSubmit}>
-          <div>
-            <label
-              htmlFor="content"
-              className="block mb-1 text-sm font-medium text-gray-700"
-            >
-              Content
-            </label>
-            <input
-              type="text"
-              value={data.content}
-              name="content"
-              onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="What's on your mind?"
-            />
+        {/* Instagram-like card for creating post */}
+        <div className="bg-white rounded-xl shadow-sm overflow-hidden mb-4">
+          {/* Image upload area with preview */}
+          <div className="relative">
+            {imagePreview ? (
+              <div className="relative">
+                <img
+                  src={imagePreview}
+                  alt="Preview"
+                  className="w-full aspect-square object-cover"
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    setImagePreview(null);
+                    setData(prev => ({ ...prev, image: "" }));
+                  }}
+                  className="absolute top-2 right-2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70 transition"
+                >
+                  <FiX size={18} />
+                </button>
+              </div>
+            ) : (
+              <label
+                htmlFor="image"
+                className="flex flex-col items-center justify-center bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer h-64 hover:bg-gray-100 transition"
+              >
+                <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                  <FiImage className="w-12 h-12 mb-3 text-gray-400" />
+                  <p className="mb-2 text-sm text-gray-500">
+                    <span className="font-semibold">Click to upload</span> or drag and drop
+                  </p>
+                  <p className="text-xs text-gray-500">SVG, PNG, JPG or GIF</p>
+                </div>
+                <input
+                  type="file"
+                  id="image"
+                  name="image"
+                  accept="image/*"
+                  onChange={handleInputChange}
+                  className="hidden"
+                />
+              </label>
+            )}
           </div>
 
-          <div>
-            <label
-              htmlFor="image"
-              className="block mb-1 text-sm font-medium text-gray-700"
-            >
-              Upload Image (optional)
-            </label>
+          {/* Content input area */}
+          <form onSubmit={handleSubmit}>
+            <div className="p-4">
+              <textarea
+                value={data.content}
+                name="content"
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500 resize-none h-24"
+                placeholder="Write a caption..."
+              />
+            </div>
 
-            <input
-              type="file"
-              id="image"
-              name="image"
-              accept="image/*"
-              onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-
-            {/* Image Preview */}
-          </div>
-
-          <button
-            type="submit"
-            disabled={status.loading}
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-300 disabled:bg-blue-300 disabled:cursor-not-allowed"
-          >
-            {status.loading ? "Posting..." : "Create Post"}
-          </button>
-        </form>
-
-        <div className="mt-4 text-center">
-          <button
-            onClick={() => navigate("/login")}
-            className="text-blue-600 hover:underline"
-          >
-            Back to Login
-          </button>
+            <div className="px-4 pb-4">
+              <button
+                type="submit"
+                disabled={status.loading || (!data.content && !data.image)}
+                className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-2.5 rounded-lg font-medium hover:from-purple-600 hover:to-pink-600 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {status.loading ? "Posting..." : "Share"}
+              </button>
+            </div>
+          </form>
         </div>
-        {imagePreview && (
-          <div className="mt-2">
-            <p className="text-sm text-gray-600 mb-1">Image Preview:</p>
-            <img
-              src={imagePreview}
-              alt="Preview"
-              className="w-full h-auto max-h-48 object-contain rounded-lg border border-gray-300"
-            />
+
+        {status.success && (
+          <div className="mb-4 p-3 bg-green-100 text-green-700 rounded-lg">
+            Post shared successfully!
           </div>
         )}
 
-        {/* Display submitted posts */}
+        {status.error && (
+          <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg">
+            {status.error}
+          </div>
+        )}
+
+        {/* Display submitted posts in Instagram-like feed */}
         {submittedPosts.length > 0 && (
           <div className="mt-6">
             <h2 className="text-xl font-semibold mb-3 text-gray-800">
-              Your Posts
+              Your Feed
             </h2>
-            <div className="space-y-4">
+            <div className="space-y-6">
               {submittedPosts.map((post) => (
                 <div
                   key={post.id}
-                  className="p-4 bg-gray-50 rounded-lg border border-gray-200"
+                  className="bg-white rounded-xl shadow-sm overflow-hidden"
                 >
-                  <p className="text-gray-600 text-sm mb-1">{post.createdAt}</p>
-                  <p className="text-gray-800 mb-2">{post.content}</p>
+                  {/* Post header */}
+                  <div className="p-4 flex items-center">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-sm">
+                      {post.content.charAt(0).toUpperCase()}
+                    </div>
+                    <div className="ml-3">
+                      <p className="font-medium text-gray-900">You</p>
+                      <p className="text-gray-500 text-xs">{post.createdAt}</p>
+                    </div>
+                  </div>
+                  
+                  {/* Post image */}
                   {post.image && (
-                    <img
-                      src={post.image}
-                      alt="Post image"
-                      className="w-full h-auto max-h-48 object-contain rounded-lg"
-                    />
+                    <div className="relative pb-[100%] bg-black">
+                      <img
+                        src={post.image}
+                        alt="Post"
+                        className="absolute inset-0 w-full h-full object-contain"
+                      />
+                    </div>
                   )}
+                  
+                  {/* Post content */}
+                  <div className="p-4">
+                    <p className="text-gray-900">{post.content}</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -201,5 +245,7 @@ export const CreatePost = () => {
         )}
       </div>
     </div>
+      // </div>
+    // </div>
   );
 };
