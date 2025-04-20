@@ -1,6 +1,5 @@
 const Baseurl = "https://api.freeapi.app/api/v1/";
 const createApiClient = () => {
-    
   const request = async (endpoint, options = {}) => {
     console.log("options", options);
 
@@ -8,7 +7,10 @@ const createApiClient = () => {
     const defaultOptions = {
       headers: {
         ...options.headers,
-        "Content-Type": "application/json",
+        // Only set Content-Type to application/json if we're not sending FormData
+        ...(!(options.body instanceof FormData) && {
+          "Content-Type": "application/json",
+        }),
         ...(token && { Authorization: `Bearer ${token}` }),
       },
     };

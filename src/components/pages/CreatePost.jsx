@@ -7,26 +7,40 @@ export const CreatePost = () => {
   const [data, setData] = useState({
     content: "",
     image: "",
+    tags: []
   });
-  const { setPost, createPost, status } = useCreatePost();
+  const { createPost, status } = useCreatePost();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Create FormData
+    const formData = new FormData();
+    formData.append("content", data.content);
+
+    // Attach file if selected
+    if (data.image instanceof File) {
+      formData.append("images", data.image); // key must be "images"
+    }
+    data.tags.forEach(( index)=>{
+      formData.append(`tag[${index}], tag`)
+    })
+
     try {
-      await createPost(data);
-      // Reset form after successful submission
+      await createPost(formData);
+
       if (status.success) {
-        setPost({ content: "", image: "" });
+        setData({ content: "", image: "" , tag:[]}); // Reset state
       }
     } catch (error) {
       console.error("Error submitting post:", error);
     }
   };
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, files } = e.target;
     setData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: name ==="image" ? files[0] : value,
     }));
   };
 
@@ -72,12 +86,12 @@ export const CreatePost = () => {
             >
               Image URL (optional)
             </label>
-            inp
+          
             <input
               type="file"
               id="image"
               name="image"
-              value={data.image}
+              accept="image/*"
               onChange={handleInputChange}
               placeholder="Enter image URL"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
