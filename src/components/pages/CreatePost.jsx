@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useCreatePost } from "../hooks/useCreatePost";
 import { useNavigate } from "react-router-dom";
 
@@ -7,8 +7,11 @@ export const CreatePost = () => {
   const [data, setData] = useState({
     content: "",
     image: "",
-    tags: []
+    tags: [],
   });
+  const [imagePreview, setImagePreview] = useState(null);
+  console.log(data);
+
   const { createPost, status } = useCreatePost();
 
   const handleSubmit = async (e) => {
@@ -22,15 +25,20 @@ export const CreatePost = () => {
     if (data.image instanceof File) {
       formData.append("images", data.image); // key must be "images"
     }
-    data.tags.forEach(( index)=>{
-      formData.append(`tag[${index}], tag`)
-    })
+
+    // Properly append tags if they exist
+    if (data.tags && data.tags.length > 0) {
+      data.tags.forEach((tag, index) => {
+        formData.append(`tags[${index}]`, tag);
+      });
+    }
 
     try {
       await createPost(formData);
 
       if (status.success) {
-        setData({ content: "", image: "" , tag:[]}); // Reset state
+        setData({ content: "", image: "", tags: [] }); // Reset state
+        setImagePreview(null); // Clear image preview
       }
     } catch (error) {
       console.error("Error submitting post:", error);
@@ -38,11 +46,35 @@ export const CreatePost = () => {
   };
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
-    setData((prev) => ({
-      ...prev,
-      [name]: name ==="image" ? files[0] : value,
-    }));
+
+    if (name === "image" && files && files.length > 0) {
+      setData((prev) => ({
+        ...prev,
+        [name]: files[0],
+      }));
+
+      // Create image preview URL
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(files[0]);
+    } else {
+      setData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
+
+  // Clean up image preview URL when component unmounts
+  useEffect(() => {
+    return () => {
+      if (imagePreview) {
+        URL.revokeObjectURL(imagePreview);
+      }
+    };
+  }, []);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
@@ -76,6 +108,8 @@ export const CreatePost = () => {
               value={data.content}
               name="content"
               onChange={handleInputChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="What's on your mind?"
             />
           </div>
 
@@ -84,23 +118,34 @@ export const CreatePost = () => {
               htmlFor="image"
               className="block mb-1 text-sm font-medium text-gray-700"
             >
-              Image URL (optional)
+              Upload Image (optional)
             </label>
-          
+
             <input
               type="file"
               id="image"
               name="image"
               accept="image/*"
               onChange={handleInputChange}
-              placeholder="Enter image URL"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+
+            {/* Image Preview */}
+            {imagePreview && (
+              <div className="mt-2">
+                <p className="text-sm text-gray-600 mb-1">Image Preview:</p>
+                <img
+                  src={imagePreview}
+                  alt="Preview"
+                  className="w-full h-auto max-h-48 object-contain rounded-lg border border-gray-300"
+                />
+              </div>
+            )}
           </div>
 
           <button
             type="submit"
-            disabled={status.loading }
+            disabled={status.loading}
             className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-300 disabled:bg-blue-300 disabled:cursor-not-allowed"
           >
             {status.loading ? "Posting..." : "Create Post"}
