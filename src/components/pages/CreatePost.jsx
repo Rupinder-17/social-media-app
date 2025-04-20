@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { useCreatePost } from "../hooks/useCreatePost";
 import { useNavigate } from "react-router-dom";
 
 export const CreatePost = () => {
   const navigate = useNavigate();
-  const { post, setPost, handleInputChange, createPost, status } =
-    useCreatePost();
+  const [data, setData] = useState({
+    content: "",
+    image: "",
+  });
+  const { setPost, createPost, status } = useCreatePost();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await createPost();
+      await createPost(data);
       // Reset form after successful submission
       if (status.success) {
         setPost({ content: "", image: "" });
@@ -18,6 +21,13 @@ export const CreatePost = () => {
     } catch (error) {
       console.error("Error submitting post:", error);
     }
+  };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   return (
@@ -47,14 +57,11 @@ export const CreatePost = () => {
             >
               Content
             </label>
-            <textarea
-              id="content"
+            <input
+              type="text"
+              value={data.content}
               name="content"
-              value={post.content}
               onChange={handleInputChange}
-              placeholder="What's on your mind?"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[120px]"
-              required
             />
           </div>
 
@@ -65,11 +72,12 @@ export const CreatePost = () => {
             >
               Image URL (optional)
             </label>
+            inp
             <input
-              type="text"
+              type="file"
               id="image"
               name="image"
-              value={post.image}
+              value={data.image}
               onChange={handleInputChange}
               placeholder="Enter image URL"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -78,7 +86,7 @@ export const CreatePost = () => {
 
           <button
             type="submit"
-            disabled={status.loading || !post.content}
+            disabled={status.loading }
             className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-300 disabled:bg-blue-300 disabled:cursor-not-allowed"
           >
             {status.loading ? "Posting..." : "Create Post"}
