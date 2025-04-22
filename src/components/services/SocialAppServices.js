@@ -20,7 +20,9 @@ export const SocialAppServices = {
     try {
       const response = await apiclient.request("social-media/posts", {
         method: "GET",
-      });
+      })
+      console.log("load", response)
+        
       return response;
     } catch (error) {
       console.log(error);

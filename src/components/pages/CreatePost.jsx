@@ -105,6 +105,18 @@ export const CreatePost = () => {
       }
     };
   }, []);
+  // const getPosts = ()=>{
+  //   try{
+  //     const res = PostGet()
+  //     console.log(res);
+      
+      
+  //   }
+  //   catch(e){
+  //     console.log(e);
+      
+  //   }
+  // }
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
@@ -116,6 +128,7 @@ export const CreatePost = () => {
         >
           <FiArrowLeft size={20} />
         </button>
+          <div onClick={()=>navigate("/veiw-post")}>veiw allpost</div>
         <h1 className="text-xl font-semibold text-center flex-1">
           Create New Post
         </h1>
