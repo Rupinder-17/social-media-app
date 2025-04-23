@@ -19,7 +19,7 @@ export const usePost = () => {
         loading: false,
         error: null,
         success: true,
-        data: response?.data || null,
+        data: response?.data?.posts || null,
       });
       return response;
     } catch (e) {

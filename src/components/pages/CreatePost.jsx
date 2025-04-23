@@ -14,8 +14,8 @@ export const CreatePost = () => {
 
   const [imagePreview, setImagePreview] = useState(null);
   const [showPreview, setShowPreview] = useState(false);
-  const [submittedPosts, setSubmittedPosts] = useState([]);
-  const { posts } = usePost();
+  const [, setSubmittedPosts] = useState([]);
+  const {  data: posts } = usePost();
   console.log("checkPots",posts);
 
   
@@ -219,13 +219,13 @@ export const CreatePost = () => {
         )}
 
         {/* Display submitted posts in Instagram-like feed */}
-        {posts?.data?.posts?.length > 0 && (
+        {posts?.length > 0 && (
           <div className="mt-6">
             <h2 className="text-xl font-semibold mb-3 text-gray-800">
               Your Feed
             </h2>
             <div className="space-y-6">
-              {posts?.data?.posts?.map((post) => (
+              {posts?.map((post) => (
                 <div
                   key={post.id}
                   className="bg-white rounded-xl shadow-sm overflow-hidden"

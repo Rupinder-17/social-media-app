@@ -5,7 +5,7 @@ import {useNavigate } from "react-router-dom";
 
 
 export const VeiwPosts = () => {
-  const { posts} = usePost();
+  const {  loading, error,data:posts} = usePost();
   console.log("postfetch", posts);
   const navigate = useNavigate()
 
@@ -22,13 +22,13 @@ export const VeiwPosts = () => {
         Your Posts
       </h1>
 
-      {posts.loading ? (
+      {loading ? (
         <p className="text-center text-gray-600">Loading posts...</p>
-      ) : posts.error ? (
-        <p className="text-center text-red-500">{posts.error}</p>
-      ) : posts?.data?.posts?.length > 0 ? (
+      ) : error ? (
+        <p className="text-center text-red-500">{error}</p>
+      ) : posts?.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {posts.data.posts.map((post, index) => (
+          {posts?.map((post, index) => (
             <div
               key={index}
               className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200"
