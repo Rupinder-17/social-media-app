@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SocialAppServices } from "../services/SocialAppServices";
 
 export const usePost = () => {
@@ -7,12 +7,20 @@ export const usePost = () => {
     error: null,
     success: false,
   });
+  useEffect(() => {
+    PostGet();
+  }, []);
 
   const PostGet = async () => {
     setPosts({ loading: true, error: null, success: false });
     try {
       const response = await SocialAppServices.loadpost();
-      setPosts({ loading: false, error: null, success: true, data: response?.data || null });
+      setPosts({
+        loading: false,
+        error: null,
+        success: true,
+        data: response?.data || null,
+      });
       return response;
     } catch (e) {
       setPosts({ loading: false, error: null, success: false, data: null });
@@ -20,7 +28,7 @@ export const usePost = () => {
     }
   };
   return {
-    posts,
-    PostGet,
+    ...posts,
+    // PostGet,
   };
 };

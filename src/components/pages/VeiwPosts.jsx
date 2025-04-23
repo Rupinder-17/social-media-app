@@ -1,17 +1,17 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { usePost } from "../hooks/usePost";
  import {FiArrowLeft } from "react-icons/fi";
 import {useNavigate } from "react-router-dom";
 
 
 export const VeiwPosts = () => {
-  const { posts, PostGet } = usePost();
+  const { posts} = usePost();
   console.log("postfetch", posts);
   const navigate = useNavigate()
 
-  useEffect(() => {
-    PostGet();
-  }, []);
+  // useEffect(() => {
+  //   PostGet();
+  // }, []);
 
   return (
     <div className="min-h-screen bg-gray-50 p-4">
@@ -47,11 +47,11 @@ export const VeiwPosts = () => {
               </div>
 
               {/* Post Image */}
-              {post.image && (
+              {post.images && (
                 <img
-                  src={post.images?.[0]}
+                  src={post.images[0].url}
                   alt="Post"
-                  className="w-full h-60 object-cover"
+                  className="w-full h-60 object-contain"
                 />
               )}
 
