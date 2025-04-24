@@ -20,12 +20,26 @@ export const SocialAppServices = {
     try {
       const response = await apiclient.request("social-media/posts", {
         method: "GET",
-      })
-      console.log("load", response)
-        
+      });
+      console.log("load", response);
+
       return response;
     } catch (error) {
       console.log(error);
+    }
+  },
+  async likePost(postId) {
+    try {
+      const response = await apiclient.request(
+        "social-media/like/post/{postId}",
+        {
+          method: "POST",
+          body: postId,
+        }
+      );
+      return response;
+    } catch (e) {
+      console.log(e);
     }
   },
 };
