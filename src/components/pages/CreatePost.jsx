@@ -12,12 +12,15 @@ export const CreatePost = () => {
     tags: [],
   });
 
+
   const [imagePreview, setImagePreview] = useState(null);
   const [showPreview, setShowPreview] = useState(false);
   const [, setSubmittedPosts] = useState([]);
-  const {  data: posts, PostGet } = usePost();
+  const {  data: posts, PostGet , LikePosts } = usePost();
   console.log("checkPots",posts);
 
+
+  const [like , setLike] = useState()
   
   const { createPost, status } = useCreatePost();
 
@@ -103,18 +106,7 @@ export const CreatePost = () => {
       }
     };
   }, []);
-  // const getPosts = ()=>{
-  //   try{
-  //     const res = PostGet()
-  //     console.log(res);
-      
-      
-  //   }
-  //   catch(e){
-  //     console.log(e);
-      
-  //   }
-  // }
+  
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
@@ -251,7 +243,9 @@ export const CreatePost = () => {
                         className="h-60 object-contain"
                       />
                     </div>
+
                   )}
+                  <button>like</button>
 
                   {/* Post content */}
                   <div className="p-4">
