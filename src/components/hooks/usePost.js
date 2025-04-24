@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { SocialAppServices } from "../services/SocialAppServices";
+import { data } from "react-router-dom";
 
 export const usePost = () => {
   const [posts, setPosts] = useState({
@@ -27,8 +28,27 @@ export const usePost = () => {
       console.log(e);
     }
   };
+    const LikePosts = async () => {
+      setPosts({ loading: true, error: null, success: false, data: null });
+      try {
+        const response = await SocialAppServices.likePost();
+        setPosts({
+          loading: false,
+          error: null,
+          success: false,
+          data: response?.data?.posts || null,
+        });
+        return response;
+      } catch (e) {
+        setPosts({ loading: false, error: null, success: false, data: null });
+
+        console.log(e);
+      }
+    };
   return {
     ...posts,
-    PostGet
+    PostGet,
+    LikePosts
+
   };
 };
