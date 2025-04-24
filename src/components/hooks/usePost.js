@@ -29,6 +29,6 @@ export const usePost = () => {
   };
   return {
     ...posts,
-    // PostGet,
+    PostGet
   };
 };

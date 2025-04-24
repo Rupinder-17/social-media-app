@@ -15,7 +15,7 @@ export const CreatePost = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [showPreview, setShowPreview] = useState(false);
   const [, setSubmittedPosts] = useState([]);
-  const {  data: posts } = usePost();
+  const {  data: posts, PostGet } = usePost();
   console.log("checkPots",posts);
 
   
@@ -57,6 +57,7 @@ export const CreatePost = () => {
 
         // Reset form state
         setData({ content: "", image: "", tags: [] });
+        PostGet()
         setImagePreview(null);
       }
     } catch (error) {
@@ -243,11 +244,11 @@ export const CreatePost = () => {
 
                   {/* Post image */}
                   {post.images && (
-                    <div className="relative pb-[100%] bg-black">
+                    <div className="relative  bg-white">
                       <img
                         src={post.images[0].url}
                         alt="Post"
-                        className="absolute inset-0 w-full h-full object-contain"
+                        className="h-60 object-contain"
                       />
                     </div>
                   )}
