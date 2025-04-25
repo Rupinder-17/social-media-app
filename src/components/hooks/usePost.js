@@ -28,10 +28,10 @@ export const usePost = () => {
       console.log(e);
     }
   };
-    const LikePosts = async () => {
+    const LikePosts = async (postId) => {
       setPosts({ loading: true, error: null, success: false, data: null });
       try {
-        const response = await SocialAppServices.likePost();
+        const response = await SocialAppServices.likePost(postId);
         setPosts({
           loading: false,
           error: null,

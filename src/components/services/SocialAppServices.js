@@ -31,10 +31,9 @@ export const SocialAppServices = {
   async likePost(postId) {
     try {
       const response = await apiclient.request(
-        "social-media/like/post/{postId}",
+        `social-media/like/post/${postId}`,
         {
           method: "POST",
-          body: postId,
         }
       );
       return response;
