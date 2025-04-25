@@ -12,18 +12,26 @@ export const CreatePost = () => {
     tags: [],
   });
 
-
   const [imagePreview, setImagePreview] = useState(null);
   const [showPreview, setShowPreview] = useState(false);
   const [, setSubmittedPosts] = useState([]);
-  const {  data: posts, PostGet , LikePosts } = usePost();
-  console.log("checkPots",posts);
+  const { data: posts, PostGet, LikePosts } = usePost();
+  console.log("checkPots", posts);
 
+  const [like, setLike] = useState();
 
-  const [like , setLike] = useState()
-  
+  const handleLike = () => {
+    setLike(() => !like);
+  };
+
   const { createPost, status } = useCreatePost();
+  console.log("ssss", status);
 
+  useEffect(() => {
+    if (status.success) {
+      PostGet();
+    }
+  }, [status]);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -44,25 +52,24 @@ export const CreatePost = () => {
     try {
       await createPost(formData);
 
-      if (status.success) {
-        // Save the current post to the submittedPosts array
-        const newPost = {
-          id: Date.now(), // Generate a unique ID
-          content: data.content,
-          image: imagePreview,
-          createdAt: new Date().toLocaleString(),
-        };
+      console.log("status", status);
 
-        setSubmittedPosts((prev) => [newPost, ...prev]);
+      // Save the current post to the submittedPosts array
+      const newPost = {
+        id: Date.now(), // Generate a unique ID
+        content: data.content,
+        image: imagePreview,
+        createdAt: new Date().toLocaleString(),
+      };
 
-        // Show the preview after successful submission
-        setShowPreview(true);
+      setSubmittedPosts((prev) => [newPost, ...prev]);
 
-        // Reset form state
-        setData({ content: "", image: "", tags: [] });
-        PostGet()
-        setImagePreview(null);
-      }
+      // Show the preview after successful submission
+      setShowPreview(true);
+
+      // Reset form state
+      setData({ content: "", image: "", tags: [] });
+      setImagePreview(null);
     } catch (error) {
       console.error("Error submitting post:", error);
     }
@@ -106,7 +113,6 @@ export const CreatePost = () => {
       }
     };
   }, []);
-  
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
@@ -118,7 +124,7 @@ export const CreatePost = () => {
         >
           <FiArrowLeft size={20} />
         </button>
-          <div onClick={()=>navigate("/veiw-post")}>veiw allpost</div>
+        <div onClick={() => navigate("/veiw-post")}>veiw allpost</div>
         <h1 className="text-xl font-semibold text-center flex-1">
           Create New Post
         </h1>
@@ -220,7 +226,7 @@ export const CreatePost = () => {
             <div className="space-y-6">
               {posts?.map((post) => (
                 <div
-                  key={post.id}
+                  key={post._id}
                   className="bg-white rounded-xl shadow-sm overflow-hidden"
                 >
                   {/* Post header */}
@@ -243,9 +249,15 @@ export const CreatePost = () => {
                         className="h-60 object-contain"
                       />
                     </div>
-
                   )}
-                  <button>like</button>
+                  <button
+                    onClick={() => {
+                      handleLike;
+                    }}
+                    className=" shadow-2xl bg-amber-50"
+                  >
+                    Like
+                  </button>
 
                   {/* Post content */}
                   <div className="p-4">
