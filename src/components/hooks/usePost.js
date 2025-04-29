@@ -61,10 +61,22 @@ export const usePost = () => {
       console.log(e);
     }
   };
+  const getBookMarkPosts = async ()=>{
+    setPosts({loading:true, error: null, success: false, data: null})
+    try{
+      const response= await SocialAppServices.getBookmarkedPosts()
+      setPosts({loading:false, error: null, success: true, data: response.data.posts || []})
+    }
+    catch(e){
+      console.log(e);
+      
+    }
+  }
   return {
     ...posts,
     PostGet,
     LikePosts,
     bookMarkPost,
+    getBookMarkPosts
   };
 };

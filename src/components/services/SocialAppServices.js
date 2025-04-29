@@ -54,4 +54,14 @@ export const SocialAppServices = {
       console.log(error);
     }
   },
+  async getBookmarkedPosts() {
+    try {
+      const response = await apiclient.request("social-media/bookmarks", {
+        method: "GET",
+      });
+      return response;
+    } catch (e) {
+      console.log(e);
+    }
+  },
 };
