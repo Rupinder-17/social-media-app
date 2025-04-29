@@ -6,7 +6,7 @@ import { FaRegBookmark } from "react-icons/fa6";
 import { FaBookmark } from "react-icons/fa6";
 
 export const ListItems = ({ post }) => {
-  const { LikePosts } = usePost();
+  const { LikePosts, bookMarkPost } = usePost();
   const [isLiked, setIsLiked] = useState(post.isLiked);
   const [bookMark, setBookMark] = useState(post.isBookmarked);
 
@@ -49,7 +49,18 @@ export const ListItems = ({ post }) => {
           <CiHeart className="w-7 h-7" />
         )}
       </button>
-      {bookMark ? <FaRegBookmark className="w-8 h-8" /> : <FaBookmark />}
+      <button
+        onClick={() => {
+          bookMarkPost(post._id);
+          setBookMark(() => !bookMark);
+        }}
+      >
+        {bookMark ? (
+          <FaBookmark className="w-7 h-7" />
+        ) : (
+          <FaRegBookmark className="w-7 h-7" />
+        )}
+      </button>
       <div className="p-4">
         <p className="text-gray-900">{post.content}</p>
       </div>
