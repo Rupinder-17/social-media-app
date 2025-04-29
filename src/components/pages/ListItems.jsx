@@ -2,10 +2,14 @@ import React, { useState } from "react";
 import { usePost } from "../hooks/usePost";
 import { CiHeart } from "react-icons/ci";
 import { IoIosHeart } from "react-icons/io";
+import { FaRegBookmark } from "react-icons/fa6";
+import { FaBookmark } from "react-icons/fa6";
 
 export const ListItems = ({ post }) => {
   const { LikePosts } = usePost();
   const [isLiked, setIsLiked] = useState(post.isLiked);
+  const [bookMark, setBookMark] = useState(post.isBookmarked);
+
   return (
     <div
       key={post._id}
@@ -39,10 +43,13 @@ export const ListItems = ({ post }) => {
         }}
         className=" shadow-2xl bg-amber-50"
       >
-        {isLiked ? <IoIosHeart className="w-8 h-8 text-red-600" /> : <CiHeart className="w-8 h-8" />}
+        {isLiked ? (
+          <IoIosHeart className="w-8 h-8 text-red-600" />
+        ) : (
+          <CiHeart className="w-7 h-7" />
+        )}
       </button>
-
-      {/* Post content */}
+      {bookMark ? <FaRegBookmark className="w-8 h-8" /> : <FaBookmark />}
       <div className="p-4">
         <p className="text-gray-900">{post.content}</p>
       </div>
