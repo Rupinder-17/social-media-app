@@ -41,4 +41,18 @@ export const SocialAppServices = {
       console.log(e);
     }
   },
+  async bookmark(postId) {
+    try {
+      const response = await apiclient.request(
+        `/social-media/bookmarks/${postId}
+        `,
+        {
+          method: "POST",
+        }
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };

@@ -28,27 +28,43 @@ export const usePost = () => {
       console.log(e);
     }
   };
-    const LikePosts = async (postId) => {
-      setPosts({ loading: true, error: null, success: false, data: null });
-      try {
-        const response = await SocialAppServices.likePost(postId);
-        setPosts({
-          loading: false,
-          error: null,
-          success: false,
-          data: response?.data?.posts || null,
-        });
-        return response;
-      } catch (e) {
-        setPosts({ loading: false, error: null, success: false, data: null });
+  const LikePosts = async (postId) => {
+    setPosts({ loading: true, error: null, success: false, data: null });
+    try {
+      const response = await SocialAppServices.likePost(postId);
+      setPosts({
+        loading: false,
+        error: null,
+        success: true,
+        data: response?.data?.posts || null,
+      });
+      return response;
+    } catch (e) {
+      setPosts({ loading: false, error: null, success: false, data: null });
 
-        console.log(e);
-      }
-    };
+      console.log(e);
+    }
+  };
+
+  const bookMarkPost = async (postId) => {
+    setPosts({ loading: true, error: null, success: false, data: null });
+    try {
+      const response = await SocialAppServices.bookmark(postId);
+      setPosts({
+        loading: false,
+        error: null,
+        success: true,
+        data: response?.data.posts,
+      });
+      return response;
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return {
     ...posts,
     PostGet,
-    LikePosts
-
+    LikePosts,
+    bookMarkPost,
   };
 };
