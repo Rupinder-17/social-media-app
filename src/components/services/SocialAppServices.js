@@ -44,8 +44,7 @@ export const SocialAppServices = {
   async bookmark(postId) {
     try {
       const response = await apiclient.request(
-        `/social-media/bookmarks/${postId}
-        `,
+        `/social-media/bookmarks/${postId}`,
         {
           method: "POST",
         }

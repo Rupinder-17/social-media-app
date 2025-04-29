@@ -54,9 +54,9 @@ export const usePost = () => {
         loading: false,
         error: null,
         success: true,
-        data: response?.data.posts,
+        data: response?.data.posts || [],
       });
-      return response;
+      return response.data;
     } catch (e) {
       console.log(e);
     }

@@ -26,7 +26,6 @@ export const ListItems = ({ post }) => {
         </div>
       </div>
 
-      {/* Post image */}
       {post.images && (
         <div className="relative  bg-white">
           <img
