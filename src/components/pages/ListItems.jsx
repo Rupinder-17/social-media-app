@@ -4,8 +4,11 @@ import { CiHeart } from "react-icons/ci";
 import { IoIosHeart } from "react-icons/io";
 import { FaRegBookmark } from "react-icons/fa6";
 import { FaBookmark } from "react-icons/fa6";
+import { CommentModel } from "./CommentModel";
 
 export const ListItems = ({ post }) => {
+    const [model, setModel] = useState();
+  
   const { LikePosts, bookMarkPost } = usePost();
   const [isLiked, setIsLiked] = useState(post.isLiked);
   const [bookMark, setBookMark] = useState(post.isBookmarked);
@@ -61,8 +64,8 @@ export const ListItems = ({ post }) => {
         )}
       </button>
       <div>
-        <h2>comment</h2>
-        <input type="text" />
+        <button onClick={()=> setModel(()=> !model)}>comment</button>
+        {model && <CommentModel />}
       </div>
       <div className="p-4">
         <p className="text-gray-900">{post.content}</p>

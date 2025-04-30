@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { SocialAppServices } from "../services/SocialAppServices";
-// import { data } from "react-router-dom";
 
 export const usePost = () => {
   const [posts, setPosts] = useState({
