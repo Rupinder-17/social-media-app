@@ -76,11 +76,22 @@ export const usePost = () => {
       console.log(e);
     }
   };
+  const addCommemts = async (postId, comment) => {
+    setPosts({ loading: true, error: null, success: false, data: null });
+    try {
+      const response = await SocialAppServices.addComment(postId, comment);
+      setPosts({ loading: false, error: null, success: true, data: response });
+      console.log("comment", response);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return {
     ...posts,
     PostGet,
     LikePosts,
     bookMarkPost,
     getBookMarkPosts,
+    addCommemts,
   };
 };
