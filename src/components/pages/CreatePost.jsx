@@ -19,7 +19,6 @@ export const CreatePost = () => {
   const [, setSubmittedPosts] = useState([]);
   const { data: posts, PostGet, LikePosts } = usePost();
   console.log("checkPosts", posts);
-  const {getBookMarkPosts} = usePost()
 
  
 
@@ -127,6 +126,14 @@ export const CreatePost = () => {
         <h1 className="text-xl font-semibold text-center flex-1">
           Create New Post
         </h1>
+        <div>
+          <button
+            onClick={() => navigate("/book-mark")}
+            className="bg-black text-white px-3 py-2 rounded-2xl"
+          >
+            saved photos
+          </button>
+        </div>
         <div className="w-6"></div> {/* Empty div for balanced spacing */}
       </div>
 
@@ -136,9 +143,6 @@ export const CreatePost = () => {
             {status.error}
           </div>
         )}
-        <div>
-          <button onClick={() => navigate("/book-mark")}>saved photos</button>
-        </div>
 
         {/* Instagram-like card for creating post - more compact UI */}
         <div className="bg-white rounded-xl shadow-sm overflow-hidden mb-4">
@@ -219,7 +223,6 @@ export const CreatePost = () => {
           </div>
         )}
 
-        {/* Display submitted posts in Instagram-like feed */}
         {posts?.length > 0 && (
           <div className="mt-6">
             <h2 className="text-xl font-semibold mb-3 text-gray-800">
