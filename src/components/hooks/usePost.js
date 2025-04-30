@@ -89,7 +89,7 @@ export const usePost = () => {
     setPosts({ loading: true, error: null, success: false, data: null });
     try {
       const response = await SocialAppServices.allcommentsOfPost(postId);
-      setPosts({ loading: false, error: null, success: true, data: response });
+      setPosts({ loading: false, error: null, success: true, data: response.data });
       return response;
     } catch (e) {
       console.log(e);

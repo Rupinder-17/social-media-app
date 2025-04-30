@@ -3,9 +3,9 @@ import { usePost } from "../hooks/usePost";
 
 export const CommentModel = ({ postId }) => {
   const [comment, setComment] = useState("");
-  const { addComments } = usePost();
+  const { data:content, addComments, allcommentsOfPost } = usePost();
   const [submittedComment, setSubmittedComment] = useState("");
-  console.log("allcomm", comment);
+  console.log("allcomm", submittedComment);
 
   return (
     <div>
@@ -20,12 +20,23 @@ export const CommentModel = ({ postId }) => {
         <button
           onClick={() => {
             addComments(postId, comment);
+            allcommentsOfPost(postId)
             setSubmittedComment(comment);
             setComment("")
           }}
         >
           send
         </button>
+        <div>
+          {content?.map((elm)=>(
+            <ul key={elm._id}>
+              <li>
+                {elm.content}
+
+              </li>
+            </ul>
+          ))}
+        </div>
         <p>{submittedComment}</p>
       </>
     </div>
