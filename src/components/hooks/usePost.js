@@ -85,6 +85,16 @@ export const usePost = () => {
       console.log(e);
     }
   };
+  const allcommentsOfPost = async (postId) => {
+    setPosts({ loading: true, error: null, success: false, data: null });
+    try {
+      const response = await SocialAppServices.allcommentsOfPost(postId);
+      setPosts({ loading: false, error: null, success: true, data: response });
+      return response;
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return {
     ...posts,
     PostGet,
@@ -92,5 +102,6 @@ export const usePost = () => {
     bookMarkPost,
     getBookMarkPosts,
     addComments,
+    allcommentsOfPost,
   };
 };

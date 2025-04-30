@@ -70,12 +70,25 @@ export const SocialAppServices = {
         `social-media/comments/post/${postId}`,
         {
           method: "POST",
-          body: JSON.stringify({"content": comment}),
+          body: JSON.stringify({ content: comment }),
         }
       );
       return response;
     } catch (e) {
       console.log(e);
+    }
+  },
+  async allcommentsOfPost(postId) {
+    try {
+      const response = await apiclient.request(
+        `social-media/comments/post/${postId}`,
+        {
+          method: "GET",
+        }
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
     }
   },
 };
