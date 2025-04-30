@@ -4,7 +4,7 @@ import { MdOutlineDeleteOutline } from "react-icons/md";
 
 export const CommentModel = ({ postId }) => {
   const [commentInput, setCommentInput] = useState("");
-  const { addComments, allcommentsOfPost } = usePost();
+  const { addComments, allcommentsOfPost, deleteComment } = usePost();
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
@@ -65,7 +65,7 @@ export const CommentModel = ({ postId }) => {
               >
                 {comment.content}
                 <button>
-                  <MdOutlineDeleteOutline/>
+                  <MdOutlineDeleteOutline onClick={()=> deleteComment(comment._id)} />
                 </button>
               </li>
             ))}
