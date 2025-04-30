@@ -19,6 +19,7 @@ export const CreatePost = () => {
   const [, setSubmittedPosts] = useState([]);
   const { data: posts, PostGet, LikePosts } = usePost();
   console.log("checkPosts", posts);
+  const {getBookMarkPosts} = usePost()
 
  
 
@@ -135,6 +136,9 @@ export const CreatePost = () => {
             {status.error}
           </div>
         )}
+        <div>
+          <button onClick={() => navigate("/book-mark")}>saved photos</button>
+        </div>
 
         {/* Instagram-like card for creating post - more compact UI */}
         <div className="bg-white rounded-xl shadow-sm overflow-hidden mb-4">
@@ -223,8 +227,7 @@ export const CreatePost = () => {
             </h2>
             <div className="space-y-6">
               {posts?.map((post) => (
-                <ListItems post={post} key={post._id}/>
-               
+                <ListItems post={post} key={post._id} />
               ))}
             </div>
           </div>

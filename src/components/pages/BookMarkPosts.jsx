@@ -13,7 +13,7 @@ export const BookMarkPosts = () => {
       {error ? <p>there is error</p> : <p>no error</p>}
       {posts?.map((items) => (
         <ul key={items._id}>
-          <li>{items.posts}</li>
+          <li>{items.images.url}</li>
         </ul>
       ))}
     </div>

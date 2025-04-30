@@ -69,7 +69,7 @@ export const usePost = () => {
         loading: false,
         error: null,
         success: true,
-        data: response.data.posts || [],
+        data: response.data.bookmarkedPosts || [],
       });
       console.log("book", response);
     } catch (e) {
