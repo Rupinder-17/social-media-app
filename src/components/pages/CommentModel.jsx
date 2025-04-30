@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { usePost } from "../hooks/usePost";
 
-export const CommentModel = () => {
-  const [comment, setComment] = useState();
+export const CommentModel = ({ postId }) => {
+  const [comment, setComment] = useState("");
   const { addcomments } = usePost();
-  console.log("comm", comment);
-  
+  const [submittedComment, setSubmittedComment] = useState("");
+  console.log("allcomm", comment);
 
   return (
     <div>
@@ -17,8 +17,15 @@ export const CommentModel = () => {
           }}
           value={comment}
         />
-        <button onClick={() => addcomments}>send</button>
-        
+        <button
+          onClick={() => {
+            addcomments(Comment, postId);
+            setSubmittedComment(comment);
+          }}
+        >
+          send
+        </button>
+        <p>{submittedComment}</p>
       </>
     </div>
   );

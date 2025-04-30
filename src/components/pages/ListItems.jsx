@@ -65,7 +65,7 @@ export const ListItems = ({ post }) => {
       </button>
       <div>
         <button onClick={()=> setModel(()=> !model)}>comment</button>
-        {model && <CommentModel />}
+        {model && <CommentModel postId={post._id} />}
       </div>
       <div className="p-4">
         <p className="text-gray-900">{post.content}</p>
