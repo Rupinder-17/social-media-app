@@ -35,6 +35,18 @@ export const CommentModel = ({ postId }) => {
       console.error("Error adding comment:", error);
     }
   };
+  const handleDeleteComment = async(id)=>{
+    try{
+      const res = await deleteComment(id)
+      console.log(res);
+      
+    }
+    catch(e){
+      console.log(e);
+      
+    }
+    
+  }
 
   return (
     <div className="p-3 bg-gray-50 rounded-lg">
@@ -65,7 +77,7 @@ export const CommentModel = ({ postId }) => {
               >
                 {comment.content}
                 <button>
-                  <MdOutlineDeleteOutline onClick={()=> deleteComment(comment._id)} />
+                  <MdOutlineDeleteOutline onClick={()=> handleDeleteComment(comment._id)} />
                 </button>
               </li>
             ))}
