@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { usePost } from "../hooks/usePost";
+import { MdOutlineDeleteOutline } from "react-icons/md";
 
 export const CommentModel = ({ postId }) => {
   const [commentInput, setCommentInput] = useState("");
@@ -63,6 +64,9 @@ export const CommentModel = ({ postId }) => {
                 className="p-2 bg-white rounded border border-gray-200"
               >
                 {comment.content}
+                <button>
+                  <MdOutlineDeleteOutline/>
+                </button>
               </li>
             ))}
           </ul>

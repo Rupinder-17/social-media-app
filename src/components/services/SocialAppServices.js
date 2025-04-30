@@ -90,4 +90,17 @@ export const SocialAppServices = {
       console.log(error);
     }
   },
+  async deleteComment(commentId){
+    try{
+      const response = await apiclient.request(`social-media/comments/${commentId}`,{
+        method : "DELETE"
+      })
+      return response
+
+    }
+    catch(e){
+      console.log(e);
+      
+    }
+  }
 };
