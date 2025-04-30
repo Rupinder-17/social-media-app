@@ -165,7 +165,7 @@ export const CreatePost = () => {
                   <img
                     src={imagePreview}
                     alt="Preview"
-                    className="w-full h-40 object-cover"
+                    className="w-full h-40 object-contain"
                   />
                   <button
                     type="button"

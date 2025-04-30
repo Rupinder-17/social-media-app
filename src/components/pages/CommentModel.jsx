@@ -4,6 +4,8 @@ import { usePost } from "../hooks/usePost";
 export const CommentModel = () => {
   const [comment, setComment] = useState();
   const { addcomments } = usePost();
+  console.log("comm", comment);
+  
 
   return (
     <div>
@@ -16,6 +18,7 @@ export const CommentModel = () => {
           value={comment}
         />
         <button onClick={() => addcomments}>send</button>
+        
       </>
     </div>
   );
