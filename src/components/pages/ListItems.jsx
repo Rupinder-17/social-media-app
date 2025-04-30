@@ -60,6 +60,10 @@ export const ListItems = ({ post }) => {
           <FaRegBookmark className="w-7 h-7" />
         )}
       </button>
+      <div>
+        <h2>comment</h2>
+        <input type="text" />
+      </div>
       <div className="p-4">
         <p className="text-gray-900">{post.content}</p>
       </div>

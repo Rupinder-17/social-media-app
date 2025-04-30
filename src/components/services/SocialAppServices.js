@@ -64,4 +64,18 @@ export const SocialAppServices = {
       console.log(e);
     }
   },
+  async addComment(postId, comment) {
+    try {
+      const response = await apiclient.request(
+        `social-media/comments/post/${postId}`,
+        {
+          method: "POST",
+          body: JSON.stringify(comment),
+        }
+      );
+      return response;
+    } catch (e) {
+      console.log(e);
+    }
+  },
 };
