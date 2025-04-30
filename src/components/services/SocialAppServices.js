@@ -70,7 +70,7 @@ export const SocialAppServices = {
         `social-media/comments/post/${postId}`,
         {
           method: "POST",
-          body: JSON.stringify(comment),
+          body: JSON.stringify({"content": comment}),
         }
       );
       return response;

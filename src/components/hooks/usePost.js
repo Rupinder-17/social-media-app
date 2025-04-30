@@ -75,7 +75,7 @@ export const usePost = () => {
       console.log(e);
     }
   };
-  const addCommemts = async (postId, comment) => {
+  const addComments = async (postId, comment) => {
     setPosts({ loading: true, error: null, success: false, data: null });
     try {
       const response = await SocialAppServices.addComment(postId, comment);
@@ -91,6 +91,6 @@ export const usePost = () => {
     LikePosts,
     bookMarkPost,
     getBookMarkPosts,
-    addCommemts,
+    addComments,
   };
 };
