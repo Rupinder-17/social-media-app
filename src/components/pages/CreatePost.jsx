@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useCreatePost } from "../hooks/useCreatePost";
 import { useNavigate } from "react-router-dom";
-import { FiImage, FiX, FiArrowLeft } from "react-icons/fi";
+import { FiImage, FiX, FiArrowLeft, FiSend } from "react-icons/fi";
+import { FaBookmark } from "react-icons/fa6";
 import { usePost } from "../hooks/usePost";
 
 import { ListItems } from "./ListItems";
@@ -19,8 +20,6 @@ export const CreatePost = () => {
   const [, setSubmittedPosts] = useState([]);
   const { data: posts, PostGet, LikePosts } = usePost();
   console.log("checkPosts", posts);
-
- 
 
   const { createPost, status } = useCreatePost();
   console.log("ssss", status);
@@ -118,22 +117,25 @@ export const CreatePost = () => {
       <div className="sticky top-0 z-10 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
         <button
           onClick={() => navigate("/login")}
-          className="text-gray-800 flex items-center gap-1"
+          className="text-gray-800 flex items-center gap-1 hover:bg-gray-100 p-2 rounded-full transition-colors"
         >
           <FiArrowLeft size={20} />
         </button>
-        <div onClick={() => navigate("/veiw-post")}>veiw allpost</div>
+        <button
+          onClick={() => navigate("/veiw-post")}
+          className="flex items-center gap-1 bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-full text-gray-800 font-medium text-sm transition-colors"
+        >
+          View All Posts
+        </button>
         <h1 className="text-xl font-semibold text-center flex-1">
           Create New Post
         </h1>
-        <div>
-          <button
-            onClick={() => navigate("/book-mark")}
-            className="bg-black text-white px-3 py-2 rounded-2xl"
-          >
-            saved photos
-          </button>
-        </div>
+        <button
+          onClick={() => navigate("/book-mark")}
+          className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-4 py-2 rounded-full font-medium text-sm transition-colors shadow-sm hover:shadow flex items-center gap-1"
+        >
+          <FaBookmark className="w-4 h-4" /> Saved Photos
+        </button>
         <div className="w-6"></div> {/* Empty div for balanced spacing */}
       </div>
 
@@ -203,9 +205,10 @@ export const CreatePost = () => {
               <button
                 type="submit"
                 disabled={status.loading || (!data.content && !data.image)}
-                className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-2 rounded-lg font-medium hover:from-purple-600 hover:to-pink-600 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-2.5 rounded-full font-medium hover:from-purple-600 hover:to-pink-600 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm shadow-sm hover:shadow flex items-center justify-center gap-2"
               >
-                {status.loading ? "Posting..." : "Share"}
+                {status.loading ? "Posting..." : "Share Post"}
+                {!status.loading && <FiSend className="w-4 h-4" />}
               </button>
             </div>
           </form>

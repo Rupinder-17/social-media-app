@@ -4,11 +4,12 @@ import { CiHeart } from "react-icons/ci";
 import { IoIosHeart } from "react-icons/io";
 import { FaRegBookmark } from "react-icons/fa6";
 import { FaBookmark } from "react-icons/fa6";
+import { FaRegComment } from "react-icons/fa";
 import { CommentModel } from "./CommentModel";
 
 export const ListItems = ({ post }) => {
-    const [model, setModel] = useState();
-  
+  const [model, setModel] = useState();
+
   const { LikePosts, bookMarkPost } = usePost();
   const [isLiked, setIsLiked] = useState(post.isLiked);
   const [bookMark, setBookMark] = useState(post.isBookmarked);
@@ -38,35 +39,41 @@ export const ListItems = ({ post }) => {
           />
         </div>
       )}
-      <button
-        onClick={() => {
-          LikePosts(post._id);
-          setIsLiked(() => !isLiked);
-        }}
-        className=" shadow-2xl bg-amber-50"
-      >
-        {isLiked ? (
-          <IoIosHeart className="w-8 h-8 text-red-600" />
-        ) : (
-          <CiHeart className="w-7 h-7" />
-        )}
-      </button>
-      <button
-        onClick={() => {
-          bookMarkPost(post._id);
-          setBookMark(() => !bookMark);
-        }}
-      >
-        {bookMark ? (
-          <FaBookmark className="w-7 h-7" />
-        ) : (
-          <FaRegBookmark className="w-7 h-7" />
-        )}
-      </button>
-      <div>
-        <button onClick={()=> setModel(()=> !model)}>comment</button>
-        {model && <CommentModel postId={post._id} />}
+      <div className="p-3 flex items-center space-x-4">
+        <button
+          onClick={() => {
+            LikePosts(post._id);
+            setIsLiked(() => !isLiked);
+          }}
+          className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+        >
+          {isLiked ? (
+            <IoIosHeart className="w-7 h-7 text-red-600" />
+          ) : (
+            <CiHeart className="w-7 h-7" />
+          )}
+        </button>
+        <button
+          onClick={() => setModel(() => !model)}
+          className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+        >
+          <FaRegComment className="w-6 h-6 text-gray-700" />
+        </button>
+        <button
+          onClick={() => {
+            bookMarkPost(post._id);
+            setBookMark(() => !bookMark);
+          }}
+          className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+        >
+          {bookMark ? (
+            <FaBookmark className="w-6 h-6 text-gray-700" />
+          ) : (
+            <FaRegBookmark className="w-6 h-6 text-gray-700" />
+          )}
+        </button>
       </div>
+      {model && <CommentModel postId={post._id} />}
       <div className="p-4">
         <p className="text-gray-900">{post.content}</p>
       </div>
