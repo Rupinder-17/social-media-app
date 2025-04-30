@@ -3,8 +3,6 @@ import { apiclient } from "../../api/apiClients";
 
 export const SocialAppServices = {
   async postData(formdata) {
-    console.log("form", formdata);
-
     try {
       const response = await apiclient.request("social-media/posts", {
         method: "POST",
@@ -21,7 +19,6 @@ export const SocialAppServices = {
       const response = await apiclient.request("social-media/posts", {
         method: "GET",
       });
-      console.log("load", response);
 
       return response;
     } catch (error) {
@@ -86,6 +83,8 @@ export const SocialAppServices = {
           method: "GET",
         }
       );
+      console.log("allcommments", response);
+
       return response;
     } catch (error) {
       console.log(error);
