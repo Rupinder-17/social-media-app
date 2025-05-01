@@ -10,8 +10,7 @@ import { FiSend } from "react-icons/fi";
 
 export const CommentModel = ({ postId }) => {
   const [commentInput, setCommentInput] = useState("");
-  const { addComments, allcommentsOfPost, deleteComment, updateComment } =
-    usePost();
+  const { addComments, allcommentsOfPost, deleteComment, updateComment } = usePost();
   const [comments, setComments] = useState([]);
   const [editComment, setEditComment] = useState(null);
   const [editCommentText, setEditCommentText] = useState("");
