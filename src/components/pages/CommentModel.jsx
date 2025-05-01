@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { usePost } from "../hooks/usePost";
-import { MdOutlineDeleteOutline } from "react-icons/md";
+import {
+  MdOutlineDeleteOutline,
+  MdEdit,
+  MdCheck,
+  MdClose,
+} from "react-icons/md";
 import { FiSend } from "react-icons/fi";
 
 export const CommentModel = ({ postId }) => {
   const [commentInput, setCommentInput] = useState("");
-  const { addComments, allcommentsOfPost, deleteComment, updateComment } = usePost();
+  const { addComments, allcommentsOfPost, deleteComment, updateComment } =
+    usePost();
   const [comments, setComments] = useState([]);
+  const [editComment, setEditComment] = useState(null);
+  const [editCommentText, setEditCommentText] = useState("");
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -38,22 +46,38 @@ export const CommentModel = ({ postId }) => {
   const handleDeleteComment = async (id) => {
     try {
       await deleteComment(id);
+      await allcommentsOfPost(postId);
     } catch (e) {
       console.log(e);
     }
   };
-  const handleUpdateComment = async(id)=>{
-    try{
-      await updateComment(id)
-      await allcommentsOfPost(postId)
+  const handleEditComment = (comment) => {
+    setEditComment(comment._id);
+    setEditCommentText(comment.content);
+  };
 
-    }
-    catch(e){
+  const handleCancelEdit = () => {
+    setEditComment(null);
+    setEditCommentText("");
+  };
+
+  const handleUpdateComment = async () => {
+    try {
+      if (!editComment || !editCommentText.trim()) return;
+
+      await updateComment(editComment, editCommentText);
+      const response = await allcommentsOfPost(postId);
+      if (response && response.data && response.data.comments) {
+        setComments(response.data.comments);
+      }
+
+      // Reset edit state
+      setEditComment(null);
+      setEditCommentText("");
+    } catch (e) {
       console.log(e);
-      
     }
-
-  }
+  };
 
   return (
     <div className="p-4 bg-white rounded-lg shadow-sm border border-gray-100">
@@ -97,27 +121,70 @@ export const CommentModel = ({ postId }) => {
                   {comment.content.charAt(0).toUpperCase()}
                 </div>
                 <div className="flex-1">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <p className="text-sm text-gray-900 break-words">
-                        {comment.content}
-                      </p>
-                      <span className="text-xs text-gray-500 mt-1">
-                        {comment.createdAt
-                          ? new Date(comment.createdAt).toLocaleString()
-                          : "Just now"}
-                      </span>
+                  {editComment === comment._id ? (
+                    <div className="flex flex-col gap-2">
+                      <div className="relative">
+                        <input
+                          type="text"
+                          value={editCommentText}
+                          onChange={(e) => setEditCommentText(e.target.value)}
+                          className="w-full pl-3 pr-10 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm"
+                          placeholder="Edit your comment..."
+                          autoFocus
+                        />
+                      </div>
+                      <div className="flex justify-end gap-2">
+                        <button
+                          onClick={handleCancelEdit}
+                          className="p-1.5 bg-gray-100 text-gray-600 rounded-full hover:bg-gray-200 transition-colors flex items-center gap-1 text-xs"
+                          title="Cancel"
+                        >
+                          <MdClose size={16} /> Cancel
+                        </button>
+                        <button
+                          onClick={handleUpdateComment}
+                          disabled={!editCommentText.trim()}
+                          className={`p-1.5 rounded-full flex items-center gap-1 text-xs ${
+                            editCommentText.trim()
+                              ? "bg-blue-500 text-white hover:bg-blue-600"
+                              : "bg-gray-200 text-gray-400"
+                          }`}
+                          title="Save"
+                        >
+                          <MdCheck size={16} /> Save
+                        </button>
+                      </div>
                     </div>
-                    <button
-                      onClick={() => handleDeleteComment(comment._id)}
-                      className="p-1 text-gray-400 hover:text-red-500 transition-colors rounded-full hover:bg-gray-200"
-                      title="Delete comment"
-                    >
-                      <MdOutlineDeleteOutline size={16} />
-
-                    </button>
-                    <button onClick={()=>handleUpdateComment(comment._id)}>edit</button>
-                  </div>
+                  ) : (
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <p className="text-sm text-gray-900 break-words">
+                          {comment.content}
+                        </p>
+                        <span className="text-xs text-gray-500 mt-1 block">
+                          {comment.createdAt
+                            ? new Date(comment.createdAt).toLocaleString()
+                            : "Just now"}
+                        </span>
+                      </div>
+                      <div className="flex gap-1">
+                        <button
+                          onClick={() => handleEditComment(comment)}
+                          className="p-1 text-gray-400 hover:text-blue-500 transition-colors rounded-full hover:bg-gray-200"
+                          title="Edit comment"
+                        >
+                          <MdEdit size={16} />
+                        </button>
+                        <button
+                          onClick={() => handleDeleteComment(comment._id)}
+                          className="p-1 text-gray-400 hover:text-red-500 transition-colors rounded-full hover:bg-gray-200"
+                          title="Delete comment"
+                        >
+                          <MdOutlineDeleteOutline size={16} />
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </li>
             ))}
