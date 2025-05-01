@@ -90,17 +90,31 @@ export const SocialAppServices = {
       console.log(error);
     }
   },
-  async deleteComment(commentId){
-    try{
-      const response = await apiclient.request(`social-media/comments/${commentId}`,{
-        method : "DELETE"
-      })
-      return response
-
-    }
-    catch(e){
+  async deleteComment(commentId) {
+    try {
+      const response = await apiclient.request(
+        `social-media/comments/${commentId}`,
+        {
+          method: "DELETE",
+        }
+      );
+      return response;
+    } catch (e) {
       console.log(e);
-      
     }
-  }
+  },
+  async updateComment(commentId, updatetext) {
+    try {
+      const response = await apiclient.request(
+        `social-media/comments/${commentId}`,
+        {
+          method: "PATCH",
+          body: JSON.stringify({ content: updatetext }),
+        }
+      );
+      return response;
+    } catch (e) {
+      console.log(e);
+    }
+  },
 };
