@@ -89,24 +89,47 @@ export const usePost = () => {
     setPosts({ loading: true, error: null, success: false, data: null });
     try {
       const response = await SocialAppServices.allcommentsOfPost(postId);
-      setPosts({ loading: false, error: null, success: true, data: response.data });
+      setPosts({
+        loading: false,
+        error: null,
+        success: true,
+        data: response.data,
+      });
       return response;
     } catch (e) {
       console.log(e);
     }
   };
-  const deleteComment = async (commentId)=>{
+  const deleteComment = async (commentId) => {
     setPosts({ loading: true, error: null, success: false, data: null });
-    try{
-      const response = await SocialAppServices.deleteComment(commentId)
-      setPosts({ loading: false, error: null, success: true, data: response.data });
-      return response
-    }
-    catch(e){
+    try {
+      const response = await SocialAppServices.deleteComment(commentId);
+      setPosts({
+        loading: false,
+        error: null,
+        success: true,
+        data: response.data,
+      });
+      return response;
+    } catch (e) {
       console.log(e);
-      
     }
-  }
+  };
+  const updateComment = (commentId, updatetext) => {
+    setPosts({ loading: true, error: null, success: false, data: null });
+    try {
+      const response = SocialAppServices.updateComment(commentId,updatetext);
+      setPosts({
+        loading: false,
+        error: null,
+        success: true,
+        data: response.data,
+      });
+      return response;
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return {
     ...posts,
     PostGet,
@@ -115,6 +138,7 @@ export const usePost = () => {
     getBookMarkPosts,
     addComments,
     allcommentsOfPost,
-    deleteComment
+    deleteComment,
+    updateComment,
   };
 };
