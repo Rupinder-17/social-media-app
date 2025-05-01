@@ -5,7 +5,7 @@ import { FiSend } from "react-icons/fi";
 
 export const CommentModel = ({ postId }) => {
   const [commentInput, setCommentInput] = useState("");
-  const { addComments, allcommentsOfPost, deleteComment } = usePost();
+  const { addComments, allcommentsOfPost, deleteComment, updateComment } = usePost();
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
@@ -42,6 +42,18 @@ export const CommentModel = ({ postId }) => {
       console.log(e);
     }
   };
+  const handleUpdateComment = async(id)=>{
+    try{
+      await updateComment(id)
+      await allcommentsOfPost(postId)
+
+    }
+    catch(e){
+      console.log(e);
+      
+    }
+
+  }
 
   return (
     <div className="p-4 bg-white rounded-lg shadow-sm border border-gray-100">
@@ -102,7 +114,9 @@ export const CommentModel = ({ postId }) => {
                       title="Delete comment"
                     >
                       <MdOutlineDeleteOutline size={16} />
+
                     </button>
+                    <button onClick={()=>handleUpdateComment(comment._id)}>edit</button>
                   </div>
                 </div>
               </li>
