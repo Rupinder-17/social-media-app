@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { usePost } from "../hooks/usePost";
 import {
   MdOutlineDeleteOutline,
   MdEdit,
@@ -7,11 +6,13 @@ import {
   MdClose,
 } from "react-icons/md";
 import { FiSend } from "react-icons/fi";
+import { useComment } from "../hooks/useComment";
 
 export const CommentModel = ({ postId }) => {
   const [commentInput, setCommentInput] = useState("");
   const { addComments, allcommentsOfPost, deleteComment, updateComment } =
-    usePost();
+    useComment();
+  
   const [comments, setComments] = useState([]);
   const [editComment, setEditComment] = useState(null);
   const [editCommentText, setEditCommentText] = useState("");
@@ -19,8 +20,10 @@ export const CommentModel = ({ postId }) => {
   const fetchComments = async (postId) => {
     try {
       const response = await allcommentsOfPost(postId);
-      if (response && response.data && response.data.comments) {
-        setComments(response.data.comments);
+      console.log("my comments", response);
+      
+      if (response && response.comments) {
+        setComments(response.comments);
       }
     } catch (error) {
       console.error("Error fetching comments:", error);
@@ -35,8 +38,8 @@ export const CommentModel = ({ postId }) => {
     try {
       await addComments(postId, commentInput);
       const response = await fetchComments(postId);
-      if (response && response.data && response.data.comments) {
-        setComments(response.data.comments);
+      if (response  && response.comments) {
+        setComments(response.comments);
       }
       setCommentInput("");
     } catch (error) {
@@ -67,7 +70,7 @@ export const CommentModel = ({ postId }) => {
 
       await updateComment(editComment, editCommentText);
       const response = await allcommentsOfPost(postId);
-      if (response && response.data && response.data.comments) {
+      if (response  && response.comments) {
         setComments(response.data.comments);
       }
 

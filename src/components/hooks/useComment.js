@@ -11,8 +11,9 @@ export const useComment = () => {
     setCommentState({ loading: true, error: null, success: false, data: null });
     try {
       const response = await SocialAppServices.addComment(postId, comment);
-      setCommentState({ loading: false, error: null, success: true, data: response });
-      console.log("comment", response);
+      setCommentState({ loading: false, error: null, success: true, data: response.data });
+      console.log("comment", response.data);
+      return response.data
     } catch (e) {
       console.log(e);
     }
@@ -47,16 +48,18 @@ export const useComment = () => {
       console.log(e);
     }
   };
-  const updateComment = (commentId, updatetext) => {
+  const updateComment =  async(commentId, updatetext) => {
     setCommentState({ loading: true, error: null, success: false, data: null });
     try {
-      const response = SocialAppServices.updateComment(commentId, updatetext);
+      const response =  await SocialAppServices.updateComment(commentId, updatetext);
       setCommentState({
         loading: false,
         error: null,
         success: true,
         data: response.data,
       });
+      console.log("mycccc", response);
+      
       return response.data;
     } catch (e) {
       console.log(e);
