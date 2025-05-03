@@ -8,6 +8,8 @@ export const Profile = () => {
   const { loading, error, data, getProfile } = useProfile();
   const [profile, setProfile] = useState(null);
   console.log("data",data);
+  console.log("profile", profile);
+  
   
 
   useEffect(() => {
@@ -93,7 +95,7 @@ export const Profile = () => {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  profile.username?.charAt(0).toUpperCase() || "U"
+                  profile.account.username?.charAt(0).toUpperCase() || "U"
                 )}
               </div>
 
@@ -107,7 +109,7 @@ export const Profile = () => {
               {/* User Details */}
               <div className="mt-10">
                 <h2 className="text-xl font-bold text-gray-900">
-                  {profile.username || "Username"}
+                  {profile.account.username || "Username"}
                 </h2>
                 {profile.fullName && (
                   <p className="text-gray-600 text-sm">{profile.fullName}</p>
