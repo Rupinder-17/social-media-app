@@ -10,30 +10,31 @@ import { FiSend } from "react-icons/fi";
 
 export const CommentModel = ({ postId }) => {
   const [commentInput, setCommentInput] = useState("");
-  const { addComments, allcommentsOfPost, deleteComment, updateComment } = usePost();
+  const { addComments, allcommentsOfPost, deleteComment, updateComment } =
+    usePost();
   const [comments, setComments] = useState([]);
   const [editComment, setEditComment] = useState(null);
   const [editCommentText, setEditCommentText] = useState("");
 
-  useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        const response = await allcommentsOfPost(postId);
-        if (response && response.data && response.data.comments) {
-          setComments(response.data.comments);
-        }
-      } catch (error) {
-        console.error("Error fetching comments:", error);
+  const fetchComments = async (postId) => {
+    try {
+      const response = await allcommentsOfPost(postId);
+      if (response && response.data && response.data.comments) {
+        setComments(response.data.comments);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching comments:", error);
+    }
+  };
 
-    fetchComments();
+  useEffect(() => {
+    fetchComments(postId);
   }, [postId]);
 
   const handleAddComment = async () => {
     try {
       await addComments(postId, commentInput);
-      const response = await allcommentsOfPost(postId);
+      const response = await fetchComments(postId);
       if (response && response.data && response.data.comments) {
         setComments(response.data.comments);
       }
@@ -45,7 +46,7 @@ export const CommentModel = ({ postId }) => {
   const handleDeleteComment = async (id) => {
     try {
       await deleteComment(id);
-      await allcommentsOfPost(postId);
+      await fetchComments(postId);
     } catch (e) {
       console.log(e);
     }

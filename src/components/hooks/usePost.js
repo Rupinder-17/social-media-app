@@ -95,7 +95,7 @@ export const usePost = () => {
         success: true,
         data: response.data,
       });
-      return response;
+      return response.data;
     } catch (e) {
       console.log(e);
     }
@@ -110,7 +110,7 @@ export const usePost = () => {
         success: true,
         data: response.data,
       });
-      return response;
+      return response.data;
     } catch (e) {
       console.log(e);
     }
@@ -125,7 +125,7 @@ export const usePost = () => {
         success: true,
         data: response.data,
       });
-      return response;
+      return response.data;
     } catch (e) {
       console.log(e);
     }
