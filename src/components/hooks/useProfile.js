@@ -1,0 +1,38 @@
+import { useState } from "react";
+import { SocialAppServices } from "../services/SocialAppServices";
+
+export const useProfile = () => {
+  const [profileState, setProfileState] = useState({
+    loading: false,
+    error: null,
+    success: false,
+    data: null,
+  });
+
+  const getProfile = async () => {
+    setProfileState({ loading: true, error: null, success: false, data: null });
+    try {
+      const response = await SocialAppServices.getProfile();
+      setProfileState({
+        loading: false,
+        error: null,
+        success: true,
+        data: response.data,
+      });
+      return response.data;
+    } catch (error) {
+      setProfileState({
+        loading: false,
+        error: error.message || "Failed to fetch profile",
+        success: false,
+        data: null,
+      });
+      console.error("Error fetching profile:", error);
+    }
+  };
+
+  return {
+    ...profileState,
+    getProfile,
+  };
+};

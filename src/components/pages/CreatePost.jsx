@@ -132,9 +132,15 @@ export const CreatePost = () => {
         </h1>
         <button
           onClick={() => navigate("/book-mark")}
-          className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-4 py-2 rounded-full font-medium text-sm transition-colors shadow-sm hover:shadow flex items-center gap-1"
+          className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-4 py-2 rounded-full font-medium text-sm transition-colors shadow-sm hover:shadow flex items-center gap-1 mr-2"
         >
           <FaBookmark className="w-4 h-4" /> Saved Photos
+        </button>
+        <button
+          onClick={() => navigate("/profile")}
+          className="bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white px-4 py-2 rounded-full font-medium text-sm transition-colors shadow-sm hover:shadow flex items-center gap-1"
+        >
+          Profile
         </button>
         <div className="w-6"></div> {/* Empty div for balanced spacing */}
       </div>

@@ -5,6 +5,7 @@ import { Register } from "./Register";
 import { Login } from "./Login";
 import { VeiwPosts } from "./VeiwPosts";
 import { BookMarkPosts } from "./BookMarkPosts";
+import { Profile } from "./Profile";
 
 export const Index = () => {
   return (
@@ -14,7 +15,8 @@ export const Index = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/create-post" element={<CreatePost />} />
         <Route path="/veiw-post" element={<VeiwPosts />} />
-        <Route path="/book-mark" element={<BookMarkPosts/>} />
+        <Route path="/book-mark" element={<BookMarkPosts />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </div>
   );
