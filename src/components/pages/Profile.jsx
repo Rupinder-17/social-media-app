@@ -5,22 +5,25 @@ import { useNavigate } from "react-router-dom";
 
 export const Profile = () => {
   const navigate = useNavigate();
-  const { loading, error, data, getProfile , coverImage } = useProfile();
+  const { loading, error, data, getProfile, coverImage } = useProfile();
   const [profile, setProfile] = useState(null);
-  console.log("data",data);
-  console.log("profile", profile);
-  const [coverImagefile, setCoverImagefile] = useState("")
-  
-  
-  const handleCoverImage = async()=>{
-    try{
-    await coverImage()
+  const [coverImagefile, setCoverImagefile] = useState();
 
-    }catch(e){
-      console.log(e);
-      
+  const handleCoverImage = async () => {
+    if (!coverImagefile) {
+      return;
     }
-  }
+
+    const formData = new FormData();
+    formData.append("coverImage", coverImagefile);
+    try {
+      await coverImage(formData);
+      await getProfile();
+      setCoverImagefile(null); // Reset after successful upload
+    } catch (e) {
+      console.error("Error updating cover image:", e);
+    }
+  };
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -84,25 +87,39 @@ export const Profile = () => {
           <div className="bg-white rounded-xl shadow-sm overflow-hidden mb-4">
             {/* Cover Image */}
             <div className="h-32 bg-gradient-to-r from-blue-500 to-purple-600 relative">
-              {/* {profile.coverImage && (
+              {profile.coverImage && (
                 <img
                   src={profile.coverImage}
                   alt="Cover"
                   className="w-full h-full object-cover"
                 />
-              )} */}
-              <input
-                type="file"
-                multiple
-                id="image"
-                name="image"
-                accept="image/*"
-                onChange={(e)=>{
-                  setCoverImage(e.target.value)
-                }}
-                className="hidden"
-              />
-              <button onClick={() => handleCoverImage}>post</button>
+              )}
+              <div className="absolute bottom-2 right-2 flex items-center gap-2">
+                <label
+                  htmlFor="coverImage"
+                  className="bg-white bg-opacity-80 hover:bg-opacity-100 text-gray-800 px-3 py-1.5 rounded-full text-sm font-medium cursor-pointer transition shadow-sm hover:shadow flex items-center gap-1"
+                >
+                  <FiEdit size={14} /> Change Cover
+                  <input
+                    type="file"
+                    id="coverImage"
+                    name="coverImage"
+                    accept="image/*"
+                    onChange={(e) => {
+                      setCoverImagefile(e.target.files[0]);
+                    }}
+                    className="hidden"
+                  />
+                </label>
+                {coverImagefile && (
+                  <button
+                    onClick={handleCoverImage}
+                    className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1.5 rounded-full text-sm font-medium transition shadow-sm hover:shadow"
+                  >
+                    Save
+                  </button>
+                )}
+              </div>
             </div>
 
             {/* Profile Info */}

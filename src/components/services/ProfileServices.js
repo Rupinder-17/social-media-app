@@ -13,17 +13,22 @@ export const ProfileServices = {
       throw error;
     }
   },
-  async Coverimage() {
+  async Coverimage(formData) {
     try {
       const response = await apiclient.request(
         "social-media/profile/cover-image",
         {
           method: "PATCH",
+          data: formData,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
       return response;
     } catch (e) {
       console.log(e);
+      throw e;
     }
   },
 };

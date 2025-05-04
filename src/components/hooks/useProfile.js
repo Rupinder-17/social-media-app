@@ -31,10 +31,10 @@ export const useProfile = () => {
       console.error("Error fetching profile:", error);
     }
   };
-  const coverImage = async () => {
+  const coverImage = async (formData) => {
     setProfileState({ loading: true, error: null, success: false, data: null });
     try {
-      const response = await ProfileServices.Coverimage();
+      const response = await ProfileServices.Coverimage(formData);
       setProfileState({
         loading: false,
         error: null,
@@ -44,6 +44,12 @@ export const useProfile = () => {
       return response.data;
     } catch (e) {
       console.log(e);
+      setProfileState({
+        loading: false,
+        error: e.message || "Failed to update cover image",
+        success: false,
+        data: profileState.data,
+      });
     }
   };
   return {

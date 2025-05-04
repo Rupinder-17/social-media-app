@@ -18,7 +18,7 @@ export const CreatePost = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [showPreview, setShowPreview] = useState(false);
   const [, setSubmittedPosts] = useState([]);
-  const { data: posts, PostGet, LikePosts } = usePost();
+  const { data: posts, PostGet } = usePost();
   console.log("checkPosts", posts);
 
   const { createPost, status } = useCreatePost();
