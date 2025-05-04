@@ -19,7 +19,7 @@ export const ProfileServices = {
         "social-media/profile/cover-image",
         {
           method: "PATCH",
-          data: formData,
+          body: formData,
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -28,7 +28,19 @@ export const ProfileServices = {
       return response;
     } catch (e) {
       console.log(e);
-      throw e;
+    }
+  },
+  async followerList(username) {
+    try {
+      const response = await apiclient.request(
+        `social-media/follow/list/followers/${username}`,
+        {
+          method: "GET",
+        }
+      );
+      return response;
+    } catch (e) {
+      console.log(e);
     }
   },
 };

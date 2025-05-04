@@ -7,7 +7,7 @@ export const Profile = () => {
   const navigate = useNavigate();
   const { loading, error, data, getProfile, coverImage } = useProfile();
   const [profile, setProfile] = useState(null);
-  const [coverImagefile, setCoverImagefile] = useState();
+  const [coverImagefile, setCoverImagefile] = useState(null);
 
   const handleCoverImage = async () => {
     if (!coverImagefile) {
@@ -19,7 +19,7 @@ export const Profile = () => {
     try {
       await coverImage(formData);
       await getProfile();
-      setCoverImagefile(null); // Reset after successful upload
+      setCoverImagefile(null)
     } catch (e) {
       console.error("Error updating cover image:", e);
     }
@@ -122,7 +122,6 @@ export const Profile = () => {
               </div>
             </div>
 
-            {/* Profile Info */}
             <div className="px-4 pt-0 pb-4 relative">
               {/* Avatar */}
               <div className="absolute -top-12 left-4 border-4 border-white rounded-full overflow-hidden bg-gradient-to-r from-purple-500 to-pink-500 w-24 h-24 flex items-center justify-center text-white text-3xl font-bold shadow-md">
@@ -137,14 +136,12 @@ export const Profile = () => {
                 )}
               </div>
 
-              {/* Edit Button */}
               <div className="flex justify-end mt-2">
                 <button className="flex items-center gap-1 bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded-full text-gray-700 text-sm transition-colors">
                   <FiEdit size={14} /> Edit Profile
                 </button>
               </div>
 
-              {/* User Details */}
               <div className="mt-10">
                 <h2 className="text-xl font-bold text-gray-900">
                   {profile.account.username || "Username"}
@@ -156,7 +153,6 @@ export const Profile = () => {
                   <p className="mt-2 text-gray-700">{profile.bio}</p>
                 )}
 
-                {/* Stats */}
                 <div className="flex gap-4 mt-4 pt-4 border-t border-gray-100">
                   <div className="text-center">
                     <p className="font-bold text-gray-900">

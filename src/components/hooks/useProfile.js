@@ -41,7 +41,9 @@ export const useProfile = () => {
         success: true,
         data: response.data,
       });
+      console.log("cover res", response.data);
       return response.data;
+      
     } catch (e) {
       console.log(e);
       setProfileState({
