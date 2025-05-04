@@ -117,15 +117,5 @@ export const SocialAppServices = {
       console.log(e);
     }
   },
-  async getProfile() {
-    try {
-      const response = await apiclient.request("social-media/profile", {
-        method: "GET",
-      });
-      return response;
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  },
+  
 };

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { SocialAppServices } from "../services/SocialAppServices";
+import { ProfileServices } from "../services/ProfileServices";
 
 export const useProfile = () => {
   const [profileState, setProfileState] = useState({
@@ -12,7 +13,7 @@ export const useProfile = () => {
   const getProfile = async () => {
     setProfileState({ loading: true, error: null, success: false, data: null });
     try {
-      const response = await SocialAppServices.getProfile();
+      const response = await ProfileServices.getProfile();
       setProfileState({
         loading: false,
         error: null,
@@ -30,9 +31,16 @@ export const useProfile = () => {
       console.error("Error fetching profile:", error);
     }
   };
+  // const coverImage = async ()=>{
+  //   setProfileState({ loading: true, error: null, success: false, data: null });
+  //   try{
+  //     const response =  await 
+  //   }
 
+  // }
   return {
     ...profileState,
     getProfile,
+    // coverImage
   };
 };
