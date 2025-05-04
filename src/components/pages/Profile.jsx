@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 export const Profile = () => {
   const navigate = useNavigate();
-  const { loading, error, data, getProfile, coverImage } = useProfile();
+  const { loading, error, data, getProfile, coverImage , followerList } = useProfile();
   const [profile, setProfile] = useState(null);
   const [coverImagefile, setCoverImagefile] = useState(null);
 

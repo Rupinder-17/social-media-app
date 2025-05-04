@@ -50,13 +50,45 @@ export const useProfile = () => {
         loading: false,
         error: e.message || "Failed to update cover image",
         success: false,
-        data: profileState.data,
+        data: null,
       });
     }
   };
+  const followerList =async (username)=>{
+     setProfileState({
+       loading: true,
+       error: null,
+       success: false,
+       data: null,
+     });
+     try{
+      const response = await ProfileServices.followerList(username) 
+      setProfileState({
+        loading: false,
+        error: null,
+        success: true,
+        data: response.data,
+      });
+      console.log("follower",response.data);
+      
+     }
+     catch(e){
+      console.log(e);
+      setProfileState({
+        loading: false,
+        error: e.message || "Failed to update cover image",
+        success: false,
+        data: null,
+      });
+      
+     }
+
+
+  }
   return {
     ...profileState,
     getProfile,
     coverImage,
+    followerList,
   };
 };
