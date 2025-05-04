@@ -31,27 +31,24 @@ export const useProfile = () => {
       console.error("Error fetching profile:", error);
     }
   };
-  const coverImage = async ()=>{
+  const coverImage = async () => {
     setProfileState({ loading: true, error: null, success: false, data: null });
-    try{
-      const response =  await ProfileServices.Coverimage()
+    try {
+      const response = await ProfileServices.Coverimage();
       setProfileState({
         loading: false,
         error: null,
         success: true,
         data: response.data,
       });
-      return response.data
-    }
-    catch(e){
+      return response.data;
+    } catch (e) {
       console.log(e);
-      
     }
-
-  }
+  };
   return {
     ...profileState,
     getProfile,
-    coverImage
+    coverImage,
   };
 };

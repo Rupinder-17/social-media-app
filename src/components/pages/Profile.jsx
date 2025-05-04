@@ -5,12 +5,22 @@ import { useNavigate } from "react-router-dom";
 
 export const Profile = () => {
   const navigate = useNavigate();
-  const { loading, error, data, getProfile } = useProfile();
+  const { loading, error, data, getProfile , coverImage } = useProfile();
   const [profile, setProfile] = useState(null);
   console.log("data",data);
   console.log("profile", profile);
+  const [coverImagefile, setCoverImagefile] = useState("")
   
   
+  const handleCoverImage = async()=>{
+    try{
+    await coverImage()
+
+    }catch(e){
+      console.log(e);
+      
+    }
+  }
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -71,17 +81,28 @@ export const Profile = () => {
 
       {profile ? (
         <div className="max-w-xl mx-auto p-4">
-          {/* Profile Card */}
           <div className="bg-white rounded-xl shadow-sm overflow-hidden mb-4">
             {/* Cover Image */}
             <div className="h-32 bg-gradient-to-r from-blue-500 to-purple-600 relative">
-              {profile.coverImage && (
+              {/* {profile.coverImage && (
                 <img
                   src={profile.coverImage}
                   alt="Cover"
                   className="w-full h-full object-cover"
                 />
-              )}
+              )} */}
+              <input
+                type="file"
+                multiple
+                id="image"
+                name="image"
+                accept="image/*"
+                onChange={(e)=>{
+                  setCoverImage(e.target.value)
+                }}
+                className="hidden"
+              />
+              <button onClick={() => handleCoverImage}>post</button>
             </div>
 
             {/* Profile Info */}
