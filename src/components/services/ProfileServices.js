@@ -1,5 +1,5 @@
-import React from 'react'
-import { apiclient } from '../../api/apiClients';
+import React from "react";
+import { apiclient } from "../../api/apiClients";
 
 export const ProfileServices = {
   async getProfile() {
@@ -13,5 +13,17 @@ export const ProfileServices = {
       throw error;
     }
   },
+  async Coverimage() {
+    try {
+      const response = await apiclient.request(
+        "social-media/profile/cover-image",
+        {
+          method: "PATCH",
+        }
+      );
+      return response;
+    } catch (e) {
+      console.log(e);
+    }
+  },
 };
-
