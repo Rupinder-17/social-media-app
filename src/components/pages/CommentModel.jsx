@@ -55,6 +55,8 @@ export const CommentModel = ({ postId }) => {
     }
   };
   const handleEditComment = (comment) => {
+    console.log("idcom", comment);
+    
     setEditComment(comment._id);
     setEditCommentText(comment.content);
   };
@@ -71,7 +73,7 @@ export const CommentModel = ({ postId }) => {
       await updateComment(editComment, editCommentText);
       const response = await allcommentsOfPost(postId);
       if (response  && response.comments) {
-        setComments(response.data.comments);
+        setComments(response.comments);
       }
 
       // Reset edit state
