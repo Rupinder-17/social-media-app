@@ -70,7 +70,6 @@ export const usePost = () => {
         success: true,
         data: response.data.bookmarkedPosts || [],
       });
-      console.log("book", response);
     } catch (e) {
       console.log(e);
     }

@@ -1,7 +1,6 @@
 const Baseurl = "https://api.freeapi.app/api/v1/";
 const createApiClient = () => {
   const request = async (endpoint, options = {}) => {
-    console.log("options", options);
 
     const token = localStorage.getItem("accessToken");
     const defaultOptions = {
@@ -14,7 +13,6 @@ const createApiClient = () => {
         ...(token && { Authorization: `Bearer ${token}` }),
       },
     };
-    console.log("default", defaultOptions);
     try {
       const response = await fetch(`${Baseurl}${endpoint}`, {
         ...options,

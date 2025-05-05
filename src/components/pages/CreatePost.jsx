@@ -22,10 +22,8 @@ export const CreatePost = () => {
   const [showPreview, setShowPreview] = useState(false);
   const [, setSubmittedPosts] = useState([]);
   const { data: posts, PostGet } = usePost();
-  console.log("checkPosts", posts);
 
   const { createPost, status } = useCreatePost();
-  console.log("ssss", status);
 
   useEffect(() => {
     if (status.success) {

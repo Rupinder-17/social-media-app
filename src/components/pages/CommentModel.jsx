@@ -17,7 +17,6 @@ export const CommentModel = ({ postId }) => {
     deleteComment,
     updateComment,
   } = useComment();
-  console.log("cooo", comments);
 
   const [editComment, setEditComment] = useState(null);
   const [editCommentText, setEditCommentText] = useState("");
@@ -45,7 +44,6 @@ export const CommentModel = ({ postId }) => {
     }
   };
   const handleEditComment = (comment) => {
-    console.log("idcom", comment);
 
     setEditComment(comment._id);
     setEditCommentText(comment.content);
