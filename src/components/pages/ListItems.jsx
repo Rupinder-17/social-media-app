@@ -25,7 +25,7 @@ export const ListItems = ({ post }) => {
           {post.content.charAt(0).toUpperCase()}
         </div>
         <div className="ml-3">
-          <p className="font-medium text-gray-900">You</p>
+          <p className="font-medium text-gray-900">{post.username}</p>
           <p className="text-gray-500 text-xs">{post.createdAt}</p>
         </div>
       </div>

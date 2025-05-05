@@ -6,6 +6,7 @@ import { FaBookmark } from "react-icons/fa6";
 import { usePost } from "../hooks/usePost";
 
 import { ListItems } from "./ListItems";
+import { useAuth } from "../hooks/useAuth";
 
 export const CreatePost = () => {
   const navigate = useNavigate();
@@ -14,6 +15,8 @@ export const CreatePost = () => {
     image: "",
     tags: [],
   });
+  const {logout}= useAuth()
+  
 
   const [imagePreview, setImagePreview] = useState(null);
   const [showPreview, setShowPreview] = useState(false);
@@ -130,6 +133,10 @@ export const CreatePost = () => {
         <h1 className="text-xl font-semibold text-center flex-1">
           Create New Post
         </h1>
+        <button onClick={()=>{
+          logout()
+          navigate("/login")
+        }} >logout</button>
         <button
           onClick={() => navigate("/book-mark")}
           className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-4 py-2 rounded-full font-medium text-sm transition-colors shadow-sm hover:shadow flex items-center gap-1 mr-2"

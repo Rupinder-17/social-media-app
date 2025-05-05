@@ -35,5 +35,10 @@ export const useAuth = () => {
       throw error;
     }
   };
-  return { ...state, register, login };
+  const logout = ()=>{
+    setState(null)
+    localStorage.removeItem("user");
+    localStorage.removeItem("accessToken")
+  }
+  return { ...state, register, login, logout };
 };
