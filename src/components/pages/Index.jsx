@@ -13,10 +13,39 @@ export const Index = () => {
       <Routes>
         <Route path="/" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/create-post" element={<CreatePost />} />
-        <Route path="/veiw-post" element={<VeiwPosts />} />
-        <Route path="/book-mark" element={<BookMarkPosts />} />
-        <Route path="/profile" element={<Profile />} />
+
+        <Route
+          path="/create-post"
+          element={
+            <Protected>
+              <CreatePost />
+            </Protected>
+          }
+        />
+        <Route
+          path="/veiw-post"
+          element={
+            <Protected>
+              <VeiwPosts />
+            </Protected>
+          }
+        />
+        <Route
+          path="/book-mark"
+          element={
+            <Protected>
+              <BookMarkPosts />
+            </Protected>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <Protected>
+              <Profile />
+            </Protected>
+          }
+        />
       </Routes>
     </div>
   );
