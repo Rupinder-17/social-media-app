@@ -82,9 +82,10 @@ export const useProfile = () => {
       });
       
      }
-
-
   }
+  // const getuserProfile= ()=>{
+    
+  // }
   return {
     ...profileState,
     getProfile,

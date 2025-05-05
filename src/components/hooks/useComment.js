@@ -1,19 +1,24 @@
-import React, { useState } from 'react'
-import { SocialAppServices } from '../services/SocialAppServices';
+import React, { useState } from "react";
+import { SocialAppServices } from "../services/SocialAppServices";
 
 export const useComment = () => {
-    const [commentState, setCommentState] = useState({
-      loading: false,
-      error: null,
-      success: false,
-    });
+  const [commentState, setCommentState] = useState({
+    loading: false,
+    error: null,
+    success: false,
+  });
   const addComments = async (postId, comment) => {
     setCommentState({ loading: true, error: null, success: false, data: null });
     try {
       const response = await SocialAppServices.addComment(postId, comment);
-      setCommentState({ loading: false, error: null, success: true, data: response.data });
+      setCommentState({
+        loading: false,
+        error: null,
+        success: true,
+        data: response.data,
+      });
       console.log("comment", response.data);
-      return response.data
+      return response.data;
     } catch (e) {
       console.log(e);
     }
@@ -26,7 +31,7 @@ export const useComment = () => {
         loading: false,
         error: null,
         success: true,
-        data: response.data,
+        data: response.data.comments,
       });
       return response.data;
     } catch (e) {
@@ -48,10 +53,13 @@ export const useComment = () => {
       console.log(e);
     }
   };
-  const updateComment =  async(commentId, updatetext) => {
+  const updateComment = async (commentId, updatetext) => {
     setCommentState({ loading: true, error: null, success: false, data: null });
     try {
-      const response =  await SocialAppServices.updateComment(commentId, updatetext);
+      const response = await SocialAppServices.updateComment(
+        commentId,
+        updatetext
+      );
       setCommentState({
         loading: false,
         error: null,
@@ -59,7 +67,7 @@ export const useComment = () => {
         data: response.data,
       });
       console.log("mycccc", response);
-      
+
       return response.data;
     } catch (e) {
       console.log(e);
@@ -72,4 +80,4 @@ export const useComment = () => {
     deleteComment,
     updateComment,
   };
-}
+};

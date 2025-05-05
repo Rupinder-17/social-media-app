@@ -43,4 +43,17 @@ export const ProfileServices = {
       console.log(e);
     }
   },
+  async getUserPorfile(username) {
+    try {
+      const response = await apiclient.request(
+        `social-media/profile/u/${username}`,
+        {
+          method: "GET",
+        }
+      );
+      return response;
+    } catch (e) {
+      console.log(e);
+    }
+  },
 };

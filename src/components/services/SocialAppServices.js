@@ -117,17 +117,5 @@ export const SocialAppServices = {
       console.log(e);
     }
   },
-  async userPosts(username) {
-    try {
-      const response = await apiclient.request(
-        `social-media/posts/get/u/${username}`,
-        {
-          method: "GET",
-        }
-      );
-      return response;
-    } catch (e) {
-      console.log(e);
-    }
-  },
+ 
 };

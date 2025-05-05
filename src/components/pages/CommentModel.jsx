@@ -10,37 +10,27 @@ import { useComment } from "../hooks/useComment";
 
 export const CommentModel = ({ postId }) => {
   const [commentInput, setCommentInput] = useState("");
-  const { addComments, allcommentsOfPost, deleteComment, updateComment } =
-    useComment();
-  
-  const [comments, setComments] = useState([]);
+  const {
+    data: comments,
+    addComments,
+    allcommentsOfPost,
+    deleteComment,
+    updateComment,
+  } = useComment();
+  console.log("cooo", comments);
+
   const [editComment, setEditComment] = useState(null);
   const [editCommentText, setEditCommentText] = useState("");
 
-  const fetchComments = async (postId) => {
-    try {
-      const response = await allcommentsOfPost(postId);
-      console.log("my comments", response);
-      
-      if (response && response.comments) {
-        setComments(response.comments);
-      }
-    } catch (error) {
-      console.error("Error fetching comments:", error);
-    }
-  };
-
   useEffect(() => {
-    fetchComments(postId);
+    allcommentsOfPost(postId);
   }, [postId]);
 
   const handleAddComment = async () => {
     try {
       await addComments(postId, commentInput);
-      const response = await fetchComments(postId);
-      if (response  && response.comments) {
-        setComments(response.comments);
-      }
+      await allcommentsOfPost(postId);
+
       setCommentInput("");
     } catch (error) {
       console.error("Error adding comment:", error);
@@ -49,14 +39,14 @@ export const CommentModel = ({ postId }) => {
   const handleDeleteComment = async (id) => {
     try {
       await deleteComment(id);
-      await fetchComments(postId);
+      await allcommentsOfPost(postId);
     } catch (e) {
       console.log(e);
     }
   };
   const handleEditComment = (comment) => {
     console.log("idcom", comment);
-    
+
     setEditComment(comment._id);
     setEditCommentText(comment.content);
   };
@@ -71,12 +61,8 @@ export const CommentModel = ({ postId }) => {
       if (!editComment || !editCommentText.trim()) return;
 
       await updateComment(editComment, editCommentText);
-      const response = await allcommentsOfPost(postId);
-      if (response  && response.comments) {
-        setComments(response.comments);
-      }
+      await allcommentsOfPost(postId);
 
-      // Reset edit state
       setEditComment(null);
       setEditCommentText("");
     } catch (e) {
@@ -114,10 +100,10 @@ export const CommentModel = ({ postId }) => {
         </div>
       </div>
 
-      {comments.length > 0 ? (
+      {comments?.length > 0 ? (
         <div className="mt-2">
           <ul className="space-y-3">
-            {comments.map((comment) => (
+            {comments?.map((comment) => (
               <li
                 key={comment._id}
                 className="flex items-start gap-2 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
