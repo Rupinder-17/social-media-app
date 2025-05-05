@@ -18,11 +18,11 @@ export const CommentModel = ({ postId }) => {
     deleteComment,
     updateComment,
   } = useComment();
-const {user}= useAuth()  
+  const { user } = useAuth();
 
   const [editComment, setEditComment] = useState(null);
   const [editCommentText, setEditCommentText] = useState("");
-  const [showEditbutton , setEditButton]= useState(false)
+  const [showEditbutton, setEditButton] = useState(false);
 
   useEffect(() => {
     allcommentsOfPost(postId);
@@ -47,7 +47,6 @@ const {user}= useAuth()
     }
   };
   const handleEditComment = (comment) => {
-
     setEditComment(comment._id);
     setEditCommentText(comment.content);
   };
@@ -157,7 +156,7 @@ const {user}= useAuth()
                             : "Just now"}
                         </span>
                       </div>
-                      {showEditbutton.auther !== user._id && (
+                      {comment.author.account._id === user._id && (
                         <div className="flex gap-1">
                           <button
                             onClick={() => handleEditComment(comment)}
