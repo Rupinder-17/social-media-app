@@ -14,7 +14,7 @@ const ProtectedRoute = ({children})=>{
 }
 const PublicRoute = ({children})=>{
   const {user}= useAuth()
-  return !user ? children : <Navigate to="/create-post" />;
+  return !user ? children : <Navigate to="/login" />;
 }
 
 export const Index = () => {
