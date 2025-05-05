@@ -1,49 +1,73 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
+import React, { Children } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { CreatePost } from "./CreatePost";
 import { Register } from "./Register";
 import { Login } from "./Login";
 import { VeiwPosts } from "./VeiwPosts";
 import { BookMarkPosts } from "./BookMarkPosts";
 import { Profile } from "./Profile";
+import { useAuth } from "../hooks/useAuth";
+
+const ProtectedRoute = ({children})=>{
+  const {user}= useAuth()
+  return user ? children : <Navigate to="/login"/>
+}
+const PublicRoute = ({children})=>{
+  const {user}= useAuth()
+  return !user ? children : <Navigate to="/create-post" />;
+}
 
 export const Index = () => {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<Register />} />
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/"
+          element={
+            <PublicRoute>
+              <Register />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
 
         <Route
           path="/create-post"
           element={
-            <Protected>
+            <ProtectedRoute>
               <CreatePost />
-            </Protected>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/veiw-post"
           element={
-            <Protected>
+            <ProtectedRoute>
               <VeiwPosts />
-            </Protected>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/book-mark"
           element={
-            <Protected>
+            <ProtectedRoute>
               <BookMarkPosts />
-            </Protected>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/profile"
           element={
-            <Protected>
+            <ProtectedRoute>
               <Profile />
-            </Protected>
+            </ProtectedRoute>
           }
         />
       </Routes>
