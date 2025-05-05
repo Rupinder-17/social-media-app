@@ -7,6 +7,7 @@ import {
 } from "react-icons/md";
 import { FiSend } from "react-icons/fi";
 import { useComment } from "../hooks/useComment";
+import { useAuth } from "../hooks/useAuth";
 
 export const CommentModel = ({ postId }) => {
   const [commentInput, setCommentInput] = useState("");
@@ -17,9 +18,11 @@ export const CommentModel = ({ postId }) => {
     deleteComment,
     updateComment,
   } = useComment();
+const {user}= useAuth()  
 
   const [editComment, setEditComment] = useState(null);
   const [editCommentText, setEditCommentText] = useState("");
+  const [showEditbutton , setEditButton]= useState(false)
 
   useEffect(() => {
     allcommentsOfPost(postId);
@@ -73,9 +76,7 @@ export const CommentModel = ({ postId }) => {
       <h3 className="font-semibold text-gray-800 mb-3 text-lg">Comments</h3>
 
       <div className="flex items-center gap-2 mb-4">
-        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold text-sm">
-          Y
-        </div>
+        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold text-sm"></div>
         <div className="flex-1 relative">
           <input
             type="text"
@@ -156,22 +157,24 @@ export const CommentModel = ({ postId }) => {
                             : "Just now"}
                         </span>
                       </div>
-                      <div className="flex gap-1">
-                        <button
-                          onClick={() => handleEditComment(comment)}
-                          className="p-1 text-gray-400 hover:text-blue-500 transition-colors rounded-full hover:bg-gray-200"
-                          title="Edit comment"
-                        >
-                          <MdEdit size={16} />
-                        </button>
-                        <button
-                          onClick={() => handleDeleteComment(comment._id)}
-                          className="p-1 text-gray-400 hover:text-red-500 transition-colors rounded-full hover:bg-gray-200"
-                          title="Delete comment"
-                        >
-                          <MdOutlineDeleteOutline size={16} />
-                        </button>
-                      </div>
+                      {showEditbutton.auther !== user._id && (
+                        <div className="flex gap-1">
+                          <button
+                            onClick={() => handleEditComment(comment)}
+                            className="p-1 text-gray-400 hover:text-blue-500 transition-colors rounded-full hover:bg-gray-200"
+                            title="Edit comment"
+                          >
+                            <MdEdit size={16} />
+                          </button>
+                          <button
+                            onClick={() => handleDeleteComment(comment._id)}
+                            className="p-1 text-gray-400 hover:text-red-500 transition-colors rounded-full hover:bg-gray-200"
+                            title="Delete comment"
+                          >
+                            <MdOutlineDeleteOutline size={16} />
+                          </button>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
