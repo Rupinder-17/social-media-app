@@ -39,10 +39,10 @@ export const useProfile = () => {
         loading: false,
         error: null,
         success: true,
-        data: response.data,
+        data: response.data.coverImage.url,
       });
-      console.log("cover res", response.data);
-      return response.data;
+      console.log("cover res", response.data.coverImage.url);
+      return response.data.Coverimage.url;
       
     } catch (e) {
       console.log(e);

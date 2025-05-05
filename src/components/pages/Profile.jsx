@@ -8,6 +8,8 @@ export const Profile = () => {
   const { loading, error, data, getProfile, coverImage , followerList } = useProfile();
   const [profile, setProfile] = useState(null);
   const [coverImagefile, setCoverImagefile] = useState(null);
+  console.log("image", coverImagefile);
+  
 
   const handleCoverImage = async () => {
     if (!coverImagefile) {
