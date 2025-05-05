@@ -10,7 +10,7 @@ import { useAuth } from "../hooks/useAuth";
 
 const ProtectedRoute = ({children})=>{
   const {user}= useAuth()
-  return user ? children : <Navigate to="/login"/>
+  return user ? children : <Navigate to="/create-post" />;
 }
 const PublicRoute = ({children})=>{
   const {user}= useAuth()
