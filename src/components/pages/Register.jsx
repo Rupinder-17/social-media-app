@@ -13,7 +13,6 @@ export const Register = () => {
   };
   const [inputValues, setInputValues] = useState(allvalues);
   const { register, loading, error } = useAuth();
-  console.log("inputs", inputValues);
 
   const handlechange = (e) => {
     const { name, value } = e.target;
@@ -29,7 +28,6 @@ export const Register = () => {
     } catch (e) {
       console.log(e);
     }
-    console.log("values", inputValues);
   };
 
   return (

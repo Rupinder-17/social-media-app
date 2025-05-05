@@ -22,10 +22,12 @@ export const ListItems = ({ post }) => {
       {/* Post header */}
       <div className="p-4 flex items-center">
         <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-sm">
-          {post.content.charAt(0).toUpperCase()}
+          {post.author.account.username.charAt(0).toUpperCase()}
         </div>
         <div className="ml-3">
-          <p className="font-medium text-gray-900">{post.username}</p>
+          <p className="font-medium text-gray-900">
+            {post.author.account.username}
+          </p>
           <p className="text-gray-500 text-xs">{post.createdAt}</p>
         </div>
       </div>
