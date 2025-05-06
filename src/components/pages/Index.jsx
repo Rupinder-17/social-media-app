@@ -7,6 +7,7 @@ import { VeiwPosts } from "./VeiwPosts";
 import { BookMarkPosts } from "./BookMarkPosts";
 import { Profile } from "./Profile";
 import { useAuth } from "../hooks/useAuth";
+import { UserProfile } from "./UserProfile";
 
 const ProtectedRoute = ({children})=>{
   const {user}= useAuth()
@@ -70,6 +71,11 @@ export const Index = () => {
             </ProtectedRoute>
           }
         />
+        <Route path="/user-Profile" element={
+          <ProtectedRoute>
+            <UserProfile/>
+          </ProtectedRoute>
+        } />
       </Routes>
     </div>
   );

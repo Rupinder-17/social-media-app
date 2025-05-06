@@ -6,13 +6,17 @@ import { FaRegBookmark } from "react-icons/fa6";
 import { FaBookmark } from "react-icons/fa6";
 import { FaRegComment } from "react-icons/fa";
 import { CommentModel } from "./CommentModel";
+import { useNavigate } from "react-router-dom";
+import { useProfile } from "../hooks/useProfile";
 
 export const ListItems = ({ post }) => {
   const [model, setModel] = useState();
+  const navigate = useNavigate();
 
   const { LikePosts, bookMarkPost } = usePost();
   const [isLiked, setIsLiked] = useState(post.isLiked);
   const [bookMark, setBookMark] = useState(post.isBookmarked);
+  const {getUserProfile} = useProfile()
 
   return (
     <div
@@ -25,9 +29,16 @@ export const ListItems = ({ post }) => {
           {post.author.account.username.charAt(0).toUpperCase()}
         </div>
         <div className="ml-3">
-          <p className="font-medium text-gray-900">
-            {post.author.account.username}
-          </p>
+          <button onClick={()=>{
+            getUserProfile(post.author.account.username);
+            navigate("/user-Profile")
+            console.log("hello posts");
+            
+          }}>
+            <p className="font-medium text-gray-900">
+              {post.author.account.username}
+            </p>
+          </button>
           <p className="text-gray-500 text-xs">{post.createdAt}</p>
         </div>
       </div>

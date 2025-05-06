@@ -42,7 +42,6 @@ export const useProfile = () => {
       });
       console.log("cover res", response.data.coverImage.url);
       return response.data.Coverimage.url;
-      
     } catch (e) {
       console.log(e);
       setProfileState({
@@ -53,25 +52,23 @@ export const useProfile = () => {
       });
     }
   };
-  const followerList =async (username)=>{
-     setProfileState({
-       loading: true,
-       error: null,
-       success: false,
-       data: null,
-     });
-     try{
-      const response = await ProfileServices.followerList(username) 
+  const followerList = async (username) => {
+    setProfileState({
+      loading: true,
+      error: null,
+      success: false,
+      data: null,
+    });
+    try {
+      const response = await ProfileServices.followerList(username);
       setProfileState({
         loading: false,
         error: null,
         success: true,
         data: response.data,
       });
-      console.log("follower",response.data);
-      
-     }
-     catch(e){
+      console.log("follower", response.data);
+    } catch (e) {
       console.log(e);
       setProfileState({
         loading: false,
@@ -79,14 +76,35 @@ export const useProfile = () => {
         success: false,
         data: null,
       });
-      
-     }
-  }
- 
+    }
+  };
+  const getUserProfile = async (username) => {
+    setProfileState({
+      loading: true,
+      error: null,
+      success: false,
+      data: null,
+    });
+    try {
+      const response = await ProfileServices.getUserPorfile(username);
+      setProfileState({
+        loading: false,
+        error: null,
+        success: true,
+        data: response,
+      });
+      console.log("userPtrofile", response);
+      return response;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return {
     ...profileState,
     getProfile,
     coverImage,
     followerList,
+    getUserProfile,
   };
 };

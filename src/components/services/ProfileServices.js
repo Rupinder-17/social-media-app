@@ -38,6 +38,7 @@ export const ProfileServices = {
           method: "GET",
         }
       );
+      
       return response;
     } catch (e) {
       console.log(e);
@@ -51,6 +52,8 @@ export const ProfileServices = {
           method: "GET",
         }
       );
+      // console.log("userProfile", response);
+
       return response;
     } catch (e) {
       console.log(e);
