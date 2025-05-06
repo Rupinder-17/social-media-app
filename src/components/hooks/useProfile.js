@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { SocialAppServices } from "../services/SocialAppServices";
 import { ProfileServices } from "../services/ProfileServices";
 
 export const useProfile = () => {
@@ -83,9 +82,7 @@ export const useProfile = () => {
       
      }
   }
-  // const getuserProfile= ()=>{
-    
-  // }
+ 
   return {
     ...profileState,
     getProfile,
