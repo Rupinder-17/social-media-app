@@ -1,7 +1,6 @@
 const Baseurl = "https://api.freeapi.app/api/v1/";
 const createApiClient = () => {
   const request = async (endpoint, options = {}) => {
-
     const token = localStorage.getItem("social_app_accessToken");
     const defaultOptions = {
       headers: {
@@ -25,7 +24,7 @@ const createApiClient = () => {
       return data;
     } catch (e) {
       console.log(e);
-      throw console;
+      throw e;
     }
   };
   return { request };
