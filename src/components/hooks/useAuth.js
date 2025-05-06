@@ -3,7 +3,7 @@ import { authServices } from "../services/AuthServices";
 
 export const useAuth = () => {
   const [state, setState] = useState({
-    user: JSON.parse(localStorage.getItem("user")),
+    user: JSON.parse(localStorage.getItem("social_app_user")),
     loading: false,
     error: null,
   });
@@ -37,8 +37,8 @@ export const useAuth = () => {
   };
   const logout = ()=>{
     setState(null)
-    localStorage.removeItem("user");
-    localStorage.removeItem("accessToken")
+    localStorage.removeItem("social_app_user");
+    localStorage.removeItem("soial_app_accessToken")
   }
   return { ...state, register, login, logout };
 };

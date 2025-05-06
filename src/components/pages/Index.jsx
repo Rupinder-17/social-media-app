@@ -10,11 +10,11 @@ import { useAuth } from "../hooks/useAuth";
 
 const ProtectedRoute = ({children})=>{
   const {user}= useAuth()
-  return user ? children : <Navigate to="/create-post" />;
+  return user ? children : <Navigate to="/login" />;
 }
 const PublicRoute = ({children})=>{
   const {user}= useAuth()
-  return !user ? children : <Navigate to="/login" />;
+  return !user ? children : <Navigate to="/create-post" />;
 }
 
 export const Index = () => {

@@ -10,8 +10,14 @@ export const authServices = {
       console.log(response);
 
       if (response.data?.accessToken) {
-        localStorage.setItem("accessToken", response.data.accessToken);
-        localStorage.setItem("user", JSON.stringify(response.data.user));
+        localStorage.setItem(
+          "social_app_accessToken",
+          response.data.accessToken
+        );
+        localStorage.setItem(
+          "social_app_user",
+          JSON.stringify(response.data.user)
+        );
       }
       return response.data;
     } catch (error) {

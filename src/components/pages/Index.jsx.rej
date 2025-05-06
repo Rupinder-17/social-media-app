@@ -1,0 +1,10 @@
+diff a/src/components/pages/Index.jsx b/src/components/pages/Index.jsx	(rejected hunks)
+@@ -14,7 +14,7 @@
+ }
+ const PublicRoute = ({children})=>{
+   const {user}= useAuth()
+-  return !user ? children : <Navigate to="/create-post" />;
++  return !user ? children : <Navigate to="/login" />;
+ }
+ 
+ export const Index = () => {
