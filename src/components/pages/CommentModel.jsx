@@ -23,6 +23,8 @@ export const CommentModel = ({ postId }) => {
   const [editComment, setEditComment] = useState(null);
   const [editCommentText, setEditCommentText] = useState("");
   // const [showEditbutton, setEditButton] = useState(false);
+  console.log("postComments", comments);
+  
 
   useEffect(() => {
     allcommentsOfPost(postId);

@@ -83,7 +83,6 @@ export const SocialAppServices = {
           method: "GET",
         }
       );
-      console.log("allcommments", response);
 
       return response;
     } catch (error) {

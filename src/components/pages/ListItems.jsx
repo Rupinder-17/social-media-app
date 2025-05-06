@@ -54,12 +54,15 @@ export const ListItems = ({ post }) => {
           ) : (
             <CiHeart className="w-7 h-7" />
           )}
+          <span>{post.likes}</span>
         </button>
+
         <button
           onClick={() => setModel(() => !model)}
           className="p-2 hover:bg-gray-100 rounded-full transition-colors"
         >
           <FaRegComment className="w-6 h-6 text-gray-700" />
+          <span>{post.comments}</span>
         </button>
         <button
           onClick={() => {

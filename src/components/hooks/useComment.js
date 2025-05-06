@@ -33,6 +33,8 @@ export const useComment = () => {
         success: true,
         data: response.data.comments,
       });
+      console.log("totalcomments", response.data);
+      
       return response.data;
     } catch (e) {
       console.log(e);
