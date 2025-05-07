@@ -85,6 +85,8 @@ export const usePost = () => {
         success: true,
         data: response.data.posts || [],
       });
+      console.log("userpost", response.data.posts);
+      
     } catch (e) {
       console.log(e);
     }

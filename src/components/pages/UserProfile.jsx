@@ -2,23 +2,25 @@ import React, { useEffect } from "react";
 import { useProfile } from "../hooks/useProfile";
 import { useNavigate, useParams } from "react-router-dom";
 import { FiArrowLeft, FiEdit } from "react-icons/fi";
+import { usePost } from "../hooks/usePost";
 
 export const UserProfile = () => {
   const { data, getUserProfile } = useProfile();
-  console.log("data", data);
+  const { data: posts, getUserPosts} = usePost()
+  console.log("dataposts", posts);
    const navigate = useNavigate();
   
   const { username } = useParams();
   console.log("username", username);
   useEffect(() => {
     getUserProfile(username);
+    getUserPosts()
   }, []);
 
   return (
   
     <div>
       <div>
-        <h1 className="bg-red-800">{data?.account?.username}</h1>
         <div className="min-h-screen bg-gray-50">
               {/* Header */}
               <div className="sticky top-0 z-10 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
@@ -149,6 +151,13 @@ export const UserProfile = () => {
                       </div>
                     </div>
                   </div>
+                  <div>
+                  {posts?.map((item)=>(
+                    
+                    <img src={item?.images[0].url} alt="" />
+
+))}
+                  </div>
                 </div>
               ) : (
                 <div className="flex flex-col items-center justify-center p-8">
@@ -162,6 +171,7 @@ export const UserProfile = () => {
                 </div>
               )}
             </div>
+            
       </div>
     </div>
   );
