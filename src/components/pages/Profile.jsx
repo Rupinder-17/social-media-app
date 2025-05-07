@@ -4,12 +4,11 @@ import { FiArrowLeft, FiEdit } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
 export const Profile = () => {
-  
-  const { loading, error, data, getProfile, coverImage , followerList } = useProfile();
+  const { loading, error, data, getProfile, coverImage, followerList } =
+    useProfile();
   const [profile, setProfile] = useState(null);
   const [coverImagefile, setCoverImagefile] = useState(null);
-  console.log("image", coverImagefile);
-  
+  const navigate = useNavigate();
 
   const handleCoverImage = async () => {
     if (!coverImagefile) {
@@ -21,7 +20,7 @@ export const Profile = () => {
     try {
       await coverImage(formData);
       await getProfile();
-      setCoverImagefile(null)
+      setCoverImagefile(null);
     } catch (e) {
       console.error("Error updating cover image:", e);
     }

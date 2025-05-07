@@ -91,10 +91,10 @@ export const useProfile = () => {
         loading: false,
         error: null,
         success: true,
-        data: response,
+        data: response.data,
       });
       console.log("userPtrofile", response);
-      return response;
+      return response.data;
     } catch (e) {
       console.log(e);
     }

@@ -71,7 +71,7 @@ export const Index = () => {
             </ProtectedRoute>
           }
         />
-        <Route path="/user-Profile" element={
+        <Route path="/user-Profile/:username" element={
           <ProtectedRoute>
             <UserProfile/>
           </ProtectedRoute>

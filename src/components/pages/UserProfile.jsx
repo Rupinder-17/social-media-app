@@ -1,20 +1,26 @@
-import React, { useEffect } from 'react'
-import { useProfile } from '../hooks/useProfile'
+import React, { useEffect } from "react";
+import { useProfile } from "../hooks/useProfile";
+import { useParams } from "react-router-dom";
 
 export const UserProfile = () => {
-  const {getUserProfile}= useProfile()
-  // useEffect(()=>{
-  //   // getUserProfile()
-  // })
+  const { data, getUserProfile } = useProfile();
+  console.log("data", data);
+  
+  const { username } = useParams();
+  console.log("username", username);
+  useEffect(() => {
+    getUserProfile(username);
+  }, []);
+
   return (
     <div>
+      <div>
+        <h1 className="bg-red-800">{data?.account?.username}</h1>
         <div>
-          <h1 onClick={()=>getUserProfile()} className='bg-red-800'>userProfile</h1>
-          <div>
-            <button>follow</button>
-            <button>follower</button>
-          </div>
+          <button>follow</button>
+          <button>follower</button>
         </div>
+      </div>
     </div>
-  )
-}
+  );
+};
