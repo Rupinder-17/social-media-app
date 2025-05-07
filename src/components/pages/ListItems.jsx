@@ -15,6 +15,20 @@ export const ListItems = ({ post }) => {
   const { LikePosts, bookMarkPost } = usePost();
   const [isLiked, setIsLiked] = useState(post.isLiked);
   const [bookMark, setBookMark] = useState(post.isBookmarked);
+  // const [likeCount, setLikeCount]= useState(post.likeCount || 0)
+  const handleLikeCount = ()=>{
+    
+    // if(likeCount <= 0){
+    //   setLikeCount(likeCount + 1 )
+    // }
+    // else if(likeCount>= 0){
+    //   setLikeCount(likeCount -1)
+    // }
+    // else{
+    //   setLikeCount(0)
+    // }
+  }
+
 
   return (
     <div
@@ -54,6 +68,7 @@ export const ListItems = ({ post }) => {
           onClick={() => {
             LikePosts(post._id);
             setIsLiked(() => !isLiked);
+            handleLikeCount()
           }}
           className="p-2 hover:bg-gray-100 rounded-full transition-colors"
         >
@@ -62,7 +77,7 @@ export const ListItems = ({ post }) => {
           ) : (
             <CiHeart className="w-7 h-7" />
           )}
-          <span>{post.likes}</span>
+          <span>{likeCount}</span>
         </button>
 
         <button

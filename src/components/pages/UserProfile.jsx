@@ -51,7 +51,7 @@ export const UserProfile = () => {
                           htmlFor="coverImage"
                           className="bg-white bg-opacity-80 hover:bg-opacity-100 text-gray-800 px-3 py-1.5 rounded-full text-sm font-medium cursor-pointer transition shadow-sm hover:shadow flex items-center gap-1"
                         >
-                          {/* <FiEdit size={14} /> Change Cover */}
+                          <FiEdit size={14} /> Change Cover
                           {/* <input
                             type="file"
                             id="coverImage"
