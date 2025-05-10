@@ -86,7 +86,21 @@ export const usePost = () => {
         data: response.data.posts || [],
       });
       console.log("userpost", response.data.posts);
-      
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const deletePost = async (postId) => {
+    setPosts({ loading: true, error: null, success: false, data: null });
+    try {
+      const response = await SocialAppServices.deletePost(postId);
+      setPosts({
+        loading: false,
+        error: null,
+        success: true,
+        data: response.data,
+      });
+      return response.data;
     } catch (e) {
       console.log(e);
     }
@@ -99,5 +113,6 @@ export const usePost = () => {
     bookMarkPost,
     getBookMarkPosts,
     getUserPosts,
+    deletePost,
   };
 };
