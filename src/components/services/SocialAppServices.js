@@ -116,5 +116,14 @@ export const SocialAppServices = {
       console.log(e);
     }
   },
- 
+  async deletePost(postId) {
+    try {
+      const response = await apiclient.request(`social-media/posts/${postId}`, {
+        method: "DELETE",
+      });
+      return response;
+    } catch (e) {
+      console.log(e);
+    }
+  },
 };

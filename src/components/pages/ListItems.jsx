@@ -77,7 +77,7 @@ export const ListItems = ({ post }) => {
           ) : (
             <CiHeart className="w-7 h-7" />
           )}
-          <span>{likeCount}</span>
+          {/* <span>{likeCount}</span> */}
         </button>
 
         <button
