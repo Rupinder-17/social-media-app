@@ -9,27 +9,34 @@ import { CommentModel } from "./CommentModel";
 import { useNavigate } from "react-router-dom";
 
 export const ListItems = ({ post }) => {
-  console.log("postslistitm", post);
-  
   const [model, setModel] = useState();
   const navigate = useNavigate();
 
-  const { LikePosts, bookMarkPost } = usePost();
+  const { LikePosts, bookMarkPost, deletePost, PostGet } = usePost();
   const [isLiked, setIsLiked] = useState(post.isLiked);
   const [bookMark, setBookMark] = useState(post.isBookmarked);
-  const handleLikeCount = ()=>{
-    
-    // if(likeCount <= 0){
-    //   setLikeCount(likeCount + 1 )
-    // }
-    // else if(likeCount>= 0){
-    //   setLikeCount(likeCount -1)
-    // }
-    // else{
-    //   setLikeCount(0)
-    // }
-  }
+  // const [isDeleted, setIsDeleted] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(false);
 
+  const handleDeletePost = async (id) => {
+    setIsDeleting(true);
+    try {
+      await deletePost(id);
+      await PostGet(); // PostGet doesn't need an ID parameter
+      setIsDeleted(true); // Mark as deleted for conditional rendering
+    } catch (e) {
+      console.log(e);
+      setIsDeleting(false);
+    } finally {
+      setIsDeleting(false); // Set back to false when operation completes
+    }
+  };
+
+  // If post is deleted, don't render anything
+  if (isDeleted) {
+    return null;
+  }
 
   return (
     <div
@@ -42,16 +49,29 @@ export const ListItems = ({ post }) => {
           {post?.author?.account?.username?.charAt(0)?.toUpperCase()}
         </div>
         <div className="ml-3">
-          <button onClick={()=>{
-            navigate(`/user-Profile/${post.author.account.username}`);
-            console.log("hello posts");
-            
-          }}>
+          <button
+            onClick={() => {
+              navigate(`/user-Profile/${post.author.account.username}`);
+            }}
+          >
             <p className="font-medium text-gray-900">
               {post?.author?.account?.username}
             </p>
           </button>
           <p className="text-gray-500 text-xs">{post.createdAt}</p>
+        </div>
+        <div className="ml-auto">
+          <button
+            onClick={() => handleDeletePost(post._id)}
+            disabled={isDeleting}
+            className={`px-2 py-1 rounded text-sm ${
+              isDeleting
+                ? "bg-gray-300 text-gray-500"
+                : "bg-red-100 text-red-600 hover:bg-red-200"
+            }`}
+          >
+            {isDeleting ? "Deleting..." : "Delete"}
+          </button>
         </div>
       </div>
 
@@ -69,7 +89,6 @@ export const ListItems = ({ post }) => {
           onClick={() => {
             LikePosts(post._id);
             setIsLiked(() => !isLiked);
-            handleLikeCount()
           }}
           className="p-2 hover:bg-gray-100 rounded-full transition-colors"
         >
