@@ -24,6 +24,8 @@ export const CreatePost = () => {
   const { data: posts, PostGet } = usePost();
 
   const { createPost, status } = useCreatePost();
+  console.log("status", status);
+  
 
   useEffect(() => {
     if (status.success) {

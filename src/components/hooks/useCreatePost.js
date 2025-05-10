@@ -19,6 +19,8 @@ export const useCreatePost = () => {
       const response = await SocialAppServices.postData(data);
       console.log("Post created:", response);
       setStatus({ loading: false, error: null, success: true  , data: response.data});
+      console.log("mycreatepost", response?.data);
+      
     } catch (error) {
       console.error("Error creating post:", error);
       setStatus({

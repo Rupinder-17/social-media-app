@@ -21,6 +21,8 @@ export const usePost = () => {
         success: true,
         data: response?.data?.posts || null,
       });
+      console.log("myposts",response?.data?.posts);
+      
       return response?.data?.posts;
     } catch (e) {
       setPosts({ loading: false, error: null, success: false, data: null });

@@ -9,13 +9,14 @@ import { CommentModel } from "./CommentModel";
 import { useNavigate } from "react-router-dom";
 
 export const ListItems = ({ post }) => {
+  console.log("postslistitm", post);
+  
   const [model, setModel] = useState();
   const navigate = useNavigate();
 
   const { LikePosts, bookMarkPost } = usePost();
   const [isLiked, setIsLiked] = useState(post.isLiked);
   const [bookMark, setBookMark] = useState(post.isBookmarked);
-  // const [likeCount, setLikeCount]= useState(post.likeCount || 0)
   const handleLikeCount = ()=>{
     
     // if(likeCount <= 0){
@@ -38,7 +39,7 @@ export const ListItems = ({ post }) => {
       {/* Post header */}
       <div className="p-4 flex items-center">
         <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-sm">
-          {post.author.account.username.charAt(0).toUpperCase()}
+          {post?.author?.account?.username?.charAt(0)?.toUpperCase()}
         </div>
         <div className="ml-3">
           <button onClick={()=>{
@@ -47,7 +48,7 @@ export const ListItems = ({ post }) => {
             
           }}>
             <p className="font-medium text-gray-900">
-              {post.author.account.username}
+              {post?.author?.account?.username}
             </p>
           </button>
           <p className="text-gray-500 text-xs">{post.createdAt}</p>
