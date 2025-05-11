@@ -16,27 +16,27 @@ export const ListItems = ({ post }) => {
   const [isLiked, setIsLiked] = useState(post.isLiked);
   const [bookMark, setBookMark] = useState(post.isBookmarked);
   // const [isDeleted, setIsDeleted] = useState(false)
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [isDeleted, setIsDeleted] = useState(false);
+  // const [isDeleting, setIsDeleting] = useState(false);
+  // const [isDeleted, setIsDeleted] = useState(false);
 
   const handleDeletePost = async (id) => {
-    setIsDeleting(true);
+    // setIsDeleting(true);
     try {
       await deletePost(id);
       await PostGet(); // PostGet doesn't need an ID parameter
-      setIsDeleted(true); // Mark as deleted for conditional rendering
+      // setIsDeleted(true); // Mark as deleted for conditional rendering
     } catch (e) {
       console.log(e);
-      setIsDeleting(false);
+      // setIsDeleting(false);
     } finally {
-      setIsDeleting(false); // Set back to false when operation completes
+      // setIsDeleting(false); // Set back to false when operation completes
     }
   };
 
-  // If post is deleted, don't render anything
-  if (isDeleted) {
-    return null;
-  }
+  // // If post is deleted, don't render anything
+  // if (isDeleted) {
+  //   return null;
+  // }
 
   return (
     <div
@@ -61,7 +61,7 @@ export const ListItems = ({ post }) => {
           <p className="text-gray-500 text-xs">{post.createdAt}</p>
         </div>
         <div className="ml-auto">
-          <button
+          {/* <button
             onClick={() => handleDeletePost(post._id)}
             disabled={isDeleting}
             className={`px-2 py-1 rounded text-sm ${
@@ -71,7 +71,7 @@ export const ListItems = ({ post }) => {
             }`}
           >
             {isDeleting ? "Deleting..." : "Delete"}
-          </button>
+          </button> */}
         </div>
       </div>
 

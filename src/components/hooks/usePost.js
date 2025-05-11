@@ -96,12 +96,8 @@ export const usePost = () => {
     setPosts({ loading: true, error: null, success: false, data: null });
     try {
       const response = await SocialAppServices.deletePost(postId);
-      setPosts({
-        loading: false,
-        error: null,
-        success: true,
-        data: response.data,
-      });
+      setPosts((prev)=>({...prev, loading:false, success: true, data: prev.data.filter((post)=> post._id!== postId)}))
+     
       return response.data;
     } catch (e) {
       console.log(e);
