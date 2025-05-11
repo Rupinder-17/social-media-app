@@ -5,7 +5,7 @@ import { FiArrowLeft, FiEdit } from "react-icons/fi";
 import { usePost } from "../hooks/usePost";
 
 export const UserProfile = () => {
-  const { data, getUserProfile } = useProfile();
+  const { data, getUserProfile, followerList } = useProfile();
   const { data: posts, getUserPosts} = usePost()
   console.log("dataposts", posts);
    const navigate = useNavigate();
@@ -16,7 +16,9 @@ export const UserProfile = () => {
     getUserProfile(username);
     getUserPosts()
   }, []);
-
+const handleFollowerList = ()=>{
+  followerList(username)
+}
   return (
   
     <div>
@@ -116,13 +118,13 @@ export const UserProfile = () => {
                             <p className="font-bold text-gray-900">
                               {data.followersCount || 0}
                             </p>
-                            <p className="text-xs text-gray-500">Followers</p>
+                            <button className="text-xs bg-blue-700 px-2 py-1 rounded-3xl text-gray-100" onClick={handleFollowerList}>Followers</button>
                           </div>
                           <div className="text-center">
                             <p className="font-bold text-gray-900">
                               {data.followingCount || 0}
                             </p>
-                            <p className="text-xs text-gray-500">Following</p>
+                            <button className="text-xs bg-blue-700 px-2 py-1 rounded-3xl text-gray-100">Following</button>
                           </div>
                         </div>
                       </div>

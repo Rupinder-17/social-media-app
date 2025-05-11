@@ -12,10 +12,11 @@ export const ListItems = ({ post }) => {
   const [model, setModel] = useState();
   const navigate = useNavigate();
 
-  const { data, LikePosts, bookMarkPost, deletePost, PostGet } = usePost();
+  const { LikePosts, bookMarkPost, deletePost, PostGet } = usePost();
   const [isLiked, setIsLiked] = useState(post.isLiked);
   const [bookMark, setBookMark] = useState(post.isBookmarked);
-console.log("data", data);
+const [likeCount, setLikeCount] = useState(post.isLiked|| 0)
+console.log("count", isLiked);
 
   const handleDeletePost = async (id) => {
     try {
@@ -77,8 +78,11 @@ console.log("data", data);
           className="p-2 hover:bg-gray-100 rounded-full transition-colors"
         >
           {isLiked ? (
+            setLikeCount(likeCount +1),
             <IoIosHeart className="w-7 h-7 text-red-600" />
+            
           ) : (
+            // setLikeCount(likeCount-1)
             <CiHeart className="w-7 h-7" />
           )}
           {/* <span>{likeCount}</span> */}
