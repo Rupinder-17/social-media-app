@@ -21,8 +21,8 @@ export const usePost = () => {
         success: true,
         data: response?.data?.posts || null,
       });
-      console.log("myposts",response?.data?.posts);
-      
+      console.log("myposts", response?.data?.posts);
+
       return response?.data?.posts;
     } catch (e) {
       setPosts({ loading: false, error: null, success: false, data: null });
@@ -96,8 +96,13 @@ export const usePost = () => {
     setPosts({ loading: true, error: null, success: false, data: null });
     try {
       const response = await SocialAppServices.deletePost(postId);
-      setPosts((prev)=>({...prev, loading:false, success: true, data: prev.data.filter((post)=> post._id!== postId)}))
-     
+      setPosts((prev) => ({
+        ...prev,
+        loading: false,
+        success: true,
+        data: prev?.data?.filter((post) => post?._id !== postId),
+      }));
+
       return response.data;
     } catch (e) {
       console.log(e);
