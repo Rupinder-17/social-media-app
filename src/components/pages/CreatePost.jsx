@@ -21,11 +21,18 @@ export const CreatePost = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [showPreview, setShowPreview] = useState(false);
   const [, setSubmittedPosts] = useState([]);
-  const { data: posts, PostGet } = usePost();
+  const { data: posts, PostGet , deletePost } = usePost();
 
   const { createPost, status } = useCreatePost();
   console.log("status", status);
   
+  const handleDeletePost = async (id) => {
+    try {
+      await deletePost(id);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   useEffect(() => {
     if (status.success) {
@@ -246,7 +253,7 @@ export const CreatePost = () => {
             </h2>
             <div className="space-y-6">
               {posts?.map((post) => (
-                <ListItems post={post} key={post._id} />
+                <ListItems post={post} deletePost={handleDeletePost} key={post._id} />
               ))}
             </div>
           </div>

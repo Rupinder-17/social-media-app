@@ -8,25 +8,17 @@ import { FaRegComment } from "react-icons/fa";
 import { CommentModel } from "./CommentModel";
 import { useNavigate } from "react-router-dom";
 
-export const ListItems = ({ post }) => {
+export const ListItems = ({ post, deletePost }) => {
   const [model, setModel] = useState();
   const navigate = useNavigate();
 
-  const { LikePosts, bookMarkPost, deletePost, PostGet } = usePost();
+  const { LikePosts, bookMarkPost, } = usePost();
   const [isLiked, setIsLiked] = useState(post.isLiked);
   const [bookMark, setBookMark] = useState(post.isBookmarked);
-const [likeCount, setLikeCount] = useState(post.isLiked|| 0)
+// const [likeCount, setLikeCount] = useState(post.isLiked|| 0)
 console.log("count", isLiked);
 
-  const handleDeletePost = async (id) => {
-    try {
-      await deletePost(id);
-      await PostGet(id); 
-    } catch (e) {
-      console.log(e);
-    } 
-  };
-
+  
   
   return (
     <div
@@ -52,7 +44,7 @@ console.log("count", isLiked);
         </div>
         <div className="ml-auto">
           <button
-            onClick={() => handleDeletePost(post._id)}
+            onClick={() => deletePost(post._id)}
            
           >
             Del
@@ -78,7 +70,7 @@ console.log("count", isLiked);
           className="p-2 hover:bg-gray-100 rounded-full transition-colors"
         >
           {isLiked ? (
-            setLikeCount(likeCount +1),
+            // setLikeCount(likeCount +1),
             <IoIosHeart className="w-7 h-7 text-red-600" />
             
           ) : (
