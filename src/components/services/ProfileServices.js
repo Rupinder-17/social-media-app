@@ -30,12 +30,12 @@ export const ProfileServices = {
       console.log(e);
     }
   },
-  async followerList(username) {
+  async followerUser(toBeFollowedUserId) {
     try {
       const response = await apiclient.request(
-        `social-media/follow/list/followers/${username}`,
+        `social-media/follow/${toBeFollowedUserId}`,
         {
-          method: "GET",
+          method: "POST",
         }
       );
       
@@ -52,7 +52,6 @@ export const ProfileServices = {
           method: "GET",
         }
       );
-      // console.log("userProfile", response);
 
       return response;
     } catch (e) {

@@ -5,19 +5,19 @@ import { FiArrowLeft, FiEdit } from "react-icons/fi";
 import { usePost } from "../hooks/usePost";
 
 export const UserProfile = () => {
-  const { data, getUserProfile, followerList } = useProfile();
+  const { data, getUserProfile, followerUser } = useProfile();
   const { data: posts, getUserPosts} = usePost()
-  console.log("dataposts", posts);
    const navigate = useNavigate();
+  console.log("dataId", data);
   
-  const { username } = useParams();
+  const {username } = useParams();
   console.log("username", username);
   useEffect(() => {
     getUserProfile(username);
     getUserPosts()
   }, []);
 const handleFollowerList = ()=>{
-  followerList(username)
+  followerUser(data?.account?._id)
 }
   return (
   

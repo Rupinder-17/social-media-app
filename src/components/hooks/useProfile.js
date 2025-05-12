@@ -52,30 +52,15 @@ export const useProfile = () => {
       });
     }
   };
-  const followerList = async (username) => {
-    setProfileState({
-      loading: true,
-      error: null,
-      success: false,
-      data: null,
-    });
+  const followerUser = async (userId) => {
+   
     try {
-      const response = await ProfileServices.followerList(username);
-      setProfileState({
-        loading: false,
-        error: null,
-        success: true,
-        data: response.data,
-      });
+      const response = await ProfileServices.followerUser(userId);
+      
       console.log("follower", response.data);
     } catch (e) {
       console.log(e);
-      setProfileState({
-        loading: false,
-        error: e.message || "Failed to update cover image",
-        success: false,
-        data: null,
-      });
+      
     }
   };
   const getUserProfile = async (username) => {
@@ -104,7 +89,7 @@ export const useProfile = () => {
     ...profileState,
     getProfile,
     coverImage,
-    followerList,
+    followerUser,
     getUserProfile,
   };
 };
