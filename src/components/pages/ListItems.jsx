@@ -15,8 +15,8 @@ export const ListItems = ({ post, deletePost }) => {
   const { LikePosts, bookMarkPost, } = usePost();
   const [isLiked, setIsLiked] = useState(post.isLiked);
   const [bookMark, setBookMark] = useState(post.isBookmarked);
-// const [likeCount, setLikeCount] = useState(post.isLiked|| 0)
-console.log("count", isLiked);
+const [likeCount, setLikeCount] = useState(post.likes);
+console.log("count", likeCount);
 
   
   
@@ -45,7 +45,6 @@ console.log("count", isLiked);
         <div className="ml-auto">
           <button
             onClick={() => deletePost(post._id)}
-           
           >
             Del
           </button>
@@ -65,19 +64,18 @@ console.log("count", isLiked);
         <button
           onClick={() => {
             LikePosts(post._id);
+            !isLiked ? setLikeCount(likeCount+1) : setLikeCount(likeCount-1)
             setIsLiked(() => !isLiked);
           }}
           className="p-2 hover:bg-gray-100 rounded-full transition-colors"
         >
           {isLiked ? (
-            // setLikeCount(likeCount +1),
             <IoIosHeart className="w-7 h-7 text-red-600" />
             
           ) : (
-            // setLikeCount(likeCount-1)
             <CiHeart className="w-7 h-7" />
           )}
-          {/* <span>{likeCount}</span> */}
+          <span>{likeCount}</span>
         </button>
 
         <button

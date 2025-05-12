@@ -15,17 +15,16 @@ export const CreatePost = () => {
     image: "",
     tags: [],
   });
-  const {logout}= useAuth()
-  
+  const { logout } = useAuth();
 
   const [imagePreview, setImagePreview] = useState(null);
   const [showPreview, setShowPreview] = useState(false);
   const [, setSubmittedPosts] = useState([]);
-  const { data: posts, PostGet , deletePost } = usePost();
+  const { data: posts, PostGet, deletePost } = usePost();
 
   const { createPost, status } = useCreatePost();
   console.log("status", status);
-  
+
   const handleDeletePost = async (id) => {
     try {
       await deletePost(id);
@@ -140,10 +139,14 @@ export const CreatePost = () => {
         <h1 className="text-xl font-semibold text-center flex-1">
           Create New Post
         </h1>
-        <button onClick={()=>{
-          logout()
-          navigate("/login")
-        }} >logout</button>
+        <button
+          onClick={() => {
+            logout();
+            navigate("/login");
+          }}
+        >
+          logout
+        </button>
         <button
           onClick={() => navigate("/book-mark")}
           className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-4 py-2 rounded-full font-medium text-sm transition-colors shadow-sm hover:shadow flex items-center gap-1 mr-2"
@@ -253,7 +256,11 @@ export const CreatePost = () => {
             </h2>
             <div className="space-y-6">
               {posts?.map((post) => (
-                <ListItems post={post} deletePost={handleDeletePost} key={post._id} />
+                <ListItems
+                  post={post}
+                  deletePost={handleDeletePost}
+                  key={post._id}
+                />
               ))}
             </div>
           </div>

@@ -86,7 +86,7 @@ const handleFollowerList = ()=>{
                             className="w-full h-full object-cover"
                           />
                         ) : (
-                          data.account.username?.charAt(0).toUpperCase() || "U"
+                          data?.account?.username?.charAt(0).toUpperCase() || "U"
                         )}
                       </div>
 
@@ -98,7 +98,7 @@ const handleFollowerList = ()=>{
 
                       <div className="mt-10">
                         <h2 className="text-xl font-bold text-gray-900">
-                          {data.account.username || "Username"}
+                          {data?.account?.username || "Username"}
                         </h2>
                         {data.fullName && (
                           <p className="text-gray-600 text-sm">{data.fullName}</p>

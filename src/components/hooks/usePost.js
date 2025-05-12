@@ -87,29 +87,22 @@ export const usePost = () => {
         success: true,
         data: response.data.posts || [],
       });
-      console.log("userpost", response.data.posts);
     } catch (e) {
       console.log(e);
     }
   };
   const deletePost = async (postId) => {
-    setPosts({  ...posts, loading: true, error: null, success: false,  });
+    setPosts({ ...posts, loading: true, error: null, success: false });
     try {
       const response = await SocialAppServices.deletePost(postId);
       setPosts((prev) => {
-        console.log("filter",prev,prev?.data?.filter((post) => post?._id !== postId ));
-        
-        return({
-        ...prev,
-        loading: false,
-        success: true,
-        data: prev?.data?.filter((post) => post?._id !== postId),
-      })}
-    );
-      console.log("dele",posts?.data?.filter((post) => post?._id !== postId))
-      console.log("posts", posts);
-      
-      
+        return {
+          ...prev,
+          loading: false,
+          success: true,
+          data: prev?.data?.filter((post) => post?._id !== postId),
+        };
+      });
 
       return response.data;
     } catch (e) {
