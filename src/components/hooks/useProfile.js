@@ -53,14 +53,12 @@ export const useProfile = () => {
     }
   };
   const followerUser = async (userId) => {
-   
     try {
       const response = await ProfileServices.followerUser(userId);
-      
+
       console.log("follower", response.data);
     } catch (e) {
       console.log(e);
-      
     }
   };
   const getUserProfile = async (username) => {

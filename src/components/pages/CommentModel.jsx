@@ -20,9 +20,13 @@ export const CommentModel = ({ postId }) => {
   } = useComment();
   const { user } = useAuth();
 
+
   const [editComment, setEditComment] = useState(null);
   const [editCommentText, setEditCommentText] = useState("");
   console.log("postComments", comments);
+  // const [commentCount, setCommentCount] = useState(comments);
+  // console.log("123",commentCount);
+  
   
 
   useEffect(() => {
