@@ -20,14 +20,9 @@ export const CommentModel = ({ postId }) => {
   } = useComment();
   const { user } = useAuth();
 
-
   const [editComment, setEditComment] = useState(null);
   const [editCommentText, setEditCommentText] = useState("");
   console.log("postComments", comments);
-  // const [commentCount, setCommentCount] = useState(comments);
-  // console.log("123",commentCount);
-  
-  
 
   useEffect(() => {
     allcommentsOfPost(postId);
@@ -36,7 +31,7 @@ export const CommentModel = ({ postId }) => {
   const handleAddComment = async () => {
     try {
       await addComments(postId, commentInput);
-      await allcommentsOfPost(postId);
+      // setCommentCount((prev) => prev + 1), await allcommentsOfPost(postId);
 
       setCommentInput("");
     } catch (error) {
@@ -46,7 +41,8 @@ export const CommentModel = ({ postId }) => {
   const handleDeleteComment = async (id) => {
     try {
       await deleteComment(id);
-      await allcommentsOfPost(postId);
+      // setCommentCount((prev) => prev - 1),
+       await allcommentsOfPost(postId);
     } catch (e) {
       console.log(e);
     }

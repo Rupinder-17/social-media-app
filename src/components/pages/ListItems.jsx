@@ -12,14 +12,21 @@ export const ListItems = ({ post, deletePost }) => {
   const [model, setModel] = useState();
   const navigate = useNavigate();
 
-  const { LikePosts, bookMarkPost, } = usePost();
+  const { LikePosts, bookMarkPost } = usePost();
   const [isLiked, setIsLiked] = useState(post.isLiked);
   const [bookMark, setBookMark] = useState(post.isBookmarked);
-const [likeCount, setLikeCount] = useState(post.likes);
-console.log("count", likeCount);
+  const [likeCount, setLikeCount] = useState(post.likes);
 
-  
-  
+    const [commentCount, setCommentCount] = useState(post.Comments );
+    console.log("post", commentCount);
+    
+  const handleComentCount = ()=>{
+    if(commentCount>=0){
+      setCommentCount((prev)=> prev +1)
+    }
+    // else if(commentCount)
+  }
+
   return (
     <div
       key={post._id}
@@ -43,11 +50,7 @@ console.log("count", likeCount);
           <p className="text-gray-500 text-xs">{post.createdAt}</p>
         </div>
         <div className="ml-auto">
-          <button
-            onClick={() => deletePost(post._id)}
-          >
-            Del
-          </button>
+          <button onClick={() => deletePost(post._id)}>Del</button>
         </div>
       </div>
 
@@ -64,14 +67,15 @@ console.log("count", likeCount);
         <button
           onClick={() => {
             LikePosts(post._id);
-            !isLiked ? setLikeCount(likeCount+1) : setLikeCount(likeCount-1)
+            !isLiked
+              ? setLikeCount(likeCount + 1)
+              : setLikeCount(likeCount - 1);
             setIsLiked(() => !isLiked);
           }}
           className="p-2 hover:bg-gray-100 rounded-full transition-colors"
         >
           {isLiked ? (
             <IoIosHeart className="w-7 h-7 text-red-600" />
-            
           ) : (
             <CiHeart className="w-7 h-7" />
           )}
@@ -99,7 +103,7 @@ console.log("count", likeCount);
           )}
         </button>
       </div>
-      {model && <CommentModel postId={post._id} />}
+      {model && <CommentModel postId={post._id}  post={post}/>}
       <div className="p-4">
         <p className="text-gray-900">{post.content}</p>
       </div>
