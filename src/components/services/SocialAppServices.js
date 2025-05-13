@@ -2,6 +2,11 @@ import React from "react";
 import { apiclient } from "../../api/apiClients";
 
 export const SocialAppServices = {
+  // async userPosts(username){
+  //   try{
+  //     const response = await apiclient.request()
+  //   }
+  // }
   async postData(formdata) {
     try {
       const response = await apiclient.request("social-media/posts", {

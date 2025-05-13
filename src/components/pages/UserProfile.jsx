@@ -6,7 +6,7 @@ import { usePost } from "../hooks/usePost";
 
 export const UserProfile = () => {
   const { data, getUserProfile, followerUser } = useProfile();
-  const { data: posts, getUserPosts } = usePost();
+  const { data: posts, } = usePost();
   const navigate = useNavigate();
   
   
@@ -15,7 +15,7 @@ export const UserProfile = () => {
 
   useEffect(() => {
     getUserProfile(username);
-    getUserPosts();
+    // getUserPosts();
   }, []);
 
   const handleFollowerList = () => {

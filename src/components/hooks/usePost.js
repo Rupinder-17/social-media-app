@@ -76,23 +76,8 @@ export const usePost = () => {
       console.log(e);
     }
   };
-  const getUserPosts = async (username) => {
-    console.log(username);
     
-    setPosts({ loading: true, error: null, success: false, data: null });
-
-    try {
-      const response = await SocialAppServices.userPosts(username);
-      setPosts({
-        loading: false,
-        error: null,
-        success: true,
-        data: response.data.posts || [],
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  
   const deletePost = async (postId) => {
     setPosts({ ...posts, loading: true, error: null, success: false });
     try {
@@ -118,7 +103,6 @@ export const usePost = () => {
     LikePosts,
     bookMarkPost,
     getBookMarkPosts,
-    getUserPosts,
     deletePost,
   };
 };
