@@ -81,21 +81,28 @@ export const useProfile = () => {
       console.log(e);
     }
   };
-  const getPostByUsername = async (username) => {
-    setProfileState({ loading: true, error: null, success: false, data: null });
-    try {
-      const response = await ProfileServices.userPostsbyUserName(username);
-      setProfileState({
-        loading: true,
-        error: null,
-        success: false,
-        data: response.data,
-      });
-      return response.data;
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  // const getPostByUsername = async (username) => {
+  //   setProfileState({ loading: true, error: null, success: false, data: null });
+  //   try {
+  //     const response = await ProfileServices.userPostsbyUserName(username);
+  //     setProfileState({
+  //       ...profileState,
+  //       loading: true,
+  //       error: null,
+  //       success: false,
+  //       post: response.data,
+  //     });
+  //     return response.data;
+  //   } catch (e) {
+  //     console.log(e);
+  //     setProfileState({
+  //       loading: false,
+  //       error: e.message || "Failed to update cover image",
+  //       success: false,
+  //       data: null,
+  //     });
+  //   }
+  // };
 
   return {
     ...profileState,

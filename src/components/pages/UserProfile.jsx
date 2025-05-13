@@ -3,16 +3,16 @@ import { useProfile } from "../hooks/useProfile";
 import { useNavigate, useParams } from "react-router-dom";
 import { FiArrowLeft, FiEdit } from "react-icons/fi";
 import { usePost } from "../hooks/usePost";
-// import { useAuth } from "../hooks/useAuth";
 
 export const UserProfile = () => {
-  const { data, getUserProfile, followerUser } = useProfile();
+  const { data, getUserProfile, followerUser, getPostByUsername } = useProfile();
   const { data: posts, getUserPosts } = usePost();
   const navigate = useNavigate();
   
+  
 
   const { username } = useParams();
-  
+
   useEffect(() => {
     getUserProfile(username);
     getUserPosts();
@@ -25,7 +25,6 @@ export const UserProfile = () => {
     <div>
       <div>
         <div className="min-h-screen bg-gray-50">
-          {/* Header */}
           <div className="sticky top-0 z-10 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
             <button
               onClick={() => navigate(-1)}
@@ -42,7 +41,6 @@ export const UserProfile = () => {
           {data ? (
             <div className="max-w-xl mx-auto p-4">
               <div className="bg-white rounded-xl shadow-sm overflow-hidden mb-4">
-                {/* Cover Image */}
                 <div className="h-32 bg-gradient-to-r from-blue-500 to-purple-600 relative">
                   {data.coverImage && (
                     <img
@@ -80,7 +78,6 @@ export const UserProfile = () => {
                 </div>
 
                 <div className="px-4 pt-0 pb-4 relative">
-                  {/* Avatar */}
                   <div className="absolute -top-12 left-4 border-4 border-white rounded-full overflow-hidden bg-gradient-to-r from-purple-500 to-pink-500 w-24 h-24 flex items-center justify-center text-white text-3xl font-bold shadow-md">
                     {data?.avatar ? (
                       <img
