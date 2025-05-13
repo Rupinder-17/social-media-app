@@ -23,7 +23,6 @@ export const CreatePost = () => {
   const { data: posts, PostGet, deletePost } = usePost();
 
   const { createPost, status } = useCreatePost();
-  console.log("status", status);
 
   const handleDeletePost = async (id) => {
     try {

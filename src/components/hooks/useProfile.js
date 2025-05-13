@@ -76,7 +76,6 @@ export const useProfile = () => {
         success: true,
         data: response.data,
       });
-      console.log("userPtrofile", response);
       return response.data;
     } catch (e) {
       console.log(e);

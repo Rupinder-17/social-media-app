@@ -17,15 +17,7 @@ export const ListItems = ({ post, deletePost }) => {
   const [bookMark, setBookMark] = useState(post.isBookmarked);
   const [likeCount, setLikeCount] = useState(post.likes);
 
-    const [commentCount, setCommentCount] = useState(post.Comments );
-    console.log("post", commentCount);
-    
-  const handleComentCount = ()=>{
-    if(commentCount>=0){
-      setCommentCount((prev)=> prev +1)
-    }
-    // else if(commentCount)
-  }
+  const [commentCount, setCommentCount] = useState(post.comments);
 
   return (
     <div
@@ -87,7 +79,7 @@ export const ListItems = ({ post, deletePost }) => {
           className="p-2 hover:bg-gray-100 rounded-full transition-colors"
         >
           <FaRegComment className="w-6 h-6 text-gray-700" />
-          <span>{post.comments}</span>
+          <span>{commentCount}</span>
         </button>
         <button
           onClick={() => {
@@ -103,7 +95,9 @@ export const ListItems = ({ post, deletePost }) => {
           )}
         </button>
       </div>
-      {model && <CommentModel postId={post._id}  post={post}/>}
+      {model && (
+        <CommentModel postId={post._id} setCommentCount={setCommentCount} />
+      )}
       <div className="p-4">
         <p className="text-gray-900">{post.content}</p>
       </div>

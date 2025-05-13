@@ -9,7 +9,7 @@ import { FiSend } from "react-icons/fi";
 import { useComment } from "../hooks/useComment";
 import { useAuth } from "../hooks/useAuth";
 
-export const CommentModel = ({ postId }) => {
+export const CommentModel = ({ postId, setCommentCount }) => {
   const [commentInput, setCommentInput] = useState("");
   const {
     data: comments,
@@ -31,7 +31,8 @@ export const CommentModel = ({ postId }) => {
   const handleAddComment = async () => {
     try {
       await addComments(postId, commentInput);
-      // setCommentCount((prev) => prev + 1), await allcommentsOfPost(postId);
+      setCommentCount((prev)=> prev+1);
+      await allcommentsOfPost(postId);
 
       setCommentInput("");
     } catch (error) {
@@ -41,8 +42,8 @@ export const CommentModel = ({ postId }) => {
   const handleDeleteComment = async (id) => {
     try {
       await deleteComment(id);
-      // setCommentCount((prev) => prev - 1),
-       await allcommentsOfPost(postId);
+      setCommentCount((prev)=> prev -1);
+      await allcommentsOfPost(postId);
     } catch (e) {
       console.log(e);
     }
