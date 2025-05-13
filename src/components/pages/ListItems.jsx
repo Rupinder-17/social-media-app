@@ -7,6 +7,7 @@ import { FaBookmark } from "react-icons/fa6";
 import { FaRegComment } from "react-icons/fa";
 import { CommentModel } from "./CommentModel";
 import { useNavigate } from "react-router-dom";
+import { usePostGetUserName } from "../hooks/usePostGetUserName";
 
 export const ListItems = ({ post, deletePost }) => {
   const [model, setModel] = useState();
@@ -16,8 +17,13 @@ export const ListItems = ({ post, deletePost }) => {
   const [isLiked, setIsLiked] = useState(post.isLiked);
   const [bookMark, setBookMark] = useState(post.isBookmarked);
   const [likeCount, setLikeCount] = useState(post.likes);
+  const { userNamePost , getPostByUsername} = usePostGetUserName();
+    console.log("userPOst", userNamePost);
 
   const [commentCount, setCommentCount] = useState(post.comments);
+  const handleUserPost = ()=>{
+    getPostByUsername()
+  }
 
   return (
     <div
@@ -35,7 +41,7 @@ export const ListItems = ({ post, deletePost }) => {
               navigate(`/user-Profile/${post.author.account.username}`);
             }}
           >
-            <p className="font-medium text-gray-900">
+            <p className="font-medium text-gray-900" onClick={handleUserPost}>
               {post?.author?.account?.username}
             </p>
           </button>

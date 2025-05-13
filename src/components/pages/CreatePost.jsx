@@ -21,6 +21,8 @@ export const CreatePost = () => {
   const [showPreview, setShowPreview] = useState(false);
   const [, setSubmittedPosts] = useState([]);
   const { data: posts, PostGet, deletePost } = usePost();
+  
+  
 
   const { createPost, status } = useCreatePost();
 
@@ -171,7 +173,6 @@ export const CreatePost = () => {
         {/* Instagram-like card for creating post - more compact UI */}
         <div className="bg-white rounded-xl shadow-sm overflow-hidden mb-4">
           <form onSubmit={handleSubmit} className="flex flex-col">
-            {/* Combined content and image upload area */}
             <div className="p-3">
               <textarea
                 value={data.content}
@@ -182,7 +183,6 @@ export const CreatePost = () => {
               />
             </div>
 
-            {/* Image preview or upload button */}
             <div className="px-3 pb-2">
               {imagePreview && showPreview ? (
                 <div className="relative rounded-lg overflow-hidden">

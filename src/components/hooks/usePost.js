@@ -77,6 +77,8 @@ export const usePost = () => {
     }
   };
   const getUserPosts = async (username) => {
+    console.log(username);
+    
     setPosts({ loading: true, error: null, success: false, data: null });
 
     try {

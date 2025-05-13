@@ -9,11 +9,13 @@ export const usePostGetUserName = () => {
       data: null,
     });
     const getPostByUsername = async (username) => {
-          setUserNamePost({ loading: true, error: null, success: false, data: null });
+        console.log("myuser", username);
+        
+          setUserNamePost({ loading: true, error: null, success: false, });
           try {
             const response = await ProfileServices.userPostsbyUserName(username);
             setUserNamePost({
-            //   ...profileState,
+            
               loading: true,
               error: null,
               success: false,

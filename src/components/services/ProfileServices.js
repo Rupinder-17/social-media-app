@@ -45,6 +45,8 @@ export const ProfileServices = {
     }
   },
   async getUserPorfile(username) {
+    console.log("u", username);
+    
     try {
       const response = await apiclient.request(
         `social-media/profile/u/${username}`,
