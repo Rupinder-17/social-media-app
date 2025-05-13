@@ -81,6 +81,21 @@ export const useProfile = () => {
       console.log(e);
     }
   };
+  const getPostByUsername = async (username) => {
+    setProfileState({ loading: true, error: null, success: false, data: null });
+    try {
+      const response = await ProfileServices.userPostsbyUserName(username);
+      setProfileState({
+        loading: true,
+        error: null,
+        success: false,
+        data: response.data,
+      });
+      return response.data;
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return {
     ...profileState,
@@ -88,5 +103,6 @@ export const useProfile = () => {
     coverImage,
     followerUser,
     getUserProfile,
+    getPostByUsername,
   };
 };

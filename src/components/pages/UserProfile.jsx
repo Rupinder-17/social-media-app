@@ -12,11 +12,12 @@ export const UserProfile = () => {
   
 
   const { username } = useParams();
-  console.log("username", username);
+  
   useEffect(() => {
     getUserProfile(username);
     getUserPosts();
   }, []);
+
   const handleFollowerList = () => {
     followerUser(data?.account?._id);
   };

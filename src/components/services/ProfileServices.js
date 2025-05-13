@@ -38,7 +38,7 @@ export const ProfileServices = {
           method: "POST",
         }
       );
-      
+
       return response;
     } catch (e) {
       console.log(e);
@@ -53,6 +53,19 @@ export const ProfileServices = {
         }
       );
 
+      return response;
+    } catch (e) {
+      console.log(e);
+    }
+  },
+  async userPostsbyUserName(username) {
+    try {
+      const response = await apiclient.request(
+        `social-media/posts/get/u/${username}`,
+        {
+          method: "GET",
+        }
+      );
       return response;
     } catch (e) {
       console.log(e);
