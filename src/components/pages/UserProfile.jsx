@@ -5,7 +5,7 @@ import { FiArrowLeft, FiEdit } from "react-icons/fi";
 import { usePost } from "../hooks/usePost";
 
 export const UserProfile = () => {
-  const { data, getUserProfile, followerUser, getPostByUsername } = useProfile();
+  const { data, getUserProfile, followerUser } = useProfile();
   const { data: posts, getUserPosts } = usePost();
   const navigate = useNavigate();
   
