@@ -6,7 +6,7 @@ export const usePostGetUserName = () => {
       loading: false,
       error: null,
       success: false,
-      data: null,
+      userpost: null,
     });
     const getPostByUsername = async (username) => {
         console.log("myuser", username);
@@ -19,16 +19,16 @@ export const usePostGetUserName = () => {
               loading: true,
               error: null,
               success: false,
-              post: response.data,
+              userpost: response.data.posts,
             });
-            return response.data;
+            return response.data.posts;
           } catch (e) {
             console.log(e);
             setUserNamePost({
               loading: false,
               error: e.message || "Failed to update cover image",
               success: false,
-              data: null,
+              userpost: null,
             });
           }
         };

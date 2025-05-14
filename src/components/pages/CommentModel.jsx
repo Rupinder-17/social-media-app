@@ -109,7 +109,7 @@ export const CommentModel = ({ postId, setCommentCount }) => {
                 className="flex items-start gap-2 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
               >
                 <div className="w-7 h-7 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-xs flex-shrink-0">
-                  {comment.content.charAt(0).toUpperCase()}
+                  {comment?.content?.charAt(0).toUpperCase()}
                 </div>
                 <div className="flex-1">
                   {editComment === comment._id ? (

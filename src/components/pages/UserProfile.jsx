@@ -2,12 +2,15 @@ import React, { useEffect } from "react";
 import { useProfile } from "../hooks/useProfile";
 import { useNavigate, useParams } from "react-router-dom";
 import { FiArrowLeft, FiEdit } from "react-icons/fi";
-import { usePost } from "../hooks/usePost";
+import { usePostGetUserName } from "../hooks/usePostGetUserName";
 
 export const UserProfile = () => {
   const { data, getUserProfile, followerUser } = useProfile();
-  const { data: posts, } = usePost();
+  // const { data: posts, } = usePost();
   const navigate = useNavigate();
+  const {userpost ,getPostByUsername}= usePostGetUserName()
+  console.log("area",userpost);
+  
   
   
 
@@ -15,7 +18,7 @@ export const UserProfile = () => {
 
   useEffect(() => {
     getUserProfile(username);
-    // getUserPosts();
+    getPostByUsername(username)
   }, []);
 
   const handleFollowerList = () => {
@@ -163,7 +166,7 @@ export const UserProfile = () => {
                 </div>
               </div>
               <div>
-                {posts?.map((item) => (
+                {userpost?.map((item) => (
                   <img src={item?.images[0].url} alt="" />
                 ))}
               </div>

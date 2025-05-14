@@ -20,7 +20,6 @@ export const Login = () => {
     try {
       const res = await login(credentials);
       navigate("/create-post")
-      console.log(res);
     } catch (error) {
       console.log(error);
     }

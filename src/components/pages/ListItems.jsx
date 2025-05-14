@@ -6,7 +6,7 @@ import { FaRegBookmark } from "react-icons/fa6";
 import { FaBookmark } from "react-icons/fa6";
 import { FaRegComment } from "react-icons/fa";
 import { CommentModel } from "./CommentModel";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { usePostGetUserName } from "../hooks/usePostGetUserName";
 
 export const ListItems = ({ post, deletePost }) => {
@@ -17,13 +17,17 @@ export const ListItems = ({ post, deletePost }) => {
   const [isLiked, setIsLiked] = useState(post.isLiked);
   const [bookMark, setBookMark] = useState(post.isBookmarked);
   const [likeCount, setLikeCount] = useState(post.likes);
-  const { userNamePost , getPostByUsername} = usePostGetUserName();
-    console.log("userPOst", userNamePost);
+  // const { username } = useParams();
+  
+  // const { data, getPostByUsername } = usePostGetUserName();
+  // console.log("userPOst", data);
 
   const [commentCount, setCommentCount] = useState(post.comments);
-  const handleUserPost = ()=>{
-    getPostByUsername()
-  }
+  // const handleUserPost = () => {
+  //   if (username) {
+  //     getPostByUsername(username);
+  //   }
+  // };
 
   return (
     <div
@@ -38,10 +42,12 @@ export const ListItems = ({ post, deletePost }) => {
         <div className="ml-3">
           <button
             onClick={() => {
+              // handleUserPost(post.author.account.username);
+
               navigate(`/user-Profile/${post.author.account.username}`);
             }}
           >
-            <p className="font-medium text-gray-900" onClick={handleUserPost}>
+            <p className="font-medium text-gray-900">
               {post?.author?.account?.username}
             </p>
           </button>
@@ -54,13 +60,18 @@ export const ListItems = ({ post, deletePost }) => {
 
       {post.images && (
         <div className="relative  bg-white">
-          <img
-            src={post.images[0].url}
-            alt="Post"
-            className="h-60 object-contain"
-          />
+          {post.images.length > 0 && (
+            <img
+              src={post.images[0]?.url}
+              alt="Post"
+              className="w-full object-contain"
+            />
+          )}
         </div>
       )}
+      <div className="p-4">
+        <p className="text-gray-900">{post.content}</p>
+      </div>
       <div className="p-3 flex items-center space-x-4">
         <button
           onClick={() => {
@@ -70,7 +81,7 @@ export const ListItems = ({ post, deletePost }) => {
               : setLikeCount(likeCount - 1);
             setIsLiked(() => !isLiked);
           }}
-          className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+          className="p-2 hover:bg-gray-100 rounded-full transition-colors flex gap-2"
         >
           {isLiked ? (
             <IoIosHeart className="w-7 h-7 text-red-600" />
@@ -82,7 +93,7 @@ export const ListItems = ({ post, deletePost }) => {
 
         <button
           onClick={() => setModel(() => !model)}
-          className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+          className="p-2 hover:bg-gray-100 rounded-full transition-colors flex gap-2"
         >
           <FaRegComment className="w-6 h-6 text-gray-700" />
           <span>{commentCount}</span>
@@ -104,9 +115,6 @@ export const ListItems = ({ post, deletePost }) => {
       {model && (
         <CommentModel postId={post._id} setCommentCount={setCommentCount} />
       )}
-      <div className="p-4">
-        <p className="text-gray-900">{post.content}</p>
-      </div>
     </div>
   );
 };
