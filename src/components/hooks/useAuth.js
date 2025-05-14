@@ -38,7 +38,7 @@ export const useAuth = () => {
   const logout = ()=>{
     setState(null)
     localStorage.removeItem("social_app_user");
-    localStorage.removeItem("soial_app_accessToken")
+    localStorage.removeItem("social_app_accessToken");
   }
   return { ...state, register, login, logout };
 };

@@ -38,12 +38,12 @@ export const ProfileServices = {
           method: "POST",
         }
       );
-      console.log("follow", response);
-      
 
+      // Return the response with follow status information
       return response;
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.log(error);
+      throw error; // Propagate the error to be handled by the hook
     }
   },
   async getUserPorfile(username) {

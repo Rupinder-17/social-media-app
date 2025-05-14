@@ -9,22 +9,22 @@ import {
   FiImage,
 } from "react-icons/fi";
 import { usePostGetUserName } from "../hooks/usePostGetUserName";
+import { useFollow } from "../hooks/useFollow";
 import { CiLocationOn } from "react-icons/ci";
 import { FaRegBookmark } from "react-icons/fa6";
 import { IoIosLink } from "react-icons/io";
+import { FaUserPlus, FaUserCheck } from "react-icons/fa";
 
 export const UserProfile = () => {
-  const { data, getUserProfile, followerUser } = useProfile();
+  const { data, getUserProfile } = useProfile();
   const navigate = useNavigate();
   const { userpost, getPostByUsername, deletePost } = usePostGetUserName();
-  const [followerCounts, setFollowerCount] = useState(data?.followersCount);
-  console.log(followerCounts);
-  // console.log(data._id);
-  
-
-  
+  const { toggleFollow, isFollowing } = useFollow();
+  const [followerCounts, setFollowerCount] = useState(0);
+  const [isUserFollowing, setIsUserFollowing] = useState(false);
 
   const { username } = useParams();
+
   const handleDeletePost = async (id) => {
     try {
       await deletePost(id);
@@ -32,28 +32,31 @@ export const UserProfile = () => {
       console.log(e);
     }
   };
-  const handleFollowerCount = async (id)=>{
-    if(followerCounts){
-      await followerUser(id)
-      setFollowerCount((prev)=> prev +1)
+
+  const handleFollowToggle = async (id) => {
+    try {
+      const result = await toggleFollow(id);
+      if (result.success) {
+        setIsUserFollowing(result.isFollowing);
+        setFollowerCount(result.followersCount);
+      }
+    } catch (e) {
+      console.log(e);
     }
-    else{
-      setFollowerCount((prev)=> prev-1)
-    }
-  }
+  };
 
   useEffect(() => {
     getUserProfile(username);
     getPostByUsername(username);
-  }, []);
+  }, [username]);
 
   useEffect(() => {
-    if (data && data.followersCount !== undefined) {
-      setFollowerCount(data.followersCount);
+    if (data) {
+      setFollowerCount(data.followersCount || 0);
+      setIsUserFollowing(data.isFollowing || false);
     }
   }, [data]);
 
- 
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="sticky top-0 z-10 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
@@ -153,7 +156,7 @@ export const UserProfile = () => {
                 <div className="flex gap-6 mt-6 pt-4 border-t border-gray-100">
                   <div className="text-center bg-gray-50 px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
                     <p className="font-bold text-gray-900 text-xl">
-                      {userpost.length || 0}
+                      {userpost?.length || 0}
                     </p>
                     <p className="text-sm text-blue-500 font-medium ">
                       {userpost?.length > 0 ? "Post" : "Posts"}{" "}
@@ -164,10 +167,22 @@ export const UserProfile = () => {
                       {followerCounts || 0}
                     </p>
                     <button
-                      className="text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors"
-                      onClick={()=>handleFollowerCount(data._id)}
+                      className={`text-sm font-medium flex items-center gap-1 px-3 py-1 rounded-full transition-colors ${
+                        isUserFollowing
+                          ? "bg-gray-200 text-gray-800 hover:bg-gray-300"
+                          : "bg-blue-500 text-white hover:bg-blue-600"
+                      }`}
+                      onClick={() => handleFollowToggle(data._id)}
                     >
-                      Follow
+                      {isUserFollowing ? (
+                        <>
+                          <FaUserCheck size={12} /> Following
+                        </>
+                      ) : (
+                        <>
+                          <FaUserPlus size={12} /> Follow
+                        </>
+                      )}
                     </button>
                   </div>
                   <div className="text-center bg-gray-50 px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
