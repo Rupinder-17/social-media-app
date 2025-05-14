@@ -34,7 +34,7 @@ export const useComment = () => {
         data: response.data.comments,
       });
       console.log("totalcomments", response.data);
-      
+
       return response.data;
     } catch (e) {
       console.log(e);
@@ -75,11 +75,26 @@ export const useComment = () => {
       console.log(e);
     }
   };
+  const likeComments = async (commentId) => {
+    setCommentState({ loading: true, error: null, success: false, data: null });
+    try {
+      const response = await SocialAppServices.likeComments(commentId);
+      setCommentState({
+        loading: false,
+        error: null,
+        success: true,
+        data: response.data,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return {
     ...commentState,
     addComments,
     allcommentsOfPost,
     deleteComment,
     updateComment,
+    likeComments,
   };
 };

@@ -172,7 +172,15 @@ export const UserProfile = () => {
                           ? "bg-gray-200 text-gray-800 hover:bg-gray-300"
                           : "bg-blue-500 text-white hover:bg-blue-600"
                       }`}
-                      onClick={() => handleFollowToggle(data._id)}
+                      onClick={() => {
+                        if (!data || !data._id) {
+                          setFollowError(
+                            "Cannot follow user: User ID is missing"
+                          );
+                          return;
+                        }
+                        handleFollowToggle(data._id);
+                      }}
                     >
                       {isUserFollowing ? (
                         <>

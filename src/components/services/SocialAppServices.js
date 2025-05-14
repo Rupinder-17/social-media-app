@@ -66,6 +66,7 @@ export const SocialAppServices = {
       console.log(e);
     }
   },
+
   async addComment(postId, comment) {
     try {
       const response = await apiclient.request(
@@ -78,6 +79,18 @@ export const SocialAppServices = {
       return response;
     } catch (e) {
       console.log(e);
+    }
+  },
+  async likeComments(commentId){
+    try{
+      const response = apiclient.request(`social-media/like/comment/${commentId}`,{
+        method:"POST",
+      })
+      return response
+    }
+    catch(e){
+      console.log(e);
+      
     }
   },
   async allcommentsOfPost(postId) {

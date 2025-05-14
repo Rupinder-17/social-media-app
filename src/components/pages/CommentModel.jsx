@@ -8,6 +8,8 @@ import {
 import { FiSend } from "react-icons/fi";
 import { useComment } from "../hooks/useComment";
 import { useAuth } from "../hooks/useAuth";
+import { CiHeart } from "react-icons/ci";
+import { IoIosHeart } from "react-icons/io";
 
 export const CommentModel = ({ postId, setCommentCount }) => {
   const [commentInput, setCommentInput] = useState("");
@@ -17,8 +19,12 @@ export const CommentModel = ({ postId, setCommentCount }) => {
     allcommentsOfPost,
     deleteComment,
     updateComment,
+    likeComments,
   } = useComment();
   const { user } = useAuth();
+  const [Liked, setIsLiked] = useState(comments?.comments?.isLiked);
+  const [likeCount, setLikeCount] = useState(comments?.comments?.likes);
+console.log("likes", likeCount);
 
   const [editComment, setEditComment] = useState(null);
   const [editCommentText, setEditCommentText] = useState("");
@@ -31,7 +37,7 @@ export const CommentModel = ({ postId, setCommentCount }) => {
   const handleAddComment = async () => {
     try {
       await addComments(postId, commentInput);
-      setCommentCount((prev)=> prev+1);
+      setCommentCount((prev) => prev + 1);
       await allcommentsOfPost(postId);
 
       setCommentInput("");
@@ -42,7 +48,7 @@ export const CommentModel = ({ postId, setCommentCount }) => {
   const handleDeleteComment = async (id) => {
     try {
       await deleteComment(id);
-      setCommentCount((prev)=> prev -1);
+      setCommentCount((prev) => prev - 1);
       await allcommentsOfPost(postId);
     } catch (e) {
       console.log(e);
@@ -157,6 +163,23 @@ export const CommentModel = ({ postId, setCommentCount }) => {
                             ? new Date(comment.createdAt).toLocaleString()
                             : "Just now"}
                         </span>
+                       <button
+                                 onClick={() => {
+                                   !Liked
+                                     ? setLikeCount(likeCount + 1)
+                                     : setLikeCount(likeCount - 1);
+                                   setIsLiked(() => !Liked);
+                                 }}
+                                 className="p-2 hover:bg-gray-100 rounded-full transition-colors flex gap-2"
+                               >
+                                 {Liked ? (
+                                   <IoIosHeart className="w-7 h-7 text-red-600" />
+                                 ) : (
+                                   <CiHeart className="w-7 h-7" />
+                                 )}
+                                 <span>{likeCount}</span>
+                               </button>
+                       
                       </div>
                       {comment.author.account._id === user._id && (
                         <div className="flex gap-1">
