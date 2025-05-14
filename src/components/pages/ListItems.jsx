@@ -6,8 +6,7 @@ import { FaRegBookmark } from "react-icons/fa6";
 import { FaBookmark } from "react-icons/fa6";
 import { FaRegComment } from "react-icons/fa";
 import { CommentModel } from "./CommentModel";
-import { useNavigate, useParams } from "react-router-dom";
-import { usePostGetUserName } from "../hooks/usePostGetUserName";
+import { useNavigate } from "react-router-dom";
 
 export const ListItems = ({ post, deletePost }) => {
   const [model, setModel] = useState();
