@@ -55,10 +55,11 @@ export const useProfile = () => {
   const followerUser = async (userId) => {
     try {
       const response = await ProfileServices.followerUser(userId);
-
       console.log("follower", response.data);
+      return response; // Return the response so it can be used in components
     } catch (e) {
       console.log(e);
+      throw e; // Propagate the error to be handled by the component
     }
   };
   const getUserProfile = async (username) => {
@@ -81,7 +82,7 @@ export const useProfile = () => {
       console.log(e);
     }
   };
-  
+
   return {
     ...profileState,
     getProfile,

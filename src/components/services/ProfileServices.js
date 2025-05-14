@@ -38,6 +38,8 @@ export const ProfileServices = {
           method: "POST",
         }
       );
+      console.log("follow", response);
+      
 
       return response;
     } catch (e) {

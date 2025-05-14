@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useProfile } from "../hooks/useProfile";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -17,7 +17,11 @@ export const UserProfile = () => {
   const { data, getUserProfile, followerUser } = useProfile();
   const navigate = useNavigate();
   const { userpost, getPostByUsername, deletePost } = usePostGetUserName();
-  console.log("area", userpost);
+  const [followerCounts, setFollowerCount] = useState(data?.followersCount);
+  console.log(followerCounts);
+  // console.log(data._id);
+  
+
   
 
   const { username } = useParams();
@@ -28,15 +32,28 @@ export const UserProfile = () => {
       console.log(e);
     }
   };
+  const handleFollowerCount = async (id)=>{
+    if(followerCounts){
+      await followerUser(id)
+      setFollowerCount((prev)=> prev +1)
+    }
+    else{
+      setFollowerCount((prev)=> prev-1)
+    }
+  }
 
   useEffect(() => {
     getUserProfile(username);
     getPostByUsername(username);
   }, []);
 
-  const handleFollowerList = () => {
-    followerUser(data?.account?._id);
-  };
+  useEffect(() => {
+    if (data && data.followersCount !== undefined) {
+      setFollowerCount(data.followersCount);
+    }
+  }, [data]);
+
+ 
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="sticky top-0 z-10 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
@@ -138,17 +155,19 @@ export const UserProfile = () => {
                     <p className="font-bold text-gray-900 text-xl">
                       {userpost.length || 0}
                     </p>
-                    <p className="text-sm text-blue-500 font-medium ">{userpost.length > 0 ? "Post" :"Posts"} </p>
+                    <p className="text-sm text-blue-500 font-medium ">
+                      {userpost?.length > 0 ? "Post" : "Posts"}{" "}
+                    </p>
                   </div>
                   <div className="text-center bg-gray-50 px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
                     <p className="font-bold text-gray-900 text-xl">
-                      {data.followersCount || 0}
+                      {followerCounts || 0}
                     </p>
                     <button
                       className="text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors"
-                      onClick={handleFollowerList}
+                      onClick={()=>handleFollowerCount(data._id)}
                     >
-                      Followers
+                      Follow
                     </button>
                   </div>
                   <div className="text-center bg-gray-50 px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
