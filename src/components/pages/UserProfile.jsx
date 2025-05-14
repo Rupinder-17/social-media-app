@@ -12,18 +12,15 @@ import { usePostGetUserName } from "../hooks/usePostGetUserName";
 import { CiLocationOn } from "react-icons/ci";
 import { FaRegBookmark } from "react-icons/fa6";
 import { IoIosLink } from "react-icons/io";
-import { usePost } from "../hooks/usePost";
 
 export const UserProfile = () => {
   const { data, getUserProfile, followerUser } = useProfile();
-  const { deletePost } = usePost();
   const navigate = useNavigate();
-  const { userpost, getPostByUsername } = usePostGetUserName();
+  const { userpost, getPostByUsername, deletePost } = usePostGetUserName();
   console.log("area", userpost);
 
   const { username } = useParams();
   const handleDeletePost = async (id) => {
-
     try {
       await deletePost(id);
     } catch (e) {

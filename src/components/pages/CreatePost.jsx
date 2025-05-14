@@ -49,7 +49,6 @@ export const CreatePost = () => {
       formData.append("images", data.image);
     }
 
-    // Properly append tags if they exist
     if (data.tags && data.tags.length > 0) {
       data.tags.forEach((tag, index) => {
         formData.append(`tags[${index}]`, tag);
@@ -61,9 +60,8 @@ export const CreatePost = () => {
 
       console.log("status", status);
 
-      // Save the current post to the submittedPosts array
       const newPost = {
-        id: Date.now(), // Generate a unique ID
+        id: Date.now(), 
         content: data.content,
         image: imagePreview,
         createdAt: new Date().toLocaleString(),

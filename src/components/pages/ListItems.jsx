@@ -8,7 +8,7 @@ import { FaRegComment } from "react-icons/fa";
 import { CommentModel } from "./CommentModel";
 import { useNavigate } from "react-router-dom";
 
-export const ListItems = ({ post, }) => {
+export const ListItems = ({post}) => {
   const [model, setModel] = useState();
   const navigate = useNavigate();
 
@@ -41,9 +41,7 @@ export const ListItems = ({ post, }) => {
           </button>
           <p className="text-gray-500 text-xs">{post.createdAt}</p>
         </div>
-        {/* <div className="ml-auto">
-          <button onClick={() => deletePost(post._id)}>Del</button>
-        </div> */}
+        
       </div>
 
       {post.images && (

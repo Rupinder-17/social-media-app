@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { ProfileServices } from '../services/ProfileServices';
+import { SocialAppServices } from '../services/SocialAppServices';
 
 export const usePostGetUserName = () => {
     const [userNamePost, setUserNamePost] = useState({
@@ -34,9 +35,30 @@ export const usePostGetUserName = () => {
             });
           }
         };
+        const deletePost = async (postId) => {
+            console.log("del",postId);
+            
+            setUserNamePost({ ...userNamePost, loading: true, error: null, success: false });
+            try {
+              const response = await SocialAppServices.deletePost(postId);
+              setUserNamePost((prev) => {
+                return {
+                  ...prev,
+                  loading: false,
+                  success: true,
+                  userpost: prev?.userpost?.filter((post) => post?._id !== postId),
+                };
+              });
+        
+              return response.data;
+            } catch (e) {
+              console.log(e);
+            }
+          };
         return {
             ...userNamePost,
-            getPostByUsername
+            getPostByUsername,
+            deletePost
         }
       
 }

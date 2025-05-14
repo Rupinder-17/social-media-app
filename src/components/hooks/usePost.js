@@ -78,26 +78,26 @@ export const usePost = () => {
   };
     
   
-  const deletePost = async (postId) => {
-    console.log("del",postId);
+  // const deletePost = async (postId) => {
+  //   console.log("del",postId);
     
-    setPosts({ ...posts, loading: true, error: null, success: false });
-    try {
-      const response = await SocialAppServices.deletePost(postId);
-      setPosts((prev) => {
-        return {
-          ...prev,
-          loading: false,
-          success: true,
-          data: prev?.data?.filter((post) => post?._id !== postId),
-        };
-      });
+  //   setPosts({ ...posts, loading: true, error: null, success: false });
+  //   try {
+  //     const response = await SocialAppServices.deletePost(postId);
+  //     setPosts((prev) => {
+  //       return {
+  //         ...prev,
+  //         loading: false,
+  //         success: true,
+  //         data: prev?.data?.filter((post) => post?._id !== postId),
+  //       };
+  //     });
 
-      return response.data;
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  //     return response.data;
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
 
   return {
     ...posts,
@@ -105,6 +105,6 @@ export const usePost = () => {
     LikePosts,
     bookMarkPost,
     getBookMarkPosts,
-    deletePost,
+    // deletePost,
   };
 };
