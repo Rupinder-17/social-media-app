@@ -18,6 +18,7 @@ export const UserProfile = () => {
   const navigate = useNavigate();
   const { userpost, getPostByUsername, deletePost } = usePostGetUserName();
   console.log("area", userpost);
+  
 
   const { username } = useParams();
   const handleDeletePost = async (id) => {
@@ -135,9 +136,9 @@ export const UserProfile = () => {
                 <div className="flex gap-6 mt-6 pt-4 border-t border-gray-100">
                   <div className="text-center bg-gray-50 px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
                     <p className="font-bold text-gray-900 text-xl">
-                      {data.postsCount || 0}
+                      {userpost.length || 0}
                     </p>
-                    <p className="text-sm text-gray-500 font-medium">Posts</p>
+                    <p className="text-sm text-blue-500 font-medium ">{userpost.length > 0 ? "Post" :"Posts"} </p>
                   </div>
                   <div className="text-center bg-gray-50 px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
                     <p className="font-bold text-gray-900 text-xl">
