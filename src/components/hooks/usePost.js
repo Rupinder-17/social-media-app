@@ -79,6 +79,8 @@ export const usePost = () => {
     
   
   const deletePost = async (postId) => {
+    console.log("del",postId);
+    
     setPosts({ ...posts, loading: true, error: null, success: false });
     try {
       const response = await SocialAppServices.deletePost(postId);

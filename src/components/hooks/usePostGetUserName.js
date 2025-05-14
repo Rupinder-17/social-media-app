@@ -21,6 +21,8 @@ export const usePostGetUserName = () => {
               success: false,
               userpost: response.data.posts,
             });
+            console.log("postby name", response.data.posts.images);
+            
             return response.data.posts;
           } catch (e) {
             console.log(e);

@@ -12,15 +12,24 @@ import { usePostGetUserName } from "../hooks/usePostGetUserName";
 import { CiLocationOn } from "react-icons/ci";
 import { FaRegBookmark } from "react-icons/fa6";
 import { IoIosLink } from "react-icons/io";
+import { usePost } from "../hooks/usePost";
 
 export const UserProfile = () => {
   const { data, getUserProfile, followerUser } = useProfile();
-  // const { data: posts, } = usePost();
+  const { deletePost } = usePost();
   const navigate = useNavigate();
   const { userpost, getPostByUsername } = usePostGetUserName();
   console.log("area", userpost);
 
   const { username } = useParams();
+  const handleDeletePost = async (id) => {
+
+    try {
+      await deletePost(id);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   useEffect(() => {
     getUserProfile(username);
@@ -70,9 +79,7 @@ export const UserProfile = () => {
               </div>
             </div>
 
-            {/* Profile Info */}
             <div className="px-6 pt-0 pb-6 relative">
-              {/* Avatar */}
               <div className="absolute -top-14 left-6 border-4 border-white rounded-full overflow-hidden bg-gradient-to-r from-purple-500 to-pink-500 w-28 h-28 flex items-center justify-center text-white text-3xl font-bold shadow-lg transition-transform duration-300 hover:scale-105">
                 {data?.avatar ? (
                   <img
@@ -85,14 +92,12 @@ export const UserProfile = () => {
                 )}
               </div>
 
-              {/* Edit Profile Button */}
               <div className="flex justify-end mt-3">
                 <button className="flex items-center gap-1 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 px-4 py-2 rounded-full text-white text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md">
                   <FiEdit size={14} /> Edit Profile
                 </button>
               </div>
 
-              {/* User Info */}
               <div className="mt-12">
                 <h2 className="text-2xl font-bold text-gray-900">
                   {data?.account?.username || "Username"}
@@ -108,7 +113,6 @@ export const UserProfile = () => {
                   </p>
                 )}
 
-                {/* Additional Profile Info */}
                 <div className="mt-4 flex flex-wrap gap-4">
                   {data.location && (
                     <div className="flex items-center text-gray-600 text-sm">
@@ -131,7 +135,6 @@ export const UserProfile = () => {
                   )}
                 </div>
 
-                {/* Stats Section */}
                 <div className="flex gap-6 mt-6 pt-4 border-t border-gray-100">
                   <div className="text-center bg-gray-50 px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
                     <p className="font-bold text-gray-900 text-xl">
@@ -220,6 +223,7 @@ export const UserProfile = () => {
                         />
                       </div>
                     )}
+
                     {item.content && (
                       <div className="p-3">
                         <p className="text-gray-800 text-sm line-clamp-2">
@@ -227,6 +231,14 @@ export const UserProfile = () => {
                         </p>
                       </div>
                     )}
+                    <button
+                      onClick={() => {
+                        console.log("'''''", userpost._id);
+                        handleDeletePost(item._id);
+                      }}
+                    >
+                      del
+                    </button>
                   </div>
                 ))}
               </div>
@@ -239,7 +251,7 @@ export const UserProfile = () => {
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center p-8 min-h-[60vh]">
-          <div className="w-20 h-20 rounded-full bg-gray-200 animate-pulse mb-4 flex items-center justify-center">
+          {/* <div className="w-20 h-20 rounded-full bg-gray-200 animate-pulse mb-4 flex items-center justify-center">
             <FiImage className="text-gray-400" size={30} />
           </div>
           <p className="text-gray-500 mb-2">No profile information available</p>
@@ -248,7 +260,7 @@ export const UserProfile = () => {
           </p>
           <button className="mt-3 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white px-6 py-2 rounded-full font-medium transition-all duration-200 shadow-sm hover:shadow-md">
             Refresh
-          </button>
+          </button> */}
         </div>
       )}
     </div>
