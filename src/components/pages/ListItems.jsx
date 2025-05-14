@@ -16,17 +16,8 @@ export const ListItems = ({ post, deletePost }) => {
   const [isLiked, setIsLiked] = useState(post.isLiked);
   const [bookMark, setBookMark] = useState(post.isBookmarked);
   const [likeCount, setLikeCount] = useState(post.likes);
-  // const { username } = useParams();
-  
-  // const { data, getPostByUsername } = usePostGetUserName();
-  // console.log("userPOst", data);
 
   const [commentCount, setCommentCount] = useState(post.comments);
-  // const handleUserPost = () => {
-  //   if (username) {
-  //     getPostByUsername(username);
-  //   }
-  // };
 
   return (
     <div
@@ -41,8 +32,6 @@ export const ListItems = ({ post, deletePost }) => {
         <div className="ml-3">
           <button
             onClick={() => {
-              // handleUserPost(post.author.account.username);
-
               navigate(`/user-Profile/${post.author.account.username}`);
             }}
           >
