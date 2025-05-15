@@ -20,7 +20,7 @@ export const UserProfile = () => {
   const navigate = useNavigate();
   const { userpost, getPostByUsername, deletePost } = usePostGetUserName();
   const { toggleFollow, isFollowing } = useFollow();
-  const [followerCounts, setFollowerCount] = useState(0);
+  const [followerCounts, setFollowerCount] = useState();
   const [isUserFollowing, setIsUserFollowing] = useState(false);
 
   const { username } = useParams();
@@ -179,7 +179,7 @@ export const UserProfile = () => {
                           );
                           return;
                         }
-                        handleFollowToggle(data._id);
+                        handleFollowToggle(data?.account?._id);
                       }}
                     >
                       {isUserFollowing ? (
@@ -248,7 +248,7 @@ export const UserProfile = () => {
             </h3>
 
             {userpost && userpost.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2  gap-4">
                 {userpost.map((item, index) => (
                   <div
                     key={index}
