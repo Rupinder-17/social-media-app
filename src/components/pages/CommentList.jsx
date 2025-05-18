@@ -11,15 +11,10 @@ import {
   MdClose,
 } from "react-icons/md";
 
-export const CommentList = ({ comment, setCommentCount, onDelete }) => {
-  //   const [commentInput, setCommentInput] = useState("");
+export const CommentList = ({ comment, onDelete, onUpdate }) => {
   const {
     data: comments,
-    // addComments,
     allcommentsOfPost,
-    deleteComment,
-    updateComment,
-    // likeComments,
   } = useComment();
 
   const { user } = useAuth();
@@ -28,21 +23,9 @@ export const CommentList = ({ comment, setCommentCount, onDelete }) => {
   const [Liked, setIsLiked] = useState(comments?.isLiked);
   const [likeCount, setLikeCount] = useState(comments?.likes);
 
-  //   const handleAddComment = async () => {
-  //     try {
-  //       await addComments(postId, commentInput);
-  //       setCommentCount((prev) => prev + 1);
-  //       await allcommentsOfPost(postId);
-
-  //       setCommentInput("");
-  //     } catch (error) {
-  //       console.error("Error adding comment:", error);
-  //     }
-  //   };
   const handleDeleteComment = async (id) => {
     try {
       await onDelete(id);
-    //   setCommentCount((prev) => prev - 1);
     } catch (e) {
       console.log(e);
     }
@@ -61,8 +44,8 @@ export const CommentList = ({ comment, setCommentCount, onDelete }) => {
     try {
       if (!editComment || !editCommentText.trim()) return;
 
-      await updateComment(editComment, editCommentText);
-      await allcommentsOfPost(postId);
+      await onUpdate(editComment, editCommentText);
+        // await allcommentsOfPost(postId);
 
       setEditComment(null);
       setEditCommentText("");
@@ -132,7 +115,6 @@ export const CommentList = ({ comment, setCommentCount, onDelete }) => {
                       ? setLikeCount(likeCount + 1)
                       : setLikeCount(likeCount - 1);
                     setIsLiked(() => !Liked);
-                    //  likeComments()
                   }}
                   className="p-2 hover:bg-gray-100 rounded-full transition-colors flex gap-2"
                 >
