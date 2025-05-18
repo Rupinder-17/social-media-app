@@ -75,4 +75,17 @@ export const ProfileServices = {
       console.log(e);
     }
   },
+  async getFollowerList(username) {
+    try {
+      const response = await apiclient.request(
+        `social-media/follow/list/followers/${username}`,
+        {
+          method: "GET",
+        }
+      );
+      return response;
+    } catch (e) {
+      console.log(e);
+    }
+  },
 };
