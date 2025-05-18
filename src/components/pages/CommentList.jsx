@@ -13,15 +13,18 @@ import {
 
 export const CommentList = ({ comment, onDelete, onUpdate }) => {
   const {
-    data: comments,
-    allcommentsOfPost,
+    likeComments
   } = useComment();
 
   const { user } = useAuth();
   const [editComment, setEditComment] = useState(null);
   const [editCommentText, setEditCommentText] = useState("");
-  const [Liked, setIsLiked] = useState(comments?.isLiked);
-  const [likeCount, setLikeCount] = useState(comments?.likes);
+  const [Liked, setIsLiked] = useState(comment?.isLiked);
+  const [likeCount, setLikeCount] = useState(comment?.likes);
+  console.log("likecount", likeCount);
+  console.log("com",comment);
+  
+  
 
   const handleDeleteComment = async (id) => {
     try {
@@ -45,7 +48,6 @@ export const CommentList = ({ comment, onDelete, onUpdate }) => {
       if (!editComment || !editCommentText.trim()) return;
 
       await onUpdate(editComment, editCommentText);
-        // await allcommentsOfPost(postId);
 
       setEditComment(null);
       setEditCommentText("");
@@ -115,6 +117,7 @@ export const CommentList = ({ comment, onDelete, onUpdate }) => {
                       ? setLikeCount(likeCount + 1)
                       : setLikeCount(likeCount - 1);
                     setIsLiked(() => !Liked);
+                    likeComments(comment._id)
                   }}
                   className="p-2 hover:bg-gray-100 rounded-full transition-colors flex gap-2"
                 >
