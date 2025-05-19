@@ -8,6 +8,8 @@ export const useFollow = () => {
     success: false,
     isFollowing: false,
   });
+  console.log(followState)
+  
 
   const toggleFollow = async (userId) => {
     setFollowState({ ...followState, loading: true, error: null });
@@ -44,9 +46,11 @@ export const useFollow = () => {
       };
     }
   };
+ 
 
   return {
     ...followState,
     toggleFollow,
+    // followersList
   };
 };

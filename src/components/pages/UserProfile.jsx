@@ -19,7 +19,7 @@ export const UserProfile = () => {
   const { data, getUserProfile } = useProfile();
   const navigate = useNavigate();
   const { userpost, getPostByUsername, deletePost } = usePostGetUserName();
-  const { toggleFollow, isFollowing } = useFollow();
+  const { toggleFollow,followersList} = useFollow();
   const [followerCounts, setFollowerCount] = useState();
   const [isUserFollowing, setIsUserFollowing] = useState(false);
 
@@ -48,6 +48,7 @@ export const UserProfile = () => {
   useEffect(() => {
     getUserProfile(username);
     getPostByUsername(username);
+    followersList(username)
   }, [username]);
 
   useEffect(() => {
