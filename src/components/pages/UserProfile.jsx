@@ -14,14 +14,16 @@ import { CiLocationOn } from "react-icons/ci";
 import { FaRegBookmark } from "react-icons/fa6";
 import { IoIosLink } from "react-icons/io";
 import { FaUserPlus, FaUserCheck } from "react-icons/fa";
+// import { useFollowList } from "../hooks/useFollowList";
 
 export const UserProfile = () => {
   const { data, getUserProfile } = useProfile();
   const navigate = useNavigate();
   const { userpost, getPostByUsername, deletePost } = usePostGetUserName();
-  const { toggleFollow,followersList} = useFollow();
+  const { toggleFollow} = useFollow();
   const [followerCounts, setFollowerCount] = useState();
   const [isUserFollowing, setIsUserFollowing] = useState(false);
+ 
 
   const { username } = useParams();
 
