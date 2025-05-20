@@ -23,9 +23,12 @@ export const UserProfile = () => {
   const { toggleFollow } = useFollow();
   const [followerCounts, setFollowerCount] = useState(0);
   const [isUserFollowing, setIsUserFollowing] = useState(false);
-  const { followData, userFollowerList } = useFollowList();
+  const { followData, userFollowerList, followingData, userFollowingList } =
+    useFollowList();
   const [showFollower, setShowFollower] = useState(false);
-  console.log("datattatat",followData);
+  const [showFollowing, setShowFollowing] = useState(false);
+  console.log("followerData", followData);
+  console.log("followingData", followingData);
 
   const { username } = useParams();
 
@@ -43,7 +46,6 @@ export const UserProfile = () => {
       console.log("result", result);
 
       if (result.success) {
-
         setIsUserFollowing(result.isFollowing);
         setFollowerCount(result.followersCount);
       }
@@ -127,35 +129,27 @@ export const UserProfile = () => {
                 <h2 className="text-2xl font-bold text-gray-900">
                   {data?.account?.username || "Username"}
                 </h2>
-                <div className="mt-4">
-                  <button
-                    onClick={() => {
-                      userFollowerList(username);
-                      setShowFollower((showFollower) => !showFollower);
-                    }}
-                    className="bg-gray-200 text-black px-4 py-1.5 rounded-full text-sm font-medium shadow-sm hover:bg-gray-300 transition duration-200"
-                  >
-                    {showFollower ? "Followers" : "Followers"}
-                  </button>
-
-                  {showFollower && (
-                    <div className="mt-4 bg-white shadow rounded-lg p-4 space-y-2">
-                      {followData?.length > 0 ? (
-                        followData.map((user) => (
-                          <ul key={user._id}>
-                            <li className="text-gray-800 font-medium hover:text-blue-600 transition">
-                              @{user?.username}
-                            </li>
-                          </ul>
-                        ))
-                      ) : (
-                        <p className="text-gray-500 text-sm">
-                          No followers found.
-                        </p>
-                      )}
-                    </div>
+                <button
+                  className={`text-sm font-medium flex items-center gap-1 px-3 py-1 rounded-full transition-colors ${
+                    isUserFollowing
+                      ? "bg-gray-200 text-gray-800 hover:bg-gray-300"
+                      : "bg-blue-500 text-white hover:bg-blue-600"
+                  }`}
+                  onClick={() => {
+                    handleFollowToggle(data.account._id);
+                    console.log("id", data?.account?._id);
+                  }}
+                >
+                  {isUserFollowing ? (
+                    <>
+                      <FaUserCheck size={12} /> Following
+                    </>
+                  ) : (
+                    <>
+                      <FaUserPlus size={12} /> Follow
+                    </>
                   )}
-                </div>
+                </button>
 
                 {data.fullName && (
                   <p className="text-gray-600 text-sm font-medium mt-1">
@@ -203,35 +197,67 @@ export const UserProfile = () => {
                     <p className="font-bold text-gray-900 text-xl">
                       {followerCounts || 0}
                     </p>
-                    <button
-                      className={`text-sm font-medium flex items-center gap-1 px-3 py-1 rounded-full transition-colors ${
-                        isUserFollowing
-                          ? "bg-gray-200 text-gray-800 hover:bg-gray-300"
-                          : "bg-blue-500 text-white hover:bg-blue-600"
-                      }`}
-                      onClick={() => {
-                        handleFollowToggle(data.account._id);
-                        console.log("id", data?.account?._id);
-                      }}
-                    >
-                      {isUserFollowing ? (
-                        <>
-                          <FaUserCheck size={12} /> Following
-                        </>
-                      ) : (
-                        <>
-                          <FaUserPlus size={12} /> Follow
-                        </>
+
+                    <div className="mt-4">
+                      <button
+                        onClick={() => {
+                          userFollowerList(username);
+                          setShowFollower((showFollower) => !showFollower);
+                        }}
+                        className="bg-gray-200 text-black px-4 py-1.5 rounded-full text-sm font-medium shadow-sm hover:bg-gray-300 transition duration-200"
+                      >
+                        {showFollower ? "Followers" : "Followers"}
+                      </button>
+
+                      {showFollower && (
+                        <div className="mt-4 bg-white shadow rounded-lg p-4 space-y-2">
+                          {followData?.length > 0 ? (
+                            followData.map((user) => (
+                              <ul key={user._id}>
+                                <li className="text-gray-800 font-medium hover:text-blue-600 transition">
+                                  @{user?.username}
+                                </li>
+                              </ul>
+                            ))
+                          ) : (
+                            <p className="text-gray-500 text-sm">
+                              No followers found.
+                            </p>
+                          )}
+                        </div>
                       )}
-                    </button>
+                    </div>
                   </div>
                   <div className="text-center bg-gray-50 px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
                     <p className="font-bold text-gray-900 text-xl">
                       {data.followingCount || 0}
                     </p>
-                    <button className="text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors">
+                    <button
+                      onClick={() => {
+                        userFollowingList(username);
+                        setShowFollowing((prev) => !prev);
+                      }}
+                      className="text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors"
+                    >
                       Following
                     </button>
+                    {showFollowing && (
+                      <div className="mt-4 bg-white shadow rounded-lg p-4 space-y-2">
+                        {followingData?.length > 0 ? (
+                          followingData.map((user) => (
+                            <ul key={user._id}>
+                              <li className="text-gray-800 font-medium hover:text-blue-600 transition">
+                                @{user?.username}
+                              </li>
+                            </ul>
+                          ))
+                        ) : (
+                          <p className="text-gray-500 text-sm">
+                            Not following anyone yet.
+                          </p>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

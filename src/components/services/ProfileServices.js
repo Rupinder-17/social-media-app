@@ -39,7 +39,6 @@ export const ProfileServices = {
         }
       );
       console.log("myfoll", response);
-      
 
       return response;
     } catch (error) {
@@ -74,6 +73,20 @@ export const ProfileServices = {
       return response;
     } catch (e) {
       console.log(e);
+    }
+  },
+  async getFollowingList(username) {
+    try {
+      const response = await apiclient.request(
+        `social-media/follow/list/following/${username}`,
+        {
+          method: "GET",
+        }
+      );
+      return response;
+    } catch (error) {
+      console.log("Error fetching following list:", error);
+      throw error;
     }
   },
   async getFollowerList(username) {
