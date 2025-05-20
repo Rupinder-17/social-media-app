@@ -221,7 +221,6 @@ export const UserProfile = () => {
             </div>
           </div>
 
-          {/* Account Info Section */}
           <div className="bg-white rounded-xl shadow-sm overflow-hidden mb-6 transition-all duration-300 hover:shadow-md">
             <div className="p-5">
               <h3 className="font-semibold text-gray-800 mb-4 flex items-center">
@@ -256,7 +255,6 @@ export const UserProfile = () => {
             </div>
           </div>
 
-          {/* User Posts Section */}
           <div className="mb-6">
             <h3 className="font-semibold text-gray-800 mb-4 flex items-center">
               <FiImage className="mr-2" /> Posts
@@ -306,16 +304,7 @@ export const UserProfile = () => {
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center p-8 min-h-[60vh]">
-          {/* <div className="w-20 h-20 rounded-full bg-gray-200 animate-pulse mb-4 flex items-center justify-center">
-            <FiImage className="text-gray-400" size={30} />
-          </div>
-          <p className="text-gray-500 mb-2">No profile information available</p>
-          <p className="text-gray-400 text-sm mb-4">
-            The profile you're looking for might not exist or is still loading
-          </p>
-          <button className="mt-3 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white px-6 py-2 rounded-full font-medium transition-all duration-200 shadow-sm hover:shadow-md">
-            Refresh
-          </button> */}
+          
         </div>
       )}
     </div>

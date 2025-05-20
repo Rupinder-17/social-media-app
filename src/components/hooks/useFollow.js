@@ -51,6 +51,5 @@ export const useFollow = () => {
   return {
     ...followState,
     toggleFollow,
-    // followersList
   };
 };
