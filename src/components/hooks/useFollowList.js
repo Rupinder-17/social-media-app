@@ -17,9 +17,9 @@ export const useFollowList = () => {
         loading: false,
         error: null,
         success: false,
-        followData: response.data.followers,
+        followData: response?.data?.followers,
       });
-      console.log(response.data.followers);
+      console.log(response?.data?.followers);
 
       return response.data;
     } catch (e) {

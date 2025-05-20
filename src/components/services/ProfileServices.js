@@ -38,8 +38,9 @@ export const ProfileServices = {
           method: "POST",
         }
       );
+      console.log("myfoll", response);
+      
 
-      // Return the response with follow status information
       return response;
     } catch (error) {
       console.log(error);

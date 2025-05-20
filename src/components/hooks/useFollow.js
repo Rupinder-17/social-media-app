@@ -8,10 +8,12 @@ export const useFollow = () => {
     success: false,
     isFollowing: false,
   });
-  console.log(followState)
+  console.log("followerr",followState)
   
 
   const toggleFollow = async (userId) => {
+    console.log(userId);
+    
     setFollowState({ ...followState, loading: true, error: null });
     try {
       const response = await ProfileServices.followerUser(userId);

@@ -20,13 +20,12 @@ export const UserProfile = () => {
   const { data, getUserProfile } = useProfile();
   const navigate = useNavigate();
   const { userpost, getPostByUsername, deletePost } = usePostGetUserName();
-  const { toggleFollow,  } = useFollow();
+  const { toggleFollow } = useFollow();
   const [followerCounts, setFollowerCount] = useState(0);
   const [isUserFollowing, setIsUserFollowing] = useState(false);
-  const {followData, userFollowerList} = useFollowList()
-  const [showFollower, setShowFollower]= useState(false)
-  console.log(followData);
-  
+  const { followData, userFollowerList } = useFollowList();
+  const [showFollower, setShowFollower] = useState(false);
+  console.log("datattatat",followData);
 
   const { username } = useParams();
 
@@ -41,7 +40,10 @@ export const UserProfile = () => {
   const handleFollowToggle = async (id) => {
     try {
       const result = await toggleFollow(id);
+      console.log("result", result);
+
       if (result.success) {
+
         setIsUserFollowing(result.isFollowing);
         setFollowerCount(result.followersCount);
       }
@@ -126,22 +128,23 @@ export const UserProfile = () => {
                   {data?.account?.username || "Username"}
                 </h2>
                 <div>
-                  <button onClick={()=>{ userFollowerList(username)
-                  setShowFollower((showFollower)=> !showFollower)
-
-                  }}>{showFollower ? "hide" : "show"}</button>
-                  {showFollower &&(
-                  <div>
-                    {followData?.map((user)=> (
-                      <ul key={user._id}>
-                        <li>{user?.username}</li>
-
-                      </ul>
-                    ))}
-                  </div>
-
+                  <button
+                    onClick={() => {
+                      userFollowerList(username);
+                      setShowFollower((showFollower) => !showFollower);
+                    }}
+                  >
+                    {showFollower ? "hide" : "show"}
+                  </button>
+                  {showFollower && (
+                    <div>
+                      {followData?.map((user) => (
+                        <ul key={user._id}>
+                          <li>{user?.username}</li>
+                        </ul>
+                      ))}
+                    </div>
                   )}
-
                 </div>
                 {data.fullName && (
                   <p className="text-gray-600 text-sm font-medium mt-1">
@@ -195,7 +198,10 @@ export const UserProfile = () => {
                           ? "bg-gray-200 text-gray-800 hover:bg-gray-300"
                           : "bg-blue-500 text-white hover:bg-blue-600"
                       }`}
-                      onClick={() => handleFollowToggle(data._id)}
+                      onClick={() => {
+                        handleFollowToggle(data.account._id);
+                        console.log("id", data?.account?._id);
+                      }}
                     >
                       {isUserFollowing ? (
                         <>
@@ -286,7 +292,6 @@ export const UserProfile = () => {
                     )}
                     <button
                       onClick={() => {
-                        console.log("'''''", userpost._id);
                         handleDeletePost(item._id);
                       }}
                     >
@@ -303,9 +308,7 @@ export const UserProfile = () => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center p-8 min-h-[60vh]">
-          
-        </div>
+        <div className="flex flex-col items-center justify-center p-8 min-h-[60vh]"></div>
       )}
     </div>
     // </div>
