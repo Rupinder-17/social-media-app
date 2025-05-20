@@ -127,25 +127,36 @@ export const UserProfile = () => {
                 <h2 className="text-2xl font-bold text-gray-900">
                   {data?.account?.username || "Username"}
                 </h2>
-                <div>
+                <div className="mt-4">
                   <button
                     onClick={() => {
                       userFollowerList(username);
                       setShowFollower((showFollower) => !showFollower);
                     }}
+                    className="bg-gray-200 text-black px-4 py-1.5 rounded-full text-sm font-medium shadow-sm hover:bg-gray-300 transition duration-200"
                   >
-                    {showFollower ? "hide" : "show"}
+                    {showFollower ? "Followers" : "Followers"}
                   </button>
+
                   {showFollower && (
-                    <div>
-                      {followData?.map((user) => (
-                        <ul key={user._id}>
-                          <li>{user?.username}</li>
-                        </ul>
-                      ))}
+                    <div className="mt-4 bg-white shadow rounded-lg p-4 space-y-2">
+                      {followData?.length > 0 ? (
+                        followData.map((user) => (
+                          <ul key={user._id}>
+                            <li className="text-gray-800 font-medium hover:text-blue-600 transition">
+                              @{user?.username}
+                            </li>
+                          </ul>
+                        ))
+                      ) : (
+                        <p className="text-gray-500 text-sm">
+                          No followers found.
+                        </p>
+                      )}
                     </div>
                   )}
                 </div>
+
                 {data.fullName && (
                   <p className="text-gray-600 text-sm font-medium mt-1">
                     {data.fullName}
@@ -185,7 +196,7 @@ export const UserProfile = () => {
                       {userpost?.length || 0}
                     </p>
                     <p className="text-sm text-blue-500 font-medium ">
-                      {userpost?.length > 0 ? "Post" : "Posts"}{" "}
+                      {userpost?.length > 0 ? "Posts" : "Post"}{" "}
                     </p>
                   </div>
                   <div className="text-center bg-gray-50 px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
