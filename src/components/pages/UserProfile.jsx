@@ -14,21 +14,14 @@ import { CiLocationOn } from "react-icons/ci";
 import { FaRegBookmark } from "react-icons/fa6";
 import { IoIosLink } from "react-icons/io";
 import { FaUserPlus, FaUserCheck } from "react-icons/fa";
-import { useFollowList } from "../hooks/useFollowList";
-import { ul } from "framer-motion/client";
-// import { useFollowList } from "../hooks/useFollowList";
 
 export const UserProfile = () => {
   const { data, getUserProfile } = useProfile();
   const navigate = useNavigate();
   const { userpost, getPostByUsername, deletePost } = usePostGetUserName();
-  const { toggleFollow} = useFollow();
-  const [followerCounts, setFollowerCount] = useState();
+  const { toggleFollow, isFollowing } = useFollow();
+  const [followerCounts, setFollowerCount] = useState(0);
   const [isUserFollowing, setIsUserFollowing] = useState(false);
-  const {followData, userFollowerList} = useFollowList()
-  console.log("fpllodata",followData);
-  
- 
 
   const { username } = useParams();
 
@@ -55,8 +48,6 @@ export const UserProfile = () => {
   useEffect(() => {
     getUserProfile(username);
     getPostByUsername(username);
-    // followersList(username)
-    userFollowerList(username)
   }, [username]);
 
   useEffect(() => {
@@ -125,20 +116,10 @@ export const UserProfile = () => {
                 </button>
               </div>
 
-              <div className="mt-12 ">
+              <div className="mt-12">
                 <h2 className="text-2xl font-bold text-gray-900">
                   {data?.account?.username || "Username"}
                 </h2>
-                  <button onClick={()=>userFollowerList(username)} className="bg-red-700 text-white px-2">follwers
-
-                <div className="bg-red-400">
-                  {followData?.map((user) => (
-                    <ul key={user._id}>
-                      <li>{user?.username}</li>
-                    </ul>
-                  ))}
-                </div>
-                  </button>
                 {data.fullName && (
                   <p className="text-gray-600 text-sm font-medium mt-1">
                     {data.fullName}
@@ -193,9 +174,12 @@ export const UserProfile = () => {
                       }`}
                       onClick={() => {
                         if (!data || !data._id) {
+                          setFollowError(
+                            "Cannot follow user: User ID is missing"
+                          );
                           return;
                         }
-                        handleFollowToggle(data?.account?._id);
+                        handleFollowToggle(data._id);
                       }}
                     >
                       {isUserFollowing ? (
@@ -264,7 +248,7 @@ export const UserProfile = () => {
             </h3>
 
             {userpost && userpost.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2  gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {userpost.map((item, index) => (
                   <div
                     key={index}
