@@ -14,6 +14,9 @@ import { CiLocationOn } from "react-icons/ci";
 import { FaRegBookmark } from "react-icons/fa6";
 import { IoIosLink } from "react-icons/io";
 import { FaUserPlus, FaUserCheck } from "react-icons/fa";
+import { useFollowList } from "../hooks/useFollowList";
+import { div } from "framer-motion/m";
+import { ul } from "framer-motion/client";
 
 export const UserProfile = () => {
   const { data, getUserProfile } = useProfile();
@@ -22,6 +25,10 @@ export const UserProfile = () => {
   const { toggleFollow, isFollowing } = useFollow();
   const [followerCounts, setFollowerCount] = useState(0);
   const [isUserFollowing, setIsUserFollowing] = useState(false);
+  const {followData, userFollowerList} = useFollowList()
+  const [showFollower, setShowFollower]= useState(false)
+  console.log(followData);
+  
 
   const { username } = useParams();
 
@@ -120,6 +127,24 @@ export const UserProfile = () => {
                 <h2 className="text-2xl font-bold text-gray-900">
                   {data?.account?.username || "Username"}
                 </h2>
+                <div>
+                  <button onClick={()=>{ userFollowerList(username)
+                  setShowFollower((showFollower)=> !showFollower)
+
+                  }}>{showFollower ? "hide" : "show"}</button>
+                  {showFollower &&(
+                  <div>
+                    {followData?.map((user)=> (
+                      <ul key={user._id}>
+                        <li>{user?.username}</li>
+
+                      </ul>
+                    ))}
+                  </div>
+
+                  )}
+
+                </div>
                 {data.fullName && (
                   <p className="text-gray-600 text-sm font-medium mt-1">
                     {data.fullName}
@@ -172,15 +197,7 @@ export const UserProfile = () => {
                           ? "bg-gray-200 text-gray-800 hover:bg-gray-300"
                           : "bg-blue-500 text-white hover:bg-blue-600"
                       }`}
-                      onClick={() => {
-                        if (!data || !data._id) {
-                          setFollowError(
-                            "Cannot follow user: User ID is missing"
-                          );
-                          return;
-                        }
-                        handleFollowToggle(data._id);
-                      }}
+                      onClick={() => handleFollowToggle(data._id)}
                     >
                       {isUserFollowing ? (
                         <>
