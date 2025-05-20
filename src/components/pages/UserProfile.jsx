@@ -26,7 +26,7 @@ export const UserProfile = () => {
   const [followerCounts, setFollowerCount] = useState();
   const [isUserFollowing, setIsUserFollowing] = useState(false);
   const {followData, userFollowerList} = useFollowList()
-  console.log(followData);
+  console.log("fpllodata",followData);
   
  
 
@@ -125,14 +125,14 @@ export const UserProfile = () => {
                 </button>
               </div>
 
-              <div className="mt-12">
+              <div className="mt-12 ">
                 <h2 className="text-2xl font-bold text-gray-900">
                   {data?.account?.username || "Username"}
                 </h2>
                   <button onClick={()=>userFollowerList(username)} className="bg-red-700 text-white px-2">follwers
 
                 <div className="bg-red-400">
-                  {followData?.username?.map((user) => (
+                  {followData?.map((user) => (
                     <ul key={user._id}>
                       <li>{user?.username}</li>
                     </ul>
