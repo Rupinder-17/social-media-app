@@ -14,6 +14,8 @@ import { CiLocationOn } from "react-icons/ci";
 import { FaRegBookmark } from "react-icons/fa6";
 import { IoIosLink } from "react-icons/io";
 import { FaUserPlus, FaUserCheck } from "react-icons/fa";
+import { useFollowList } from "../hooks/useFollowList";
+import { ul } from "framer-motion/client";
 // import { useFollowList } from "../hooks/useFollowList";
 
 export const UserProfile = () => {
@@ -23,6 +25,9 @@ export const UserProfile = () => {
   const { toggleFollow} = useFollow();
   const [followerCounts, setFollowerCount] = useState();
   const [isUserFollowing, setIsUserFollowing] = useState(false);
+  const {followData, userFollowerList} = useFollowList()
+  console.log(followData);
+  
  
 
   const { username } = useParams();
@@ -50,7 +55,8 @@ export const UserProfile = () => {
   useEffect(() => {
     getUserProfile(username);
     getPostByUsername(username);
-    followersList(username)
+    // followersList(username)
+    userFollowerList(username)
   }, [username]);
 
   useEffect(() => {
@@ -123,6 +129,16 @@ export const UserProfile = () => {
                 <h2 className="text-2xl font-bold text-gray-900">
                   {data?.account?.username || "Username"}
                 </h2>
+                  <button onClick={()=>userFollowerList(username)} className="bg-red-700 text-white px-2">follwers
+
+                <div className="bg-red-400">
+                  {followData?.username?.map((user) => (
+                    <ul key={user._id}>
+                      <li>{user?.username}</li>
+                    </ul>
+                  ))}
+                </div>
+                  </button>
                 {data.fullName && (
                   <p className="text-gray-600 text-sm font-medium mt-1">
                     {data.fullName}
@@ -177,9 +193,6 @@ export const UserProfile = () => {
                       }`}
                       onClick={() => {
                         if (!data || !data._id) {
-                          setFollowError(
-                            "Cannot follow user: User ID is missing"
-                          );
                           return;
                         }
                         handleFollowToggle(data?.account?._id);

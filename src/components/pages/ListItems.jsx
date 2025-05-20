@@ -24,7 +24,6 @@ export const ListItems = ({post}) => {
       key={post._id}
       className="bg-white rounded-xl shadow-sm overflow-hidden"
     >
-      {/* Post header */}
       <div className="p-4 flex items-center">
         <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-sm">
           {post?.author?.account?.username?.charAt(0)?.toUpperCase()}
