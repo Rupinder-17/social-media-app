@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useProfile } from "../hooks/useProfile";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom"; // Added Link
 import {
   FiArrowLeft,
   FiEdit,
   FiMail,
   FiCalendar,
   FiImage,
+  FiTrash2, // Added FiTrash2
 } from "react-icons/fi";
 import { usePostGetUserName } from "../hooks/usePostGetUserName";
 import { useFollow } from "../hooks/useFollow";
@@ -27,6 +28,10 @@ export const UserProfile = () => {
     useFollowList();
   const [showFollower, setShowFollower] = useState(false);
   const [showFollowing, setShowFollowing] = useState(false);
+  // State for delete confirmation
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [postToDelete, setPostToDelete] = useState(null);
+
   console.log("followerData", followData);
   console.log("followingData", followingData);
 
@@ -35,9 +40,23 @@ export const UserProfile = () => {
   const handleDeletePost = async (id) => {
     try {
       await deletePost(id);
+      // Refresh posts after deletion
+      getPostByUsername(username);
+      setShowDeleteConfirm(false); // Close confirmation dialog
+      setPostToDelete(null);
     } catch (e) {
       console.log(e);
     }
+  };
+
+  const openDeleteConfirm = (id) => {
+    setPostToDelete(id);
+    setShowDeleteConfirm(true);
+  };
+
+  const closeDeleteConfirm = () => {
+    setPostToDelete(null);
+    setShowDeleteConfirm(false);
   };
 
   const handleFollowToggle = async (id) => {
@@ -133,7 +152,7 @@ export const UserProfile = () => {
                   className={`text-sm font-medium flex items-center gap-1 px-3 py-1 rounded-full transition-colors ${
                     isUserFollowing
                       ? "bg-gray-200 text-gray-800 hover:bg-gray-300"
-                      : "bg-blue-500 text-white hover:bg-blue-600"
+                      : "bg-gray-500 text-white hover:bg-blue-600"
                   }`}
                   onClick={() => {
                     handleFollowToggle(data.account._id);
@@ -210,12 +229,27 @@ export const UserProfile = () => {
                       </button>
 
                       {showFollower && (
-                        <div className="mt-4 bg-white shadow rounded-lg p-4 space-y-2">
+                        <div className="mt-4 bg-white shadow rounded-lg p-4 space-y-2 max-h-60 overflow-y-auto custom-scrollbar">
                           {followData?.length > 0 ? (
                             followData.map((user) => (
                               <ul key={user._id}>
-                                <li className="text-gray-800 font-medium hover:text-blue-600 transition">
-                                  @{user?.username}
+                                <li className="flex items-center gap-2 p-2 hover:bg-gray-50 rounded-md">
+                                  <img
+                                    src={
+                                      user.avatar ||
+                                      `https://ui-avatars.com/api/?name=${user?.username?.charAt(
+                                        0
+                                      )}&background=random`
+                                    }
+                                    alt={user.username}
+                                    className="w-8 h-8 rounded-full object-cover"
+                                  />
+                                  <Link
+                                    to={`/user-profile/${user?.username}`}
+                                    className="text-gray-800 font-medium hover:text-blue-600 transition"
+                                  >
+                                    @{user?.username}
+                                  </Link>
                                 </li>
                               </ul>
                             ))
@@ -242,12 +276,27 @@ export const UserProfile = () => {
                       Following
                     </button>
                     {showFollowing && (
-                      <div className="mt-4 bg-white shadow rounded-lg p-4 space-y-2">
+                      <div className="mt-4 bg-white shadow rounded-lg p-4 space-y-2 max-h-60 overflow-y-auto custom-scrollbar">
                         {followingData?.length > 0 ? (
                           followingData.map((user) => (
                             <ul key={user._id}>
-                              <li className="text-gray-800 font-medium hover:text-blue-600 transition">
-                                @{user?.username}
+                              <li className="flex items-center gap-2 p-2 hover:bg-gray-50 rounded-md">
+                                <img
+                                  src={
+                                    user.avatar ||
+                                    `https://ui-avatars.com/api/?name=${user?.username?.charAt(
+                                      0
+                                    )}&background=random`
+                                  }
+                                  alt={user.username}
+                                  className="w-8 h-8 rounded-full object-cover"
+                                />
+                                <Link
+                                  to={`/user-profile/${user?.username}`}
+                                  className="text-gray-800 font-medium hover:text-blue-600 transition"
+                                >
+                                  @{user?.username}
+                                </Link>
                               </li>
                             </ul>
                           ))
@@ -327,13 +376,15 @@ export const UserProfile = () => {
                         </p>
                       </div>
                     )}
-                    <button
-                      onClick={() => {
-                        handleDeletePost(item._id);
-                      }}
-                    >
-                      del
-                    </button>
+                    <div className="p-2 flex justify-end">
+                      <button
+                        onClick={() => openDeleteConfirm(item._id)} // Changed to open confirmation
+                        className="text-red-500 hover:text-red-700 p-1.5 rounded-full hover:bg-red-50 transition-colors"
+                        title="Delete post"
+                      >
+                        <FiTrash2 size={18} />
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
