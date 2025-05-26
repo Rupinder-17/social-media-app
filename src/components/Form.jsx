@@ -1,38 +1,46 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 // import { email } from "zod/v4";
 
 const schema = z.object({
-  username: z.string().min(4,{message: "???"}).max(10, {message: "10 to jada na pao"}),
+  username: z
+    .string()
+    .min(4, { message: "???" })
+    .max(10, { message: "10 to jada na pao" }),
   email: z.string().email(),
 });
 export const Form = () => {
-  const {
-    register,
-    handleSubmit,
-    formState
-  } = useForm({ resolver: zodResolver(schema) });
+  const { register, handleSubmit, formState } = useForm({
+    resolver: zodResolver(schema),
+  });
 
   const onSubmit = (data) => {
     console.log(data);
   };
-  console.log("formstate",formState.errors);
+  console.log("formstate", formState.errors);
 
-  const API_KEY = "X-CSCAPI-KEY";
+  const API_KEY = "cklFWXY3djJzbmtSOFp3UmhLVHM1UFNhdG9ZU2hsSVBaYnh6VmlubQ==";
   const BASE_URL = "https://api.countrystatecity.in/v1";
 
-  // const countryCode =  async()=>{
-  //   try{
-  //       const res = await fetch("https://api.countrystatecity.in/v1/countries/IN")
-  //   }
-  //   catch(e){
-  //       console.log(e);
-
-  //   }
-
-  // }
+  const countryCode = async () => {
+    try {
+      const res = await fetch(`${BASE_URL}/countries/`, {
+        method: "GET",
+        headers: {
+          "X-CSCAPI-KEY": API_KEY,
+        },
+      });
+      const data = await res.json();
+      console.log(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(()=>{
+    countryCode()
+  },[])
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -58,7 +66,9 @@ export const Form = () => {
             placeholder="Enter your username"
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          {formState.errors.username && <p>{formState.errors.username.message}</p>}
+          {formState.errors.username && (
+            <p>{formState.errors.username.message}</p>
+          )}
         </div>
 
         <div className="mb-6">
